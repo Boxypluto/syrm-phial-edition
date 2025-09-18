@@ -48,8 +48,10 @@ func input(event: InputEvent) -> void:
 
 func run_process(_delta: float):
 	velocity = Vector.two_to_three(get_move_input() * speed, velocity.y)
+
 func gravity_process(delta: float):
 	velocity.y -= gravity * delta
+
 func jump_process(_delta: float):
 	if Input.is_action_just_pressed("Jump") and is_on_floor():
 		velocity.y = jump_strength
