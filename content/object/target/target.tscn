@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://t32q8ffi1g5f"]
+
+[ext_resource type="Script" uid="uid://dh3ogw0x7sjhj" path="res://content/object/target/target.gd" id="1_fwu42"]
+[ext_resource type="Script" uid="uid://bog6bqfmnioad" path="res://multi_scripts/hit_box.gd" id="1_v1wmp"]
+[ext_resource type="Script" uid="uid://5t0i5fcvv63q" path="res://content/component/hit_effect.gd" id="2_7impc"]
+[ext_resource type="Texture2D" uid="uid://ddlkwdgu8x3on" path="res://assets/sprites/target.png" id="2_lxcfl"]
+[ext_resource type="Texture2D" uid="uid://bhg7l071a8bju" path="res://assets/sprites/pole.png" id="5_m457s"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lxcfl"]
+radius = 0.7997777
+
+[node name="Target" type="Node3D"]
+script = ExtResource("1_fwu42")
+
+[node name="HitEffect" type="AnimatedSprite3D" parent="."]
+pixel_size = 0.05
+script = ExtResource("2_7impc")
+metadata/_custom_type_script = "uid://5t0i5fcvv63q"
+
+[node name="TargetSpinner" type="Sprite3D" parent="."]
+pixel_size = 0.05
+texture_filter = 0
+texture = ExtResource("2_lxcfl")
+
+[node name="HitBox" type="Area3D" parent="."]
+collision_layer = 3
+collision_mask = 0
+script = ExtResource("1_v1wmp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
+shape = SubResource("SphereShape3D_lxcfl")
+
+[node name="Pole" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7211046, 0)
+pixel_size = 0.05
+billboard = 2
+texture_filter = 0
+texture = ExtResource("5_m457s")
+
+[node name="Pole2" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.6632037, 0)
+flip_h = true
+flip_v = true
+pixel_size = 0.05
+billboard = 2
+texture_filter = 0
+texture = ExtResource("5_m457s")
+
+[connection signal="hit" from="HitBox" to="." method="on_hit"]
+[connection signal="hit" from="HitBox" to="HitEffect" method="do_effect"]

@@ -1,0 +1,110 @@
+[gd_scene load_steps=14 format=3 uid="uid://d3fghnjmt3yp8"]
+
+[ext_resource type="PackedScene" uid="uid://id8hpn1b71f6" path="res://_testing/stages/testing_state_1.tscn" id="1_pjfh2"]
+[ext_resource type="Script" uid="uid://4ax2lruikqyq" path="res://system/game.gd" id="1_uwgih"]
+[ext_resource type="PackedScene" uid="uid://db6dv4pdde6co" path="res://content/player/player.tscn" id="2_g4eph"]
+[ext_resource type="Texture2D" uid="uid://dw34slpm2n76g" path="res://assets/sprites/crosshair_1.png" id="3_aywbb"]
+[ext_resource type="Texture2D" uid="uid://47ntrbh43sxu" path="res://assets/sprites/gun_prototype_2.png" id="4_m0p3p"]
+[ext_resource type="Script" uid="uid://bkbpcrbxsc4gf" path="res://system/hud.gd" id="4_nvi61"]
+[ext_resource type="Script" uid="uid://cfbgio25yma8y" path="res://content/hud/gun_hud.gd" id="5_m0p3p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uwgih"]
+atlas = ExtResource("4_m0p3p")
+region = Rect2(0, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvi61"]
+atlas = ExtResource("4_m0p3p")
+region = Rect2(320, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3w5he"]
+atlas = ExtResource("4_m0p3p")
+region = Rect2(640, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxm5u"]
+atlas = ExtResource("4_m0p3p")
+region = Rect2(960, 0, 320, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jt55s"]
+atlas = ExtResource("4_m0p3p")
+region = Rect2(0, 0, 320, 180)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s0nrn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uwgih")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.3,
+"texture": SubResource("AtlasTexture_nvi61")
+}, {
+"duration": 0.3,
+"texture": SubResource("AtlasTexture_3w5he")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fxm5u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jt55s")
+}],
+"loop": false,
+"name": &"Shoot",
+"speed": 4.0
+}]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_uwgih")
+
+[node name="Game3D" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="3DViewport" type="SubViewport" parent="Game3D"]
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="TestingState1" parent="Game3D/3DViewport" instance=ExtResource("1_pjfh2")]
+
+[node name="Player" parent="Game3D/3DViewport" instance=ExtResource("2_g4eph")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8317046, 0)
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("4_nvi61")
+
+[node name="Crosshair" type="TextureRect" parent="HUD"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_aywbb")
+
+[node name="Gun" type="AnimatedSprite2D" parent="HUD"]
+position = Vector2(332, 192)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_s0nrn")
+animation = &"Shoot"
+autoplay = "Idle"
+script = ExtResource("5_m0p3p")

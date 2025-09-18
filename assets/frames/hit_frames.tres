@@ -1,0 +1,35 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://g26vi8ruwykt"]
+
+[ext_resource type="Texture2D" uid="uid://hofme2cpxkih" path="res://assets/sprites/hit.png" id="1_ct1r5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nbbup"]
+atlas = ExtResource("1_ct1r5")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xme0"]
+atlas = ExtResource("1_ct1r5")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_431rm"]
+atlas = ExtResource("1_ct1r5")
+region = Rect2(96, 0, 48, 48)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nbbup")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1xme0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_431rm")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"Hit",
+"speed": 64.0
+}]
