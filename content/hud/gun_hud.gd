@@ -1,11 +1,7 @@
-extends AnimatedSprite2D
+extends Node2D
 class_name GunHud
 
-func shoot():
-	animation = "Shoot"
-	frame = 0
-	play()
+@onready var orb: WeaponOrb = $Orb
 
-func _process(delta: float) -> void:
-	if animation == "Shoot" and not is_playing():
-		animation = "Idle"
+func shoot():
+	orb.shoot()
