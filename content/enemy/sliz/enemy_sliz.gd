@@ -4,6 +4,9 @@ class_name EnemySliz
 @onready var animation: AnimatedSprite3D = $Animation
 @onready var shoot_point: Marker3D = $ShootPoint
 
+@onready var sfx_shoot: MusicalAudio3D = $SFX/Shoot
+
+
 @export var beat_offset: int = 0
 @export var shoot_velocity: float = 5.0
 var target: Node3D
@@ -13,13 +16,14 @@ signal beat_action(beat: float)
 const SIMPLE_PROJECTILE = preload("uid://b3lqj7yowmppk")
 
 func _ready() -> void:
-	var rhythm_beat: Signal = Rhythm.beats(2.0, true, -1.0 - beat_offset)
+	var rhythm_beat: Signal = Rhythm.beats(2.0, true, beat_offset)
 	rhythm_beat.connect(beat)
 	rhythm_beat.connect(func(beat: float): beat_action.emit(beat))
 
 func beat(beat_number: int):
 	shoot()
 	animation.play()
+	sfx_shoot.play_musical(beat_number, 0, beat_offset, 2)
 
 func shoot():
 	var projectile: ProjectileSimple = SIMPLE_PROJECTILE.instantiate()
