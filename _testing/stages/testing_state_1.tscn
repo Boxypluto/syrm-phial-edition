@@ -1,20 +1,22 @@
 [gd_scene load_steps=8 format=3 uid="uid://id8hpn1b71f6"]
 
+[ext_resource type="Shader" uid="uid://c5u0e373tvinu" path="res://_testing/shaders/lighting.gdshader" id="1_7nvcd"]
 [ext_resource type="Texture2D" uid="uid://dg276702whk8r" path="res://addons/protoype_textures/green/texture_01.png" id="1_q1ueu"]
-[ext_resource type="Texture2D" uid="uid://bwwkuh2mj27tg" path="res://addons/protoype_textures/texture_01_normal.png" id="2_fqpks"]
 [ext_resource type="PackedScene" uid="uid://cmxvrvtkghl04" path="res://content/enemy/sliz/enemy_sliz.tscn" id="2_tg611"]
 [ext_resource type="PackedScene" uid="uid://t32q8ffi1g5f" path="res://content/object/target/target.tscn" id="2_w58o0"]
 [ext_resource type="Texture2D" uid="uid://bery80d3iqdoc" path="res://assets/sprites/environment/sun.png" id="3_tg611"]
 [ext_resource type="Script" uid="uid://ndo4d4agq3vk" path="res://content/component/pulse_3d.gd" id="4_uggq6"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_437mv"]
-albedo_color = Color(0.3752922, 0.39045358, 0.39147055, 1)
-albedo_texture = ExtResource("1_q1ueu")
-normal_enabled = true
-normal_texture = ExtResource("2_fqpks")
-uv1_triplanar = true
-uv2_triplanar = true
-texture_filter = 2
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q1ueu"]
+render_priority = 0
+shader = ExtResource("1_7nvcd")
+shader_parameter/albedo = ExtResource("1_q1ueu")
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/uv1_blend_sharpness = 1.0000000475
+shader_parameter/uv2_blend_sharpness = 1.0000000475
 
 [node name="TestingState1" type="Node3D"]
 
@@ -23,7 +25,7 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
-material_override = SubResource("StandardMaterial3D_437mv")
+material_override = SubResource("ShaderMaterial_q1ueu")
 use_collision = true
 collision_mask = 0
 
