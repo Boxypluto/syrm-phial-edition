@@ -1,0 +1,122 @@
+[gd_scene load_steps=20 format=3 uid="uid://cmxvrvtkghl04"]
+
+[ext_resource type="Script" uid="uid://53o36xmor827" path="res://content/enemy/sliz/enemy_sliz.gd" id="1_ssju7"]
+[ext_resource type="Texture2D" uid="uid://nrhbtq57fgsl" path="res://assets/sprites/enemy/sliz.png" id="1_w2n7g"]
+[ext_resource type="Script" uid="uid://ctehqaw3flkxh" path="res://content/component/beat_fader.gd" id="3_b8itv"]
+[ext_resource type="Script" uid="uid://ndo4d4agq3vk" path="res://content/component/pulse_3d.gd" id="3_xb7i7"]
+[ext_resource type="Texture2D" uid="uid://bdlqyyqt7piko" path="res://assets/sprites/pulse.png" id="5_1ehr1"]
+[ext_resource type="AudioStream" uid="uid://bpjixwj1uw10y" path="res://assets/sfx/enemy/PHIAL_SFX_ENEMY_SLIZ_SHOOT.ogg" id="6_7cusu"]
+[ext_resource type="Script" uid="uid://c2ndi6ftfs5m4" path="res://content/component/musical_audio_3d.gd" id="6_monnn"]
+[ext_resource type="Script" uid="uid://bsnc4lbnm1xpd" path="res://content/component/music_seqence.gd" id="8_7aqgi"]
+[ext_resource type="Script" uid="uid://cmdgk6ko5wdc7" path="res://content/component/note.gd" id="9_1qq75"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ssju7"]
+atlas = ExtResource("1_w2n7g")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xb7i7"]
+atlas = ExtResource("1_w2n7g")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8itv"]
+atlas = ExtResource("1_w2n7g")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ehr1"]
+atlas = ExtResource("1_w2n7g")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_monnn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ssju7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xb7i7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b8itv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ehr1")
+}],
+"loop": false,
+"name": &"Pulse",
+"speed": 12.0
+}]
+
+[sub_resource type="Resource" id="Resource_1qq75"]
+script = ExtResource("9_1qq75")
+note = 2
+metadata/_custom_type_script = "uid://cmdgk6ko5wdc7"
+
+[sub_resource type="Resource" id="Resource_8ayir"]
+script = ExtResource("9_1qq75")
+note = 7
+metadata/_custom_type_script = "uid://cmdgk6ko5wdc7"
+
+[sub_resource type="Resource" id="Resource_55xmy"]
+script = ExtResource("9_1qq75")
+note = 7
+metadata/_custom_type_script = "uid://cmdgk6ko5wdc7"
+
+[sub_resource type="Resource" id="Resource_c3hq2"]
+script = ExtResource("9_1qq75")
+note = 2
+metadata/_custom_type_script = "uid://cmdgk6ko5wdc7"
+
+[sub_resource type="Resource" id="Resource_dufm4"]
+script = ExtResource("8_7aqgi")
+sequence = Array[ExtResource("9_1qq75")]([SubResource("Resource_1qq75"), SubResource("Resource_8ayir"), SubResource("Resource_55xmy"), SubResource("Resource_c3hq2")])
+metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
+
+[node name="EnemySliz" type="Node3D"]
+script = ExtResource("1_ssju7")
+shoot_velocity = 10.0
+
+[node name="Animation" type="AnimatedSprite3D" parent="."]
+offset = Vector2(0, 32)
+pixel_size = 0.05
+billboard = 2
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_monnn")
+animation = &"Pulse"
+frame = 3
+frame_progress = 1.0
+
+[node name="BeatFader" type="Node3D" parent="." node_paths=PackedStringArray("to_fade")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.225235, 0)
+script = ExtResource("3_b8itv")
+to_fade = NodePath("BeatPulser/Sprite3D")
+auto = false
+fade_speed = 8.0
+
+[node name="BeatPulser" type="Node3D" parent="BeatFader"]
+script = ExtResource("3_xb7i7")
+auto = false
+strength = 0.5
+metadata/_custom_type_script = "uid://ndo4d4agq3vk"
+
+[node name="Sprite3D" type="Sprite3D" parent="BeatFader/BeatPulser"]
+transform = Transform3D(2.2544749, 0, 0, 0, 2.2544749, 0, 0, 0, 2.2544749, 0, 0, 0)
+pixel_size = 0.05
+billboard = 1
+texture_filter = 0
+texture = ExtResource("5_1ehr1")
+
+[node name="ShootPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3673115, 0)
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="Shoot" type="AudioStreamPlayer3D" parent="SFX"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4038804, 0)
+stream = ExtResource("6_7cusu")
+volume_db = 1.0
+bus = &"SFX"
+script = ExtResource("6_monnn")
+sequence = SubResource("Resource_dufm4")
+
+[connection signal="beat_action" from="." to="BeatFader" method="do_fade"]
+[connection signal="beat_action" from="." to="BeatFader/BeatPulser" method="pulse"]
