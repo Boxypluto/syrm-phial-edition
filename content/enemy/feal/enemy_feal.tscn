@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7rmh1yglwtqp"]
+
+[ext_resource type="Script" uid="uid://2u4fxmig1w1d" path="res://content/component/beat_repeater.gd" id="2_g6cog"]
+
+[node name="EnemyFeal" type="Node3D"]
+
+[node name="Timer" type="Node" parent="."]
+script = ExtResource("2_g6cog")
+metadata/_custom_type_script = "uid://2u4fxmig1w1d"

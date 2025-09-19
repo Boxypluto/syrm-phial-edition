@@ -1,12 +1,19 @@
-[gd_scene load_steps=13 format=3 uid="uid://cmxvrvtkghl04"]
+[gd_scene load_steps=18 format=3 uid="uid://cmxvrvtkghl04"]
 
 [ext_resource type="Script" uid="uid://53o36xmor827" path="res://content/enemy/sliz/enemy_sliz.gd" id="1_ssju7"]
 [ext_resource type="Texture2D" uid="uid://nrhbtq57fgsl" path="res://assets/sprites/enemy/sliz.png" id="1_w2n7g"]
+[ext_resource type="Script" uid="uid://cvdxyomux8pmi" path="res://content/component/health.gd" id="2_7aqgi"]
 [ext_resource type="Script" uid="uid://ctehqaw3flkxh" path="res://content/component/beat_fader.gd" id="3_b8itv"]
 [ext_resource type="Script" uid="uid://ndo4d4agq3vk" path="res://content/component/pulse_3d.gd" id="3_xb7i7"]
 [ext_resource type="Texture2D" uid="uid://bdlqyyqt7piko" path="res://assets/sprites/pulse.png" id="5_1ehr1"]
-[ext_resource type="AudioStream" uid="uid://cke3jr12fo3bk" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_Master.wav" id="6_1qq75"]
+[ext_resource type="AudioStream" uid="uid://caa1xqnkexdu0" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_SLIZ_SHOOT.wav" id="6_7cusu"]
 [ext_resource type="Script" uid="uid://c2ndi6ftfs5m4" path="res://content/component/musical_audio_3d.gd" id="6_monnn"]
+[ext_resource type="Script" uid="uid://bog6bqfmnioad" path="res://multi_scripts/hit_box.gd" id="9_1qq75"]
+[ext_resource type="Script" uid="uid://5t0i5fcvv63q" path="res://content/component/hit_effect.gd" id="10_dufm4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dufm4"]
+atlas = ExtResource("1_w2n7g")
+region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ssju7"]
 atlas = ExtResource("1_w2n7g")
@@ -28,6 +35,14 @@ region = Rect2(0, 0, 64, 64)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_dufm4")
+}],
+"loop": true,
+"name": &"Hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_ssju7")
 }, {
 "duration": 1.0,
@@ -44,9 +59,16 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dufm4"]
+radius = 0.74121094
+height = 2.4814453
+
 [node name="EnemySliz" type="Node3D"]
 script = ExtResource("1_ssju7")
 shoot_velocity = 10.0
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_7aqgi")
 
 [node name="Animation" type="AnimatedSprite3D" parent="."]
 offset = Vector2(0, 32)
@@ -55,8 +77,6 @@ billboard = 2
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_monnn")
 animation = &"Pulse"
-frame = 3
-frame_progress = 1.0
 
 [node name="BeatFader" type="Node3D" parent="." node_paths=PackedStringArray("to_fade")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.225235, 0)
@@ -86,7 +106,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3673115, 0)
 
 [node name="Shoot" type="AudioStreamPlayer3D" parent="SFX"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4038804, 0)
-stream = ExtResource("6_1qq75")
+stream = ExtResource("6_7cusu")
 volume_db = 0.2
 unit_size = 5.0
 max_distance = 50.0
@@ -94,5 +114,22 @@ bus = &"SFX"
 script = ExtResource("6_monnn")
 musical_seqence = "G-1 D A1 A1"
 
+[node name="HitBox" type="Area3D" parent="."]
+script = ExtResource("9_1qq75")
+metadata/_custom_type_script = "uid://bog6bqfmnioad"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2149764, 0)
+shape = SubResource("CapsuleShape3D_dufm4")
+
+[node name="HitEffect" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2008255, 0)
+pixel_size = 0.05
+script = ExtResource("10_dufm4")
+metadata/_custom_type_script = "uid://5t0i5fcvv63q"
+
 [connection signal="beat_action" from="." to="BeatFader" method="do_fade"]
 [connection signal="beat_action" from="." to="BeatFader/BeatPulser" method="pulse"]
+[connection signal="hit" from="HitBox" to="." method="on_hit"]
+[connection signal="hit" from="HitBox" to="HitEffect" method="do_effect"]
+[connection signal="hit" from="HitBox" to="Health" method="damage" binds= [1.0]]

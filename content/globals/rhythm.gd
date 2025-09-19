@@ -19,7 +19,7 @@ enum NOTE {
 const STAR_STAR = preload("uid://ndtb3dxwabxb")
 const STRATASPHERE = preload("uid://dk2oc0w5v7mcx")
 
-static func string_to_note(string: String) -> NOTE:
+static func string_to_note_type(string: String) -> NOTE:
 	match string:
 		"A": return NOTE.A
 		"A#": return NOTE.AS
@@ -37,31 +37,32 @@ static func string_to_note(string: String) -> NOTE:
 	assert(false, "String: " + string + " is not a valid note!")
 	return NOTE.C
 
-static func build_sequence(seqence_string: String):
-	
-	const NOTE_LETTERS: PackedStringArray = ["A", "B", "C", "D", "E", "F", "G", "-"]
+const NOTE_LETTERS: PackedStringArray = ["A", "B", "C", "D", "E", "F", "G", "-"]
+
+static func build_sequence(seqence_string: String) -> MusicalSeqence:
 	
 	var instructions: PackedStringArray = seqence_string.split(" ")
 	var sequence: MusicalSeqence = MusicalSeqence.new()
 	
 	for instruction: String in instructions:
-		assert(instruction.substr(0, 1) in NOTE_LETTERS, "Instruction: \"" + instruction + "\" does not start with a Note Letter! Must be in: " + str(NOTE_LETTERS))
-		
-		if instruction.length() == 1:
-			sequence.add_note(Note.new(string_to_note(instruction), 0, 1))
-			continue
-		if instruction.length() == 2 and instruction.substr(1, 1) == "#":
-			sequence.add_note(Note.new(string_to_note(instruction), 0, 1))
-			continue
-			
-		var sharp_offset: int = 0
-		if instruction.substr(1, 1) == "#": sharp_offset = 1
-		
-		assert(instruction.substr(1 + sharp_offset).is_valid_int(), "The octave of: " + instruction + " is not an integer!")
-		var octave: int = instruction.substr(1 + sharp_offset).to_int()
-		sequence.add_note(Note.new(string_to_note(instruction.substr(0, 1 + sharp_offset)), octave, 1))
+		sequence.add_note(build_note(instruction))
 
 	return sequence
+
+static func build_note(note_string: String) -> Note:
+	assert(note_string.substr(0, 1) in NOTE_LETTERS, "Instruction: \"" + note_string + "\" does not start with a Note Letter! Must be in: " + str(NOTE_LETTERS))
+	
+	if note_string.length() == 1:
+		return Note.new(string_to_note_type(note_string), 0, 1)
+	if note_string.length() == 2 and note_string.substr(1, 1) == "#":
+		return Note.new(string_to_note_type(note_string), 0, 1)
+		
+	var sharp_offset: int = 0
+	if note_string.substr(1, 1) == "#": sharp_offset = 1
+	
+	assert(note_string.substr(1 + sharp_offset).is_valid_int(), "The octave of: " + note_string + " is not an integer!")
+	var octave: int = note_string.substr(1 + sharp_offset).to_int()
+	return Note.new(string_to_note_type(note_string.substr(0, 1 + sharp_offset)), octave, 1)
 
 static func pitch_scale_from_c(note: NOTE, octave: int = 0) -> float:
 	

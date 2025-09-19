@@ -17,3 +17,7 @@ func get_musical_scale(beat: int) -> float:
 	assert(beat >= 0, "Beat cannot be less than 0! Current Beat: " + str(beat))
 	var note: Note = sequence.sequence.get(beat % sequence.sequence.size())
 	return Rhythm.pitch_scale_from_c(note.note, note.octave)
+
+
+func _on_timer_do_beat(beat: float) -> void:
+	pass # Replace with function body.

@@ -22,7 +22,7 @@ func _ready() -> void:
 
 func beat(beat_number: int):
 	shoot()
-	animation.play()
+	animation.play("Pulse")
 	sfx_shoot.play_musical(beat_number, 0, beat_offset, 2)
 
 func shoot():
@@ -33,3 +33,8 @@ func shoot():
 	projectile.direction = projectile.global_position.direction_to(Game.PLAYER.global_position)
 	projectile.speed = shoot_velocity
 	projectile.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_INHERIT
+
+func on_hit() -> void:
+	animation.flip_h = randf() < 0.5
+	animation.frame = 0
+	animation.play("Pulse")
