@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c85vxo4nqoadt"
+path="res://.godot/imported/untitled_FEAL_ATTACK #2.wav-dac06864c1716752c0c4d2e76b060646.sample"
+
+[deps]
+
+source_file="res://__external/SFX/PHIAL_SFX_ENEMY/untitled_FEAL_ATTACK #2.wav"
+dest_files=["res://.godot/imported/untitled_FEAL_ATTACK #2.wav-dac06864c1716752c0c4d2e76b060646.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

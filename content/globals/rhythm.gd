@@ -1,5 +1,7 @@
 extends RhythmNotifier
 
+var input_latency: float = 0.0
+
 enum NOTE {
 	A,
 	AS,
@@ -92,6 +94,9 @@ static func pitch_scale_from_c(note: NOTE, octave: int = 0) -> float:
 
 static func offet_scale_octave(pitch_scale: float, octave_offset: int) -> float:
 	return pitch_scale * (2.0 ** octave_offset)
+
+func get_decimal_beat() -> float:
+	return current_position / beat_length
 
 func _ready():
 	audio_stream_player = AudioStreamPlayer.new()

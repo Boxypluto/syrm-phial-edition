@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://byuxxh5o13cas"]
+
+[ext_resource type="Texture2D" uid="uid://d1ya5sqjps3de" path="res://assets/sprites/enemy/shockwave_1.png" id="1_67aai"]
+[ext_resource type="Script" uid="uid://b68ltbtcbdd14" path="res://content/projectile/shockwave_red.gd" id="1_qu52c"]
+
+[sub_resource type="Curve" id="Curve_qu52c"]
+bake_resolution = 40
+_data = [Vector2(0.008522727, 1), 0.0, -0.37281153, 0, 0, Vector2(0.7613636, 0.7675978), -0.8291105, -0.8291105, 0, 0, Vector2(1, 0), -1.7062094, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_lamrf"]
+height = 0.4
+radius = 1.0
+
+[node name="ShockwaveRed" type="Node3D"]
+script = ExtResource("1_qu52c")
+alpha_curve = SubResource("Curve_qu52c")
+
+[node name="Scaler" type="Node3D" parent="."]
+
+[node name="Hurter" type="Area3D" parent="Scaler"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape3D" parent="Scaler/Hurter"]
+shape = SubResource("CylinderShape3D_lamrf")
+debug_color = Color(0.97, 0, 0.43649983, 0.85490197)
+
+[node name="Sprite" type="Sprite3D" parent="Scaler"]
+transform = Transform3D(0.37, 0, 0, 0, -1.6173214e-08, 0.37, 0, -0.37, -1.6173214e-08, 0, 0, 0)
+pixel_size = 0.05
+texture_filter = 0
+texture = ExtResource("1_67aai")

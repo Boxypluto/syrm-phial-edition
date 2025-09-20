@@ -1,12 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://id8hpn1b71f6"]
+[gd_scene load_steps=14 format=3 uid="uid://id8hpn1b71f6"]
 
-[ext_resource type="Shader" uid="uid://c5u0e373tvinu" path="res://_testing/shaders/lighting.gdshader" id="1_7nvcd"]
+[ext_resource type="Shader" uid="uid://c5u0e373tvinu" path="res://assets/shaders/lighting_triplanar.gdshader" id="1_7nvcd"]
 [ext_resource type="PackedScene" uid="uid://c7rmh1yglwtqp" path="res://content/enemy/feal/enemy_feal.tscn" id="1_fqpks"]
 [ext_resource type="Texture2D" uid="uid://dg276702whk8r" path="res://addons/protoype_textures/green/texture_01.png" id="1_q1ueu"]
 [ext_resource type="PackedScene" uid="uid://cmxvrvtkghl04" path="res://content/enemy/sliz/enemy_sliz.tscn" id="2_tg611"]
 [ext_resource type="PackedScene" uid="uid://t32q8ffi1g5f" path="res://content/object/target/target.tscn" id="2_w58o0"]
 [ext_resource type="Texture2D" uid="uid://bery80d3iqdoc" path="res://assets/sprites/environment/sun.png" id="3_tg611"]
 [ext_resource type="Script" uid="uid://ndo4d4agq3vk" path="res://content/component/pulse_3d.gd" id="4_uggq6"]
+[ext_resource type="PackedScene" uid="uid://dntwirrcck4k4" path="res://content/enemy/thumper/enemy_thumper.tscn" id="8_437mv"]
+[ext_resource type="Shader" uid="uid://b1ldxr2lii55u" path="res://assets/shaders/lighting.gdshader" id="9_ypuur"]
+[ext_resource type="PackedScene" uid="uid://d3o20k80j856g" path="res://content/object/mirror/mirror.tscn" id="10_dybbh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q1ueu"]
 render_priority = 0
@@ -18,6 +21,16 @@ shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/uv1_blend_sharpness = 1.0000000475
 shader_parameter/uv2_blend_sharpness = 1.0000000475
+
+[sub_resource type="SphereMesh" id="SphereMesh_dybbh"]
+radius = 2.0
+height = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ncips"]
+render_priority = 0
+shader = ExtResource("9_ypuur")
+shader_parameter/albedo = ExtResource("1_q1ueu")
+shader_parameter/texture_scale = Vector2(3, 3)
 
 [node name="TestingState1" type="Node3D"]
 
@@ -44,8 +57,8 @@ size = Vector3(28.514648, 1.5952759, 12.184636)
 [node name="CSGSphere3D" type="CSGSphere3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.665661, 5.5494137, 4.6572294)
 radius = 3.405
-radial_segments = 64
-rings = 64
+radial_segments = 16
+rings = 16
 
 [node name="CSGTorus3D" type="CSGTorus3D" parent="CSGCombiner3D"]
 transform = Transform3D(0.9211175, 0.38928473, 0, -0.38928473, 0.9211175, 0, 0, 0, 1, -12.204676, 2.4483476, 4.9710903)
@@ -60,6 +73,29 @@ inner_radius = 2.945
 outer_radius = 4.07
 sides = 11
 ring_sides = 9
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.42735198, 0.8219159, 0.3765962, -0.8872365, 0.46131513, 0, -0.17372948, -0.3341298, 0.92637753, -25.244383, 1.7970376, 6.3430977)
+size = Vector3(18.862305, 0.51782227, 15.313797)
+
+[node name="CSGTorus3D3" type="CSGTorus3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.9907786, -0.13549072, 0, 0.13549072, 0.9907786, 0, 0, 0, 1, -21.576527, 2.867525, 10.657116)
+inner_radius = 2.945
+outer_radius = 4.07
+sides = 11
+ring_sides = 9
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="CSGCombiner3D"]
+transform = Transform3D(3.6281402, 0, 0, 0, 1.8187943, 0, 0, 0, 1, -6.3427353, 1.6131334, 15.750883)
+radius = 3.405
+radial_segments = 16
+rings = 16
+
+[node name="CSGSphere3D3" type="CSGSphere3D" parent="CSGCombiner3D"]
+transform = Transform3D(2.4882514, 0.57090676, 0.6565987, -1.5239029, 1.6505561, 0.00487718, -2.156322, -0.5076828, 0.75422436, 0.4004345, -1.2681875, 12.978144)
+radius = 3.405
+radial_segments = 16
+rings = 16
 
 [node name="Target" parent="." instance=ExtResource("2_w58o0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.474999, 2.3113163, -1.6964669)
@@ -95,3 +131,32 @@ beats = 1
 shrink_speed = 5.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -6.291498, 5.3982005, 1.3240123)
+spot_range = 9.23004
+spot_angle = 33.122593
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.906809, 2.0692759, 1.4935822)
+light_color = Color(0.79980797, 0.5855885, 0.24046287, 1)
+
+[node name="EnemyThumper" parent="." instance=ExtResource("8_437mv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9617424, 1.0177407, 5.6899214)
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, -2.0590634, 4.6680365, 4.8867335)
+light_color = Color(0.962974, 0.63138264, 0.5590757, 1)
+spot_range = 11.788353
+spot_angle = 47.56273
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.034984, 12.55305, -4.9732027)
+mesh = SubResource("SphereMesh_dybbh")
+surface_material_override/0 = SubResource("ShaderMaterial_ncips")
+
+[node name="Mirror" parent="." instance=ExtResource("10_dybbh")]
+transform = Transform3D(-0.541356, 0, -0.8407935, 0, 1, 0, 0.8407935, 0, -0.541356, -18.157745, 2.4917016, -7.635595)
+
+[node name="Mirror2" parent="." instance=ExtResource("10_dybbh")]
+transform = Transform3D(-0.541356, 0, -0.8407935, 0, 1, 0, 0.8407935, 0, -0.541356, -18.157745, 0.15295649, -7.635595)

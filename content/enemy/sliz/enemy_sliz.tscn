@@ -6,8 +6,8 @@
 [ext_resource type="Script" uid="uid://ctehqaw3flkxh" path="res://content/component/beat_fader.gd" id="3_b8itv"]
 [ext_resource type="Script" uid="uid://ndo4d4agq3vk" path="res://content/component/pulse_3d.gd" id="3_xb7i7"]
 [ext_resource type="Texture2D" uid="uid://bdlqyyqt7piko" path="res://assets/sprites/pulse.png" id="5_1ehr1"]
-[ext_resource type="AudioStream" uid="uid://caa1xqnkexdu0" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_SLIZ_SHOOT.wav" id="6_7cusu"]
 [ext_resource type="Script" uid="uid://c2ndi6ftfs5m4" path="res://content/component/musical_audio_3d.gd" id="6_monnn"]
+[ext_resource type="AudioStream" uid="uid://bwu7kswu3oqpl" path="res://__external/SFX/PHIAL_SFX_ENEMY/untitled_SLIZ_SHOOT.wav" id="7_dufm4"]
 [ext_resource type="Script" uid="uid://bog6bqfmnioad" path="res://multi_scripts/hit_box.gd" id="9_1qq75"]
 [ext_resource type="Script" uid="uid://5t0i5fcvv63q" path="res://content/component/hit_effect.gd" id="10_dufm4"]
 
@@ -106,7 +106,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3673115, 0)
 
 [node name="Shoot" type="AudioStreamPlayer3D" parent="SFX"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4038804, 0)
-stream = ExtResource("6_7cusu")
+stream = ExtResource("7_dufm4")
 volume_db = 0.2
 unit_size = 5.0
 max_distance = 50.0
@@ -121,6 +121,7 @@ metadata/_custom_type_script = "uid://bog6bqfmnioad"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2149764, 0)
 shape = SubResource("CapsuleShape3D_dufm4")
+debug_color = Color(0.61, 0.5388333, 0, 0.654902)
 
 [node name="HitEffect" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2008255, 0)

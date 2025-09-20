@@ -2,7 +2,6 @@ shader_type spatial;
 render_mode diffuse_toon, specular_toon; 
 
 uniform sampler2D albedo;
-uniform sampler2D normal;
 
 varying vec3 uv1_triplanar_pos;
 varying vec3 uv2_triplanar_pos;
@@ -42,12 +41,21 @@ vec4 triplanar_texture(sampler2D p_sampler, vec3 p_weights, vec3 p_triplanar_pos
 
 void fragment() {
 	vec4 albedo_color = triplanar_texture(albedo, uv1_power_normal, uv1_triplanar_pos);
-	vec4 normal_color = triplanar_texture(normal, uv1_power_normal, uv1_triplanar_pos);
-	
 	ALBEDO = albedo_color.rgb;
-	NORMAL = normal_color.rgb;
+}
+
+float snap(float value, float threshold) {
+	if (value > threshold) return 1.0;
+	else return 0.0;
 }
 
 void light() {
-	DIFFUSE_LIGHT += round(dot(NORMAL, LIGHT)) * ALBEDO;
+	vec3 surface_normal = normalize(NORMAL);
+	vec3 light_normal = normalize(LIGHT);
+	
+	// Lambertian-Diffuise-style lighting rounded
+	float lighting_soft = max(dot(surface_normal, light_normal), 0.0);
+	float lighting = round(lighting_soft);
+	
+	DIFFUSE_LIGHT += lighting * ALBEDO * LIGHT_COLOR * (snap(ATTENUATION, 0.0) / 0.5) / 10.0;
 }

@@ -12,6 +12,7 @@ script = ExtResource("1_kwji5")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_fvoic")
+debug_color = Color(0.84, 0.16799998, 0.82879984, 0.7294118)
 
 [node name="AnimatedSprite3D" type="Sprite3D" parent="."]
 pixel_size = 0.015

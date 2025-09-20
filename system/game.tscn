@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://d3fghnjmt3yp8"]
+[gd_scene load_steps=16 format=3 uid="uid://d3fghnjmt3yp8"]
 
 [ext_resource type="PackedScene" uid="uid://id8hpn1b71f6" path="res://_testing/stages/testing_state_1.tscn" id="1_pjfh2"]
 [ext_resource type="Script" uid="uid://4ax2lruikqyq" path="res://system/game.gd" id="1_uwgih"]
 [ext_resource type="PackedScene" uid="uid://db6dv4pdde6co" path="res://content/player/player.tscn" id="2_g4eph"]
 [ext_resource type="Texture2D" uid="uid://dw34slpm2n76g" path="res://assets/sprites/crosshair_1.png" id="3_aywbb"]
 [ext_resource type="Script" uid="uid://bkbpcrbxsc4gf" path="res://system/hud.gd" id="4_nvi61"]
+[ext_resource type="Script" uid="uid://cip3mcqdx4frc" path="res://system/fps_shower.gd" id="5_gsj3s"]
 [ext_resource type="Script" uid="uid://cfbgio25yma8y" path="res://content/hud/gun_hud.gd" id="5_m0p3p"]
 [ext_resource type="Texture2D" uid="uid://tfbb4f55hnwd" path="res://assets/sprites/heart.png" id="5_t55qc"]
 [ext_resource type="Script" uid="uid://d3wgwrudwcjna" path="res://content/component/pulse.gd" id="5_wvlmy"]
@@ -55,6 +56,16 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 script = ExtResource("4_nvi61")
+
+[node name="FPS" type="Label" parent="HUD"]
+z_index = 3
+layout_mode = 0
+offset_left = 6.0
+offset_top = 78.0
+offset_right = 46.0
+offset_bottom = 101.0
+text = "FPS: "
+script = ExtResource("5_gsj3s")
 
 [node name="Heart" type="Sprite2D" parent="HUD"]
 position = Vector2(39, 37)

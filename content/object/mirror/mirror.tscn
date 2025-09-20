@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3o20k80j856g"]
+
+[ext_resource type="Script" uid="uid://dbcjipvvffwod" path="res://content/object/mirror/mirror.gd" id="1_57dip"]
+[ext_resource type="Texture2D" uid="uid://dkhp57ruaajei" path="res://assets/sprites/objects/mirror_1.png" id="1_rcsys"]
+[ext_resource type="Texture2D" uid="uid://dwh4kn7sj6wl3" path="res://assets/sprites/player_placeholder_1.png" id="2_qwjia"]
+
+[node name="Mirror" type="Node3D"]
+script = ExtResource("1_57dip")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.536067, 0)
+layers = 3
+pixel_size = 0.05
+texture_filter = 0
+texture = ExtResource("1_rcsys")
+
+[node name="PlayerDecal" type="Decal" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.25604343, 1.9909234, -2.8304353)
+size = Vector3(2, 12.281, 4)
+texture_albedo = ExtResource("2_qwjia")
+upper_fade = 0.356762
+lower_fade = 1.1196388
+distance_fade_enabled = true
+cull_mask = 1048574
