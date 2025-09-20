@@ -24,19 +24,19 @@ func _process(delta: float) -> void:
 	wobble_velocity *= pow(1.0 - wobble_damping, delta)
 	if wobble_velocity < 0.001: wobble_velocity = 0.0
 	
-	if time_since_last_shoot() < STATE_INTERVAL:
-		visual_state = 2
-	elif time_since_last_shoot() < STATE_INTERVAL * 2:
-		visual_state = 1
-	elif time_since_last_shoot() < STATE_INTERVAL * 3:
-		visual_state = 2
-	else:
-		visual_state = 0
+	if visual_state != 0:
+		if time_since_last_shoot() < STATE_INTERVAL * abs(visual_state) + 1 and time_since_last_shoot() > STATE_INTERVAL * abs(visual_state):
+			visual_state = move_toward(visual_state, 0, 1)
 
 func get_time() -> float: return Time.get_ticks_msec() / 1000.0
 
 func time_since_last_shoot() -> float:
 	return get_time() - last_shoot
+
+func fail():
+	wobble_velocity = shoot_wobble
+	last_shoot = get_time()
+	visual_state = -2
 
 func shoot():
 	wobble_velocity = shoot_wobble

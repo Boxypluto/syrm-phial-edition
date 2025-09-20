@@ -4,6 +4,8 @@ class_name Player
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var camera: MainCamera = $CameraPivot/PlayerCamera
 
+@onready var sfx_step: AudioStreamPlayer = $SFX/Step
+
 @onready var state_orb: OrbState = $WeaponStates/Orb
 
 var speed: float = 10.0
@@ -22,6 +24,11 @@ const SHOOT_RAY_DISTANCE: float = 128.0
 func _ready() -> void:
 	In.input.connect(input)
 	Rhythm.beats(1, true, -1).connect(func(beats): camera.shake(0.1, 0.1))
+	Rhythm.beats(0.25).connect(try_step)
+
+func try_step(_beat: int = 0):
+	if velocity != Vector3.ZERO and is_on_floor():
+		sfx_step.play()
 
 func get_move_input():
 	return Input.get_vector("Leftward", "Rightward", "Forward", "Backward").rotated(flat_angle)

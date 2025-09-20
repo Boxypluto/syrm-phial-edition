@@ -86,8 +86,10 @@ animation = &"Idle"
 [node name="SFX" type="Node3D" parent="."]
 
 [node name="Thump" type="AudioStreamPlayer3D" parent="SFX"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8607903, 0)
 stream = ExtResource("3_8hb0a")
 volume_db = 0.2
+unit_size = 20.0
 bus = &"SFX"
 script = ExtResource("4_nj8qf")
 musical_seqence = "G-1"

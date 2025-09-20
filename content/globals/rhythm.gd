@@ -20,6 +20,7 @@ enum NOTE {
 
 const STAR_STAR = preload("uid://ndtb3dxwabxb")
 const STRATASPHERE = preload("uid://dk2oc0w5v7mcx")
+const BEYOND_THE_PEDALS = preload("uid://dw4yxu1063bvm")
 
 static func string_to_note_type(string: String) -> NOTE:
 	match string:
@@ -101,7 +102,7 @@ func get_decimal_beat() -> float:
 func _ready():
 	audio_stream_player = AudioStreamPlayer.new()
 	add_child(audio_stream_player)
-	audio_stream_player.stream = STRATASPHERE
+	audio_stream_player.stream = BEYOND_THE_PEDALS
 	audio_stream_player.bus = "Music"
-	bpm = 91
+	bpm = 150
 	audio_stream_player.play()

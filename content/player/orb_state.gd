@@ -8,7 +8,10 @@ class_name OrbState
 var required_beat: float = 1.0
 var leeway: float = 0.2
 
-func weapon_input() -> void:
+func _ready() -> void:
+	Rhythm.beats(1).connect(weapon_input)
+
+func weapon_input(beat: int = 0) -> void:
 	
 	var distance_from_beat: float = distance_from_closest_beat(Rhythm.get_decimal_beat(), required_beat)
 	
@@ -16,6 +19,7 @@ func weapon_input() -> void:
 		attack_action()
 	else:
 		sfx_fail.play_musical(Rhythm.current_beat)
+		Game.HUD.GUN.find_child("Orb").fail()
 
 func distance_from_closest_beat(test_position: float, beat_interval: float):
 	var wrapped_position: float = fmod(test_position, beat_interval)
@@ -33,5 +37,5 @@ func attack_action() -> void:
 	player.particles_from_result(shoot_result, player.camera.SHOOT_POINT_ORB.global_position, 0.7)
 	
 	if shoot_result.hit_hitbox():
-			Freeze.freeze(0.05)
+			#Freeze.freeze(0.05)
 			shoot_result.hit_object.hit.emit()

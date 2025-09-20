@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d3fghnjmt3yp8"]
+[gd_scene load_steps=17 format=3 uid="uid://d3fghnjmt3yp8"]
 
 [ext_resource type="PackedScene" uid="uid://id8hpn1b71f6" path="res://_testing/stages/testing_state_1.tscn" id="1_pjfh2"]
 [ext_resource type="Script" uid="uid://4ax2lruikqyq" path="res://system/game.gd" id="1_uwgih"]
@@ -14,12 +14,14 @@
 [ext_resource type="Texture2D" uid="uid://daswedmdexvkk" path="res://assets/sprites/gun_prototype_3_hand.png" id="7_jt55s"]
 [ext_resource type="Script" uid="uid://dmyk3kebnukm0" path="res://content/hud/orb.gd" id="8_3w5he"]
 [ext_resource type="Texture2D" uid="uid://dqya08esuf38x" path="res://assets/noise/Grainy 4 - 256x256.png" id="9_s0nrn"]
+[ext_resource type="Texture2D" uid="uid://dkdfxhvlvcaxd" path="res://assets/noise/Grainy 11 - 256x256.png" id="12_3af6q"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jt55s"]
 shader = ExtResource("7_fxm5u")
 shader_parameter/bit_shift_scale = 0
 shader_parameter/flash_state = 0
 shader_parameter/noise = ExtResource("9_s0nrn")
+shader_parameter/fail_noise = ExtResource("12_3af6q")
 shader_parameter/noise_scale = 2.575
 
 [node name="Game" type="Node"]
