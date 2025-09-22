@@ -20,4 +20,4 @@ func on_hit_by_body(other: Node3D) -> void:
 	pass
 
 func on_hit(other: Node3D) -> void:
-	pass
+	hit.emit()

@@ -9,7 +9,8 @@ var required_beat: float = 1.0
 var leeway: float = 0.2
 
 func _ready() -> void:
-	Rhythm.beats(1).connect(weapon_input)
+	pass
+	#Rhythm.beats(1).connect(weapon_input)
 
 func weapon_input(beat: int = 0) -> void:
 	

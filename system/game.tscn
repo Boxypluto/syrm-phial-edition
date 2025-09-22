@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://d3fghnjmt3yp8"]
+[gd_scene load_steps=22 format=3 uid="uid://d3fghnjmt3yp8"]
 
 [ext_resource type="PackedScene" uid="uid://id8hpn1b71f6" path="res://_testing/stages/testing_state_1.tscn" id="1_pjfh2"]
 [ext_resource type="Script" uid="uid://4ax2lruikqyq" path="res://system/game.gd" id="1_uwgih"]
@@ -15,6 +15,10 @@
 [ext_resource type="Script" uid="uid://dmyk3kebnukm0" path="res://content/hud/orb.gd" id="8_3w5he"]
 [ext_resource type="Texture2D" uid="uid://dqya08esuf38x" path="res://assets/noise/Grainy 4 - 256x256.png" id="9_s0nrn"]
 [ext_resource type="Texture2D" uid="uid://dkdfxhvlvcaxd" path="res://assets/noise/Grainy 11 - 256x256.png" id="12_3af6q"]
+[ext_resource type="Shader" uid="uid://r260rc35qbus" path="res://assets/shaders/harm.gdshader" id="16_h06sq"]
+[ext_resource type="Texture2D" uid="uid://cgo8hj3dved7q" path="res://assets/sprites/hurt.png" id="16_hxy0c"]
+[ext_resource type="Texture2D" uid="uid://ci5dpoyt1v74x" path="res://assets/noise/Milky 1 - 256x256.png" id="17_8mfh0"]
+[ext_resource type="Script" uid="uid://8p31pkl0wuf8" path="res://content/player/hurt.gd" id="19_m3agx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jt55s"]
 shader = ExtResource("7_fxm5u")
@@ -23,6 +27,10 @@ shader_parameter/flash_state = 0
 shader_parameter/noise = ExtResource("9_s0nrn")
 shader_parameter/fail_noise = ExtResource("12_3af6q")
 shader_parameter/noise_scale = 2.575
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8mfh0"]
+shader = ExtResource("16_h06sq")
+shader_parameter/noise_1 = ExtResource("17_8mfh0")
 
 [node name="Game" type="Node"]
 script = ExtResource("1_uwgih")
@@ -107,3 +115,23 @@ material = SubResource("ShaderMaterial_jt55s")
 position = Vector2(39, 1)
 texture = ExtResource("6_nvi61")
 script = ExtResource("8_3w5he")
+
+[node name="Hurt" type="TextureRect" parent="HUD"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_8mfh0")
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+texture = ExtResource("16_hxy0c")
+script = ExtResource("19_m3agx")
+
+[node name="Hurt" type="TextureRect" parent="HUD/Hurt"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_8mfh0")
+layout_mode = 0
+offset_left = 583.5341
+offset_top = 534.3698
+offset_right = 1277.7676
+offset_bottom = 1073.4604
+rotation = -2.8905985
+texture = ExtResource("16_hxy0c")

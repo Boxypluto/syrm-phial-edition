@@ -8,6 +8,9 @@ var shake_interval: Timer = Timer.new()
 
 const SHAKE_INTERVAL_TIME: float = 0.05
 var shake_amount: float = 0.0
+var rotation_goal: float = 0.0
+var base_fov: float = 75
+var fov_goal: float = 0.0
 
 func _ready() -> void:
 	shake_timer.one_shot = true
@@ -18,6 +21,10 @@ func _ready() -> void:
 	
 	shake_timer.timeout.connect(stop_shake)
 	shake_interval.timeout.connect(interval_shake)
+
+func _process(delta: float) -> void:
+	rotation.z = rotate_toward(rotation.z, rotation_goal, delta * 10.0)
+	fov = move_toward(fov, base_fov + fov_goal, delta * 100.0)
 
 func shake(time: float, amount: float):
 	shake_amount = amount

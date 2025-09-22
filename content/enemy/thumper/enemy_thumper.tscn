@@ -92,7 +92,7 @@ volume_db = 0.2
 unit_size = 20.0
 bus = &"SFX"
 script = ExtResource("4_nj8qf")
-musical_seqence = "G-1"
+musical_seqence = "D-1"
 metadata/_custom_type_script = "uid://c2ndi6ftfs5m4"
 
 [node name="ShockwavePoint" type="Marker3D" parent="."]

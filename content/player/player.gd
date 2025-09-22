@@ -39,6 +39,8 @@ func _physics_process(delta: float) -> void:
 	gravity_process(delta)
 	jump_process(delta)
 	
+	camera_process(delta)
+	
 	move_and_slide()
 
 func input(event: InputEvent) -> void:
@@ -65,7 +67,9 @@ func jump_process(_delta: float):
 		velocity.y = jump_strength
 
 func camera_process(_delta):
-	pass
+	
+	var input: Vector2 = Input.get_vector("Leftward", "Rightward", "Forward", "Backward").normalized()
+	camera.rotation_goal = -input.x * 0.01
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Shoot"):
@@ -125,3 +129,8 @@ func draw_shot_particles(start: Vector3, end: Vector3, interval: float = 0.2, st
 		var particle: ParticleOrb = ParticleOrb.spawn()
 		particle.global_position = direction * current_distance + start
 		current_distance += interval
+
+func on_hit() -> void:
+	Game.HUD.HURT.do_effect()
+	camera.shake(0.4, 0.4)
+	#Freeze.freeze(0.2)

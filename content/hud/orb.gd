@@ -26,7 +26,7 @@ func _process(delta: float) -> void:
 	
 	if visual_state != 0:
 		if time_since_last_shoot() < STATE_INTERVAL * abs(visual_state) + 1 and time_since_last_shoot() > STATE_INTERVAL * abs(visual_state):
-			visual_state = move_toward(visual_state, 0, 1)
+			visual_state = int(move_toward(visual_state, 0, 1))
 
 func get_time() -> float: return Time.get_ticks_msec() / 1000.0
 
