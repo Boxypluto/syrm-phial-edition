@@ -3,17 +3,15 @@ class_name Note
 
 var note: NOTE
 var octave: int = 0
-var length_in_beats: float
 var pitch_scale: float:
 	get():
 		return pitch_scale_from_c(note, octave)
 
 const NOTE_LETTERS: PackedStringArray = ["A", "B", "C", "D", "E", "F", "G", "-"]
 
-func _init(_note: NOTE, _octave: int, _length_in_beats: float) -> void:
+func _init(_note: NOTE, _octave: int) -> void:
 	note = _note
 	octave = _octave
-	length_in_beats = _length_in_beats
 
 func is_rest() -> bool:
 	return note == Rhythm.NOTE.REST
@@ -82,13 +80,13 @@ static func build(note_string: String) -> Note:
 	assert(note_string.substr(0, 1) in NOTE_LETTERS, "Instruction: \"" + note_string + "\" does not start with a Note Letter! Must be in: " + str(NOTE_LETTERS))
 	
 	if note_string.length() == 1:
-		return Note.new(string_to_note_type(note_string), 0, 1)
+		return Note.new(string_to_note_type(note_string), 0)
 	if note_string.length() == 2 and note_string.substr(1, 1) == "#":
-		return Note.new(string_to_note_type(note_string), 0, 1)
+		return Note.new(string_to_note_type(note_string), 0)
 		
 	var sharp_offset: int = 0
 	if note_string.substr(1, 1) == "#": sharp_offset = 1
 	
 	assert(note_string.substr(1 + sharp_offset).is_valid_int(), "The octave of: " + note_string + " is not an integer!")
 	var octave: int = note_string.substr(1 + sharp_offset).to_int()
-	return Note.new(string_to_note_type(note_string.substr(0, 1 + sharp_offset)), octave, 1)
+	return Note.new(string_to_note_type(note_string.substr(0, 1 + sharp_offset)), octave)

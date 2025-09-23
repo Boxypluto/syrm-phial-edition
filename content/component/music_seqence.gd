@@ -1,23 +1,34 @@
 extends Resource
-class_name MusicalSeqence
+class_name Seqence
 
-var sequence_string: String = ""
-@export var sequence: Array[Note]
-@export var base_beat: float = 1.0
+const PATTERN_REGEX: String = "(?<repitition>\\d*)(?<pattern>\\[(?:(?:[^][]*|(?R))*)\\])"
+const NOTE_REGEX: String = "[A-G]((?<=[ACDFG])#)?\\d*|S"
+const TRIM_EXTRA_SPACE_REGEX = "(?<= )\\s+|\\v+|( +$)|(^ +)"
+const MULTIPLIER_REGEX: String = "^x(\\d+\\.?\\d*|\\.\\d+)"
 
-func _init() -> void:
+static var patterns: RegEx = RegEx.create_from_string(PATTERN_REGEX)
+static var notes: RegEx = RegEx.create_from_string(NOTE_REGEX)
+static var trimmed: RegEx = RegEx.create_from_string(TRIM_EXTRA_SPACE_REGEX)
+static var multiplier: RegEx = RegEx.create_from_string(MULTIPLIER_REGEX)
+
+var tracks: int
+
+class Instruction:
+	var length: float 
+	var note: Note
+
+static func build(seqences: Array[String]):
+	var sequence: Seqence = Seqence.new()
+	sequence.tracks = seqences.size()
+
+static var example = "x0.5 A B C 3[A B] [A B C] [E A# [D# C [B C C A C] [A A A]]]"
+static var digits: PackedStringArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
+class SequencePart:
 	pass
-	
-func add_note(note: Note):
-	sequence.append(note)
 
-func get_current_note(current_beat: float):
-	return sequence.get(int(fmod(current_beat / base_beat, sequence.size())))
-
-static func build(seqence_string: String, base_beat: float = 1.0) -> MusicalSeqence:
-	var instructions: PackedStringArray = seqence_string.split(" ")
-	var sequence: MusicalSeqence = MusicalSeqence.new()
-	sequence.base_beat = base_beat
-	for instruction: String in instructions:
-		sequence.add_note(Note.build(instruction))
-	return sequence
+static func _build_single(seqence_string: String):
+	var multiplier_match: PackedStringArray = multiplier.search(seqence_string).strings
+	var multiplier_number: float = multiplier.search(seqence_string).strings[0].substr(1).to_float() if not multiplier_match.is_empty() else 1.0
+	var cleaned: String = trimmed.sub(seqence_string, "", true)
+	print(multiplier_number)
