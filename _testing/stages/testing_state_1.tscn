@@ -114,9 +114,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.68673, 2.1306407, -1.0113
 
 [node name="EnemySliz" parent="." instance=ExtResource("2_tg611")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.18352, -0.034668088, -5.448514)
+string_sequence = "G - G -"
 
 [node name="EnemySliz2" parent="." instance=ExtResource("2_tg611")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.18352, -0.034668088, -2.2595997)
+string_sequence = "- D1 A2  -"
 beat_offset = 1
 
 [node name="SUN" type="Sprite3D" parent="."]
@@ -143,6 +145,7 @@ light_color = Color(0.79980797, 0.5855885, 0.24046287, 1)
 
 [node name="EnemyThumper" parent="." instance=ExtResource("8_437mv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9617424, 1.0177407, 5.6899214)
+string_sequence = "A-1 - - -"
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, -2.0590634, 4.6680365, 4.8867335)

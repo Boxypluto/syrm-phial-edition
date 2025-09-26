@@ -5,7 +5,7 @@ var in_octave_scaling: float = 1.0
 var octave: int = 0
 var pitch_scale: float:
 	get():
-		return in_octave_scaling * (2 ** octave)
+		return in_octave_scaling * (2.0 ** octave)
 
 const NOTE_LETTERS: PackedStringArray = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"]
 
@@ -19,7 +19,7 @@ static func letter_to_scaling(note_letter: String):
 	
 	const NOTE_CONVERSION = 1.0595
 	
-	var scaling_operand: int = -2
+	var scaling_operand: int = -3
 	
 	for letter in NOTE_LETTERS:
 		if note_letter == letter:

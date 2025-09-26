@@ -79,6 +79,8 @@ script = ExtResource("1_48y4t")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1700997, 0)
 pixel_size = 0.05
 billboard = 2
+shaded = true
+alpha_cut = 2
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_a2u33")
 animation = &"Idle"
@@ -89,10 +91,8 @@ animation = &"Idle"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8607903, 0)
 stream = ExtResource("3_8hb0a")
 volume_db = 0.2
-unit_size = 20.0
 bus = &"SFX"
 script = ExtResource("4_nj8qf")
-musical_seqence = "D-1"
 metadata/_custom_type_script = "uid://c2ndi6ftfs5m4"
 
 [node name="ShockwavePoint" type="Marker3D" parent="."]
@@ -110,6 +110,7 @@ debug_color = Color(0.61, 0.5388333, 0, 0.6627451)
 [node name="HitEffect" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 1.9947944, 0)
 pixel_size = 0.05
+shaded = true
 script = ExtResource("6_d52oe")
 metadata/_custom_type_script = "uid://5t0i5fcvv63q"
 

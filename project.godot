@@ -26,6 +26,7 @@ Rhythm="*res://content/globals/rhythm.gd"
 
 window/size/viewport_width=640
 window/size/viewport_height=360
+window/size/mode=4
 window/stretch/mode="canvas_items"
 
 [dotnet]
@@ -86,6 +87,7 @@ Secondary={
 
 [layer_names]
 
+3d_render/layer_3="2D Sprite"
 3d_physics/layer_2="Enemy"
 3d_physics/layer_3="Player"
 3d_physics/layer_4="HurtsPlayer"

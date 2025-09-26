@@ -74,6 +74,8 @@ script = ExtResource("2_7aqgi")
 offset = Vector2(0, 32)
 pixel_size = 0.05
 billboard = 2
+shaded = true
+alpha_cut = 2
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_monnn")
 animation = &"Pulse"
@@ -108,11 +110,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3673115, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4038804, 0)
 stream = ExtResource("7_dufm4")
 volume_db = 0.2
-unit_size = 5.0
-max_distance = 50.0
 bus = &"SFX"
 script = ExtResource("6_monnn")
-musical_seqence = "G-1 D A1 A1"
 
 [node name="HitBox" type="Area3D" parent="."]
 script = ExtResource("9_1qq75")
@@ -126,6 +125,7 @@ debug_color = Color(0.61, 0.5388333, 0, 0.654902)
 [node name="HitEffect" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2008255, 0)
 pixel_size = 0.05
+shaded = true
 script = ExtResource("10_dufm4")
 metadata/_custom_type_script = "uid://5t0i5fcvv63q"
 

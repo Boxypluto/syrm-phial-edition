@@ -1,0 +1,230 @@
+[gd_scene load_steps=14 format=3 uid="uid://cjafvcx1lqj1o"]
+
+[ext_resource type="Shader" uid="uid://c5u0e373tvinu" path="res://assets/shaders/lighting_triplanar.gdshader" id="1_4ev5u"]
+[ext_resource type="Texture2D" uid="uid://bgrus0lj87hoe" path="res://assets/textures/sky_1.png" id="1_x7ily"]
+[ext_resource type="Script" uid="uid://dfswjeqxsapcg" path="res://content/levels/stratosphere/spinning_sun.gd" id="1_xf58e"]
+[ext_resource type="PackedScene" uid="uid://t32q8ffi1g5f" path="res://content/object/target/target.tscn" id="3_ttabb"]
+[ext_resource type="Texture2D" uid="uid://742jkup3wi6h" path="res://assets/textures/sway_1.png" id="3_xf58e"]
+[ext_resource type="Texture2D" uid="uid://c7h1cnr87d4wx" path="res://assets/textures/sway_1_normal.png" id="4_x7ily"]
+[ext_resource type="PackedScene" uid="uid://cmxvrvtkghl04" path="res://content/enemy/sliz/enemy_sliz.tscn" id="5_3ouov"]
+[ext_resource type="PackedScene" uid="uid://dntwirrcck4k4" path="res://content/enemy/thumper/enemy_thumper.tscn" id="6_2q1ge"]
+
+[sub_resource type="Shader" id="Shader_xf58e"]
+code = "
+// NOTE: Shader automatically converted from Godot Engine 4.5.stable.mono's ProceduralSkyMaterial.
+
+shader_type sky;
+render_mode use_debanding;
+
+uniform vec4 sky_top_color : source_color = vec4(0.385, 0.454, 0.55, 1.0);
+uniform vec4 sky_horizon_color : source_color = vec4(0.646, 0.656, 0.67, 1.0);
+uniform float inv_sky_curve : hint_range(1, 100) = 4.0;
+uniform vec4 ground_bottom_color : source_color = vec4(0.2, 0.169, 0.133, 1.0);
+uniform vec4 ground_horizon_color : source_color = vec4(0.646, 0.656, 0.67, 1.0);
+uniform float inv_ground_curve : hint_range(1, 100) = 30.0;
+uniform float sun_angle_max = 0.877;
+uniform float inv_sun_curve : hint_range(1, 100) = 22.78;
+uniform float exposure : hint_range(0, 128) = 1.0;
+
+uniform sampler2D sky_cover : filter_linear, source_color, hint_default_black;
+uniform vec4 sky_cover_modulate : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+
+uniform sampler2D source_panorama : filter_linear, source_color, hint_default_black;
+
+vec3 round_interval(vec3 value, float interval) {
+	return interval * round(value / interval);
+}
+
+void sky() {
+	float v_angle = clamp(EYEDIR.y, -1.0, 1.0);
+	vec3 sky = mix(sky_top_color.rgb, sky_horizon_color.rgb, clamp(pow(1.0 - v_angle, inv_sky_curve), 0.0, 1.0));
+	sky = vec3(0.0);
+	
+	if (LIGHT0_ENABLED) {
+		float sun_angle = dot(LIGHT0_DIRECTION, EYEDIR);
+		float sun_size = cos(LIGHT0_SIZE);
+		if (sun_angle > sun_size) {
+			sky = LIGHT0_COLOR * LIGHT0_ENERGY;
+		} else if (sun_angle > sun_angle_max) {
+			float c2 = (sun_size - sun_angle) / (sun_size - sun_angle_max);
+			sky = round_interval(mix(sky, vec3(0.5) * LIGHT0_ENERGY, clamp(pow(1.0 - c2, inv_sun_curve), 0.0, 5.0)), 1.3) * LIGHT0_COLOR;
+		}
+	}
+	
+	vec3 ground = mix(ground_bottom_color.rgb, ground_horizon_color.rgb, clamp(pow(1.0 + v_angle, inv_ground_curve), 0.0, 1.0));
+
+	vec3 sky_mask = vec3(EYEDIR.y + 0.4);
+	COLOR = texture(source_panorama, SKY_COORDS / 0.05).rgb;
+	COLOR *= sky_mask.r;
+	COLOR = mix(COLOR, sky, 0.5);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x7ily"]
+shader = SubResource("Shader_xf58e")
+shader_parameter/sky_top_color = Color(0, 0, 0, 1)
+shader_parameter/sky_horizon_color = Color(0.24677703, 0.31827024, 0.3581121, 1)
+shader_parameter/inv_sky_curve = 53.817603372979754
+shader_parameter/ground_bottom_color = Color(0.14188078, 0.23950979, 0.2974768, 1)
+shader_parameter/ground_horizon_color = Color(0.29452497, 0.449161, 0.5225303, 1)
+shader_parameter/inv_ground_curve = 30.0
+shader_parameter/sun_angle_max = 0.877
+shader_parameter/inv_sun_curve = 22.78
+shader_parameter/exposure = 1.0
+shader_parameter/sky_cover_modulate = Color(1, 1, 1, 1)
+shader_parameter/source_panorama = ExtResource("1_x7ily")
+
+[sub_resource type="Sky" id="Sky_2q1ge"]
+sky_material = SubResource("ShaderMaterial_x7ily")
+
+[sub_resource type="Environment" id="Environment_xf58e"]
+background_mode = 2
+sky = SubResource("Sky_2q1ge")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.03
+reflected_light_source = 1
+tonemap_mode = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xyij1"]
+render_priority = 0
+shader = ExtResource("1_4ev5u")
+shader_parameter/albedo = ExtResource("3_xf58e")
+shader_parameter/normal_map = ExtResource("4_x7ily")
+shader_parameter/normal_strength = -1.0
+shader_parameter/modulate = Color(1, 1, 1, 1)
+shader_parameter/uv1_scale = Vector3(0.3, 0.3, 0.3)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/uv1_blend_sharpness = 1.0000000475
+shader_parameter/uv2_blend_sharpness = 1.0000000475
+
+[node name="LevelStratosphere" type="Node3D"]
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(-0.93791366, -0.2722347, -0.21495616, -0.3442309, 0.80679023, 0.4802028, 0.042696696, 0.5243832, -0.85041124, 0, 0, 0)
+visible = false
+light_color = Color(0.19281086, 0.62777716, 0.6803906, 1)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_xf58e")
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(0.47383004, -0.7052709, 0.527331, -0.84059185, -0.5407145, 0.032138407, 0.2624693, -0.45849836, -0.84905183, 0, 0, 0)
+visible = false
+light_color = Color(0.7361224, 0.24935144, 0.08848297, 1)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(0.47383004, -0.7052709, 0.527331, -0.84059185, -0.5407145, 0.032138407, 0.2624693, -0.45849836, -0.84905183, 0, 0, 0)
+light_color = Color(0.8889994, 0.77772504, 0.68865347, 1)
+light_energy = 2.0
+shadow_enabled = true
+script = ExtResource("1_xf58e")
+speed = 1.0
+
+[node name="Decor" type="Node3D" parent="."]
+
+[node name="Collision" type="Node3D" parent="."]
+
+[node name="BigRock" type="CSGCombiner3D" parent="Collision"]
+material_override = SubResource("ShaderMaterial_xyij1")
+use_collision = true
+collision_mask = 0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Collision/BigRock"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0267944, -1.5761719, -3.6713867)
+size = Vector3(10.224731, 4.1523438, 20.847168)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.637806, 3.7312884, 0)
+radius = 15.385
+radial_segments = 39
+rings = 20
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(3.445469, 0, 0, 0, 1, 0, 0, 0, 3.0772758, 7.58152, -8.645678, -25.8653)
+radius = 11.782903
+radial_segments = 39
+rings = 20
+
+[node name="CSGSphere3D3" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(2.1885235, 0.77235675, 0, -2.6611314, 0.63518894, 0, 0, 0, 3.0772755, -8.3968315, -8.645681, -34.116936)
+radius = 11.782903
+radial_segments = 39
+rings = 20
+
+[node name="CSGSphere3D4" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(-2.0141313, 1.2828556, 0, -7.306279, -0.3536463, 0, 0, 0, 3.0772753, 6.0776043, -0.36348343, -26.852322)
+radius = 1.5136555
+radial_segments = 39
+rings = 20
+
+[node name="CSGSphere3D5" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(0.46912986, -0.29880172, -2.992638, -7.3062787, -0.35364628, 0, -1.9587346, 1.247572, -0.71675646, 18.345222, -0.36348343, -10.796215)
+radius = 1.9758277
+radial_segments = 39
+rings = 20
+
+[node name="CSGSphere3D5" type="CSGSphere3D" parent="Collision/BigRock/CSGSphere3D5"]
+transform = Transform3D(0.46912974, -0.2988016, -2.992638, -7.3062787, -0.35364577, 4.7683716e-07, -1.9587346, 1.2475718, -0.7167562, 4.5356503, -2.9214468, 0.12311649)
+operation = 2
+radius = 1.9758277
+radial_segments = 39
+rings = 20
+
+[node name="Lights" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5951967, 1.9593372, 1.4727612)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0776668, 3.3125563, -28.674784)
+light_color = Color(0.9983776, 0.76576793, 0.5460691, 1)
+light_energy = 2.856
+omni_range = 8.192353
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1965601, 3.3125558, 5.9960766)
+light_color = Color(0.9983776, 0.76576793, 0.5460691, 1)
+light_energy = 2.856
+omni_range = 8.192353
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.51049, 3.3869581, -26.478615)
+light_color = Color(0.9999997, 0.8376894, 0.5886299, 1)
+light_energy = 2.856
+omni_range = 8.192353
+
+[node name="Objects" type="Node3D" parent="."]
+
+[node name="Target" parent="Objects" instance=ExtResource("3_ttabb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.04873, 5.7148747, -29.297096)
+
+[node name="Target2" parent="Objects" instance=ExtResource("3_ttabb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.196209, 4.2419047, -18.339231)
+
+[node name="Target3" parent="Objects" instance=ExtResource("3_ttabb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7275114, 8.636433, -38.9564)
+
+[node name="Target4" parent="Objects" instance=ExtResource("3_ttabb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.631683, 12.55948, -27.46986)
+
+[node name="Enemies" type="Node3D" parent="."]
+
+[node name="EnemySliz" parent="Enemies" instance=ExtResource("5_3ouov")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13915253, 2.5904946, -18.41631)
+string_sequence = "G - G -"
+
+[node name="EnemySliz2" parent="Enemies" instance=ExtResource("5_3ouov")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.126311, 2.758029, -20.710972)
+string_sequence = "- D1 A2  -"
+beat_offset = 1
+
+[node name="EnemyThumper" parent="Enemies" instance=ExtResource("6_2q1ge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.824179, 1.9497705, -36.70472)
+string_sequence = "G-1 - - -"

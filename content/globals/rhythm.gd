@@ -18,7 +18,7 @@ func _ready():
 	if Engine.is_editor_hint(): return
 	audio_stream_player = AudioStreamPlayer.new()
 	add_child(audio_stream_player)
-	audio_stream_player.stream = BEYOND_THE_PEDALS
+	audio_stream_player.stream = STRATASPHERE
 	audio_stream_player.bus = "Music"
-	bpm = 150
+	bpm = 91
 	audio_stream_player.play()

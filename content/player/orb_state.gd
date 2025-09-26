@@ -5,6 +5,9 @@ class_name OrbState
 @onready var sfx_shoot: MusicalAudioGlobal = $"../../SFX/Orb/Shoot"
 @onready var sfx_fail: MusicalAudioGlobal = $"../../SFX/Orb/Fail"
 
+@export var string_sequence: String
+@onready var sequence: Seqence = Seqence.build([string_sequence])
+
 var required_beat: float = 1.0
 var leeway: float = 0.2
 
@@ -19,7 +22,8 @@ func weapon_input(beat: int = 0) -> void:
 	if distance_from_beat <= leeway:
 		attack_action()
 	else:
-		sfx_fail.play_musical(Rhythm.current_beat)
+		var note: Note = sequence.next(Rhythm.current_beat - leeway, 0).note
+		sfx_fail.play()
 		Game.HUD.GUN.find_child("Orb").fail()
 
 func distance_from_closest_beat(test_position: float, beat_interval: float):
@@ -31,7 +35,8 @@ func attack_action() -> void:
 	
 	var shoot_result: Player.ShootResult = player.shoot_forward()
 	
-	sfx_shoot.play_musical(Rhythm.current_beat)
+	var note: Note = sequence.next(Rhythm.current_beat, 0).note
+	sfx_shoot.play_note(note)
 	Game.HUD.GUN.shoot()
 	if player.is_on_floor():
 		player.camera.shake(0.2, 0.1)

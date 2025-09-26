@@ -14,11 +14,15 @@ script = ExtResource("1_fwu42")
 
 [node name="HitEffect" type="AnimatedSprite3D" parent="."]
 pixel_size = 0.05
+shaded = true
+alpha_cut = 2
 script = ExtResource("2_7impc")
 metadata/_custom_type_script = "uid://5t0i5fcvv63q"
 
 [node name="TargetSpinner" type="Sprite3D" parent="."]
 pixel_size = 0.05
+shaded = true
+alpha_cut = 2
 texture_filter = 0
 texture = ExtResource("2_lxcfl")
 
@@ -34,6 +38,8 @@ shape = SubResource("SphereShape3D_lxcfl")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7211046, 0)
 pixel_size = 0.05
 billboard = 2
+shaded = true
+alpha_cut = 2
 texture_filter = 0
 texture = ExtResource("5_m457s")
 
@@ -43,6 +49,8 @@ flip_h = true
 flip_v = true
 pixel_size = 0.05
 billboard = 2
+shaded = true
+alpha_cut = 2
 texture_filter = 0
 texture = ExtResource("5_m457s")
 
