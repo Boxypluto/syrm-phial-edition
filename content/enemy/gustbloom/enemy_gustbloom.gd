@@ -4,6 +4,10 @@ class_name EnemyGustbloom
 @onready var vertical_gusts_node: Node3D = $VerticalGusts
 @onready var spiral_gusts_node: Node3D = $SpiralGusts
 
+@onready var spiral: MusicalAudio3D = $SFX/Spiral
+
+@export var sequence: Seqence
+
 const GUST = preload("uid://ca4tm6hy5mb31")
 
 var spiral_count: int = 3
@@ -14,7 +18,8 @@ var sprial_rotation_speed: float = 1.5
 
 var spiral_gusts_seperation: float = 2.0
 var spiral_y_position: float = 1.0
-var spiral_drag: float = 0.1
+var spiral_movement_base: float = 0.1
+var spiral_drag: float = 0.75
 
 var vertical_gusts_seperation: float = 2.7
 var veritcal_gusts_y_position: float = 4.0
@@ -28,7 +33,7 @@ var spirals_rotations: Array[float]
 
 func _ready() -> void:
 	
-	spirals_rotations.resize(spiral_count)
+	spirals_rotations.resize(spiral_gust_count)
 	
 	for spiral_index in range(spiral_count):
 		spirals.append([])
@@ -52,22 +57,31 @@ func _ready() -> void:
 	
 	for gust in all_gusts:
 		gust.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_INHERIT
+	
+	sequence.setup_exported()
+	sequence.tracks[0].note_played.connect(func(_a, _b, _c): spin_spirals())
 
 func _physics_process(delta: float) -> void:
-	
-	spirals_rotation += delta * sprial_rotation_speed
 	
 	position_sprials()
 	#position_verticals()
 
+func spin_spirals():
+	print("SPIN")
+	spiral.play_note(sequence.next(Rhythm.current_position / Rhythm.beat_length).note)
+	spirals_rotation += (1.0 / spiral_count) * PI
+
 func position_sprials():
+	
+	for layer_index in range(spirals_rotations.size()):
+		spirals_rotations[layer_index] = lerpf(spirals_rotations[layer_index], spirals_rotation, spiral_movement_base * spiral_drag**(1 + layer_index))
+	
 	for spiral_index: int in range(spiral_count):
 		var rotation_offset: float = (float(spiral_index) / spiral_count) * TAU
-		print(rotation_offset)
 		
 		for gust_index: int in range(spiral_gust_count):
 			var gust: Node3D = spirals[spiral_index][gust_index]
-			var gust_rotation: float = spirals_rotation + rotation_offset - spiral_drag * gust_index
+			var gust_rotation: float = spirals_rotations[gust_index] + rotation_offset
 			var normalized_position: Vector3 = Vector3(cos(gust_rotation), 0, sin(gust_rotation))
 			gust.position = normalized_position * (spiral_gusts_seperation * (gust_index + 1)) + Vector3(0, spiral_y_position, 0)
 

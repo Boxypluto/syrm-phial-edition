@@ -244,4 +244,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.824179, 1.9497705, -36.704
 string_sequence = "G-1 - - -"
 
 [node name="EnemyGustbloom" parent="Enemies" instance=ExtResource("9_5ao7f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1769695, 1.9813738, -42.281982)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5712104, 2.3587384, -38.93832)

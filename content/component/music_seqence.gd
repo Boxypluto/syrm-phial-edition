@@ -29,6 +29,7 @@ func setup_exported() -> void:
 	build(sequence_strings, exported_include_signal, self)
 
 func next(current_beat: float, track_index: int = 0) -> NoteInfo:
+	current_beat = current_beat - 1.0
 	var beat: float = fmod(current_beat, length)
 	var current_pattern_start: float = current_beat - beat
 	var track: Track = tracks[track_index]

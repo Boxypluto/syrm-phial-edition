@@ -1,8 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://cop7xblcpkud5"]
+[gd_scene load_steps=10 format=3 uid="uid://cop7xblcpkud5"]
 
 [ext_resource type="Script" uid="uid://fb8rciqakfyc" path="res://content/enemy/gustbloom/enemy_gustbloom.gd" id="1_3j7qb"]
 [ext_resource type="Texture2D" uid="uid://c84nflhkhabes" path="res://assets/sprites/enemy/swirler.png" id="1_mtd4w"]
 [ext_resource type="Script" uid="uid://bog6bqfmnioad" path="res://multi_scripts/hit_box.gd" id="2_3j7qb"]
+[ext_resource type="Script" uid="uid://bsnc4lbnm1xpd" path="res://content/component/music_seqence.gd" id="2_arrbo"]
+[ext_resource type="AudioStream" uid="uid://bofs1hoigyij1" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_gustbloom_spiral.wav" id="5_m44sh"]
+[ext_resource type="Script" uid="uid://c2ndi6ftfs5m4" path="res://content/component/musical_audio_3d.gd" id="6_sjby7"]
+
+[sub_resource type="Resource" id="Resource_v4krv"]
+script = ExtResource("2_arrbo")
+sequence_strings = Array[String](["A1- G - A1- D -"])
+exported_include_signal = true
+metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tlyem"]
 radius = 0.9711914
@@ -14,6 +23,7 @@ radius = 1.1206055
 
 [node name="EnemyGustbloom" type="Node3D"]
 script = ExtResource("1_3j7qb")
+sequence = SubResource("Resource_v4krv")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5881426, 0)
@@ -38,3 +48,14 @@ debug_color = Color(0.7987184, 0.044899873, 0.99999994, 0.41960785)
 [node name="VerticalGusts" type="Node3D" parent="."]
 
 [node name="SpiralGusts" type="Node3D" parent="."]
+
+[node name="SFX" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0279992, -4.746648, -2.826631)
+
+[node name="Spiral" type="AudioStreamPlayer3D" parent="SFX"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8967042, 0)
+stream = ExtResource("5_m44sh")
+unit_size = 20.0
+bus = &"SFX"
+script = ExtResource("6_sjby7")
+metadata/_custom_type_script = "uid://c2ndi6ftfs5m4"
