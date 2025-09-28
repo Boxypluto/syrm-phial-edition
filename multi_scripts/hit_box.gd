@@ -1,7 +1,7 @@
 extends Area3D
 class_name HitBox
 
-signal hit()
+signal hit(damage: float)
 
 func _init() -> void:
 	area_entered.connect(on_hit_by_area)
@@ -20,4 +20,7 @@ func on_hit_by_body(other: Node3D) -> void:
 	pass
 
 func on_hit(other: Node3D) -> void:
-	hit.emit()
+	pass
+
+func on_hurt(damage: float):
+	hit.emit(damage)

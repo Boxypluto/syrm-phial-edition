@@ -45,3 +45,6 @@ func spawn_shockwave():
 	shockwave.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	shockwave.global_position = shockwave_point.global_position
 	shockwave.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_INHERIT
+
+func kill() -> void:
+	queue_free()

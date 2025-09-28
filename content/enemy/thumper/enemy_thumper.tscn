@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://dntwirrcck4k4"]
+[gd_scene load_steps=16 format=3 uid="uid://dntwirrcck4k4"]
 
 [ext_resource type="Script" uid="uid://du3knkfan8rhq" path="res://content/enemy/thumper/enemy_thumper.gd" id="1_48y4t"]
 [ext_resource type="Texture2D" uid="uid://dgeiemkj3calr" path="res://assets/sprites/enemy/thumper.png" id="1_viq1k"]
+[ext_resource type="Script" uid="uid://cvdxyomux8pmi" path="res://content/component/health.gd" id="2_np4s2"]
 [ext_resource type="AudioStream" uid="uid://bgatqyvsxdvqq" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_thumer_attack.wav" id="3_8hb0a"]
 [ext_resource type="Script" uid="uid://c2ndi6ftfs5m4" path="res://content/component/musical_audio_3d.gd" id="4_nj8qf"]
 [ext_resource type="Script" uid="uid://bog6bqfmnioad" path="res://multi_scripts/hit_box.gd" id="5_nj8qf"]
@@ -75,6 +76,12 @@ height = 3.727539
 [node name="EnemyThumper" type="Node3D"]
 script = ExtResource("1_48y4t")
 
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_np4s2")
+current_health = 12.0
+max_health = 12.0
+metadata/_custom_type_script = "uid://cvdxyomux8pmi"
+
 [node name="Animation" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1700997, 0)
 pixel_size = 0.05
@@ -114,4 +121,6 @@ shaded = true
 script = ExtResource("6_d52oe")
 metadata/_custom_type_script = "uid://5t0i5fcvv63q"
 
+[connection signal="on_damaged_zero" from="Health" to="." method="kill"]
 [connection signal="hit" from="HitBox" to="HitEffect" method="do_effect"]
+[connection signal="hit" from="HitBox" to="Health" method="damage"]

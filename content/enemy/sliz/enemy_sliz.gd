@@ -3,6 +3,7 @@ class_name EnemySliz
 
 @onready var animation: AnimatedSprite3D = $Animation
 @onready var shoot_point: Marker3D = $ShootPoint
+@onready var health: Health = $Health
 
 @onready var sfx_shoot: MusicalAudio3D = $SFX/Shoot
 
@@ -10,6 +11,7 @@ class_name EnemySliz
 @onready var sequence: Seqence = Seqence.build([string_sequence], true)
 @export var beat_offset: int = 0
 @export var shoot_velocity: float = 5.0
+
 var target: Node3D
 
 signal beat_action(beat: float)
@@ -37,3 +39,6 @@ func on_hit() -> void:
 	animation.flip_h = randf() < 0.5
 	animation.frame = 0
 	animation.play("Pulse")
+
+func kill():
+	queue_free()

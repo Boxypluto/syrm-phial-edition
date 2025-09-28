@@ -131,6 +131,7 @@ metadata/_custom_type_script = "uid://5t0i5fcvv63q"
 
 [connection signal="beat_action" from="." to="BeatFader" method="do_fade"]
 [connection signal="beat_action" from="." to="BeatFader/BeatPulser" method="pulse"]
+[connection signal="on_damaged_zero" from="Health" to="." method="kill"]
 [connection signal="hit" from="HitBox" to="." method="on_hit"]
 [connection signal="hit" from="HitBox" to="HitEffect" method="do_effect"]
 [connection signal="hit" from="HitBox" to="Health" method="damage" binds= [1.0]]

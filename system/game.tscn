@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://d3fghnjmt3yp8"]
+[gd_scene load_steps=26 format=3 uid="uid://d3fghnjmt3yp8"]
 
 [ext_resource type="Script" uid="uid://4ax2lruikqyq" path="res://system/game.gd" id="1_uwgih"]
 [ext_resource type="PackedScene" uid="uid://db6dv4pdde6co" path="res://content/player/player.tscn" id="2_g4eph"]
@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://bkbpcrbxsc4gf" path="res://system/hud.gd" id="4_nvi61"]
 [ext_resource type="Script" uid="uid://cip3mcqdx4frc" path="res://system/fps_shower.gd" id="5_gsj3s"]
 [ext_resource type="Script" uid="uid://cfbgio25yma8y" path="res://content/hud/gun_hud.gd" id="5_m0p3p"]
-[ext_resource type="Texture2D" uid="uid://tfbb4f55hnwd" path="res://assets/sprites/heart.png" id="5_t55qc"]
 [ext_resource type="Script" uid="uid://d3wgwrudwcjna" path="res://content/component/pulse.gd" id="5_wvlmy"]
 [ext_resource type="Texture2D" uid="uid://dsqvyovk6nixl" path="res://assets/sprites/gun_prototype_3_orb.png" id="6_nvi61"]
 [ext_resource type="Shader" uid="uid://bequahm58x16c" path="res://content/hud/weapon/orb/orb.gdshader" id="7_fxm5u"]
@@ -18,6 +17,9 @@
 [ext_resource type="Shader" uid="uid://r260rc35qbus" path="res://assets/shaders/harm.gdshader" id="16_h06sq"]
 [ext_resource type="Texture2D" uid="uid://cgo8hj3dved7q" path="res://assets/sprites/hurt.png" id="16_hxy0c"]
 [ext_resource type="Texture2D" uid="uid://ci5dpoyt1v74x" path="res://assets/noise/Milky 1 - 256x256.png" id="17_8mfh0"]
+[ext_resource type="Texture2D" uid="uid://b5mfr4f5ta6de" path="res://assets/sprites/heart-2.png" id="18_m3agx"]
+[ext_resource type="Script" uid="uid://c5hpove6jevd1" path="res://assets/hud/beat_syncer.gd" id="18_vscnc"]
+[ext_resource type="Texture2D" uid="uid://c7lm8a8i3cjb6" path="res://assets/sprites/heart_beat.png" id="19_fdhvp"]
 [ext_resource type="Script" uid="uid://8p31pkl0wuf8" path="res://content/player/hurt.gd" id="19_m3agx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jt55s"]
@@ -32,6 +34,14 @@ shader_parameter/noise_scale = 2.575
 shader = ExtResource("16_h06sq")
 shader_parameter/noise_1 = ExtResource("17_8mfh0")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdhvp"]
+atlas = ExtResource("19_fdhvp")
+region = Rect2(0, 0, 9, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkdic"]
+atlas = ExtResource("19_fdhvp")
+region = Rect2(9, 0, 9, 0)
+
 [node name="Game" type="Node"]
 script = ExtResource("1_uwgih")
 
@@ -39,15 +49,17 @@ script = ExtResource("1_uwgih")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 320.0
+offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.5, 0.5)
 
 [node name="3DViewport" type="SubViewport" parent="Game3D"]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
 audio_listener_enable_3d = true
 size = Vector2i(640, 360)
-size_2d_override = Vector2i(640, 360)
 render_target_update_mode = 4
 
 [node name="Player" parent="Game3D/3DViewport" instance=ExtResource("2_g4eph")]
@@ -70,21 +82,12 @@ script = ExtResource("4_nvi61")
 [node name="FPS" type="Label" parent="HUD"]
 z_index = 3
 layout_mode = 0
-offset_left = 6.0
-offset_top = 78.0
-offset_right = 46.0
-offset_bottom = 101.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 48.0
+offset_bottom = 31.0
 text = "FPS: "
 script = ExtResource("5_gsj3s")
-
-[node name="Heart" type="Sprite2D" parent="HUD"]
-position = Vector2(39, 37)
-scale = Vector2(2, 2)
-texture = ExtResource("5_t55qc")
-script = ExtResource("5_wvlmy")
-strength = 1.2
-beats = 1
-shrink_speed = 3.0
 
 [node name="Crosshair" type="TextureRect" parent="HUD"]
 layout_mode = 1
@@ -93,35 +96,35 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(16, 16)
 texture = ExtResource("3_aywbb")
 
 [node name="Gun" type="Node2D" parent="HUD"]
-position = Vector2(320, 180)
-scale = Vector2(2, 2)
+position = Vector2(56, 0)
 script = ExtResource("5_m0p3p")
 
 [node name="Hand" type="Sprite2D" parent="HUD/Gun"]
-position = Vector2(39, 1)
 texture = ExtResource("7_jt55s")
+centered = false
 
 [node name="Orb" type="Sprite2D" parent="HUD/Gun"]
 material = SubResource("ShaderMaterial_jt55s")
-position = Vector2(39, 1)
 texture = ExtResource("6_nvi61")
+centered = false
 script = ExtResource("8_3w5he")
 
 [node name="Hurt" type="TextureRect" parent="HUD"]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_8mfh0")
 layout_mode = 0
-offset_right = 640.0
-offset_bottom = 360.0
+offset_right = 320.0
+offset_bottom = 180.0
 texture = ExtResource("16_hxy0c")
 script = ExtResource("19_m3agx")
 
@@ -129,9 +132,33 @@ script = ExtResource("19_m3agx")
 texture_repeat = 2
 material = SubResource("ShaderMaterial_8mfh0")
 layout_mode = 0
-offset_left = 583.5341
-offset_top = 534.3698
-offset_right = 1277.7676
-offset_bottom = 1073.4604
+offset_left = 291.767
+offset_top = 267.185
+offset_right = 638.88403
+offset_bottom = 536.73096
 rotation = -2.8905985
 texture = ExtResource("16_hxy0c")
+
+[node name="BeatSyncer" type="Control" parent="HUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Beats" type="Node2D" parent="HUD/BeatSyncer"]
+position = Vector2(160, 160)
+script = ExtResource("18_vscnc")
+texture_left = SubResource("AtlasTexture_fdhvp")
+texture_right = SubResource("AtlasTexture_fkdic")
+
+[node name="Heart" type="Sprite2D" parent="HUD/BeatSyncer/Beats"]
+texture = ExtResource("18_m3agx")
+script = ExtResource("5_wvlmy")
+strength = 1.5
+beats = 1
+shrink_speed = 3.0
+on_beat = false
+
+[connection signal="beat_centered" from="HUD/BeatSyncer/Beats" to="HUD/BeatSyncer/Beats/Heart" method="pulse"]

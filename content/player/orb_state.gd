@@ -6,23 +6,26 @@ class_name OrbState
 @onready var sfx_fail: MusicalAudioGlobal = $"../../SFX/Orb/Fail"
 
 @export var string_sequence: String
-@onready var sequence: Seqence = Seqence.build([string_sequence])
+@onready var sequence: Seqence
 
 var required_beat: float = 1.0
 var leeway: float = 0.2
+var damage: float = 1.0
 
 func _ready() -> void:
-	pass
+	sequence = Seqence.build([string_sequence], true)
+	if not Game.are_game_refrences_ready: await Game.GAME.game_refrences_ready
+	Game.HUD.BEAT_SYNCER.beats_sequence = sequence
+	Game.HUD.BEAT_SYNCER.setup()
 	#Rhythm.beats(1).connect(weapon_input)
 
-func weapon_input(beat: int = 0) -> void:
+func weapon_input() -> void:
 	
-	var distance_from_beat: float = distance_from_closest_beat(Rhythm.get_decimal_beat(), required_beat)
+	var next_distance: float = sequence.next(Rhythm.current_position / Rhythm.beat_length - leeway / 2.0).note_distance * Rhythm.beat_length
 	
-	if distance_from_beat <= leeway:
+	if next_distance <= leeway:
 		attack_action()
 	else:
-		var note: Note = sequence.next(Rhythm.current_beat - leeway, 0).note
 		sfx_fail.play()
 		Game.HUD.GUN.find_child("Orb").fail()
 
@@ -35,7 +38,11 @@ func attack_action() -> void:
 	
 	var shoot_result: Player.ShootResult = player.shoot_forward()
 	
-	var note: Note = sequence.next(Rhythm.current_beat, 0).note
+	if shoot_result.did_hit_object():
+		if shoot_result.hit_object is HitBox:
+			shoot_result.hit_object.on_hurt(damage)
+	
+	var note: Note = sequence.next(Rhythm.current_position / Rhythm.beat_length - leeway / 2.0, 0).note
 	sfx_shoot.play_note(note)
 	Game.HUD.GUN.shoot()
 	if player.is_on_floor():

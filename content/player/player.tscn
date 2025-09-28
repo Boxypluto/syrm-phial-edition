@@ -81,7 +81,7 @@ script = ExtResource("5_3ac0f")
 
 [node name="Orb" type="Node" parent="WeaponStates"]
 script = ExtResource("7_gdtqi")
-string_sequence = "G D1 A2 A2"
+string_sequence = "G D1 D1 0.5x[A2 A2]"
 
 [node name="HitBox" type="Area3D" parent="."]
 collision_layer = 0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cjafvcx1lqj1o"]
+[gd_scene load_steps=15 format=3 uid="uid://cjafvcx1lqj1o"]
 
 [ext_resource type="Shader" uid="uid://c5u0e373tvinu" path="res://assets/shaders/lighting_triplanar.gdshader" id="1_4ev5u"]
 [ext_resource type="Texture2D" uid="uid://bgrus0lj87hoe" path="res://assets/textures/sky_1.png" id="1_x7ily"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://c7h1cnr87d4wx" path="res://assets/textures/sway_1_normal.png" id="4_x7ily"]
 [ext_resource type="PackedScene" uid="uid://cmxvrvtkghl04" path="res://content/enemy/sliz/enemy_sliz.tscn" id="5_3ouov"]
 [ext_resource type="PackedScene" uid="uid://dntwirrcck4k4" path="res://content/enemy/thumper/enemy_thumper.tscn" id="6_2q1ge"]
+[ext_resource type="PackedScene" uid="uid://cop7xblcpkud5" path="res://content/enemy/gustbloom/enemy_gustbloom.tscn" id="9_5ao7f"]
 
 [sub_resource type="Shader" id="Shader_xf58e"]
 code = "
@@ -179,6 +180,19 @@ radius = 1.9758277
 radial_segments = 39
 rings = 20
 
+[node name="CSGSphere3D6" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(1.2156689, -0.77429295, -2.4535427, -7.3062787, -0.3536463, -4.67943e-10, -1.6058873, 1.0228336, -1.8573505, 19.8488, -2.6609173, -13.406894)
+radius = 1.9758277
+radial_segments = 39
+rings = 20
+
+[node name="CSGSphere3D5" type="CSGSphere3D" parent="Collision/BigRock/CSGSphere3D6"]
+transform = Transform3D(0.46912974, -0.29880157, -2.9926376, -7.306278, -0.3536458, 1.1920929e-06, -1.9587345, 1.2475717, -0.7167561, 4.2731996, 2.5007477, 1.1050639)
+operation = 2
+radius = 1.9758277
+radial_segments = 39
+rings = 20
+
 [node name="Lights" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5951967, 1.9593372, 1.4727612)
 
@@ -228,3 +242,6 @@ beat_offset = 1
 [node name="EnemyThumper" parent="Enemies" instance=ExtResource("6_2q1ge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.824179, 1.9497705, -36.70472)
 string_sequence = "G-1 - - -"
+
+[node name="EnemyGustbloom" parent="Enemies" instance=ExtResource("9_5ao7f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1769695, 1.9813738, -42.281982)
