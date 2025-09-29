@@ -1,24 +1,129 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8e2r7s0iqkyr"]
+[gd_scene load_steps=10 format=3 uid="uid://c8e2r7s0iqkyr"]
 
-[ext_resource type="Shader" uid="uid://c6b5u72i5yvwl" path="res://sky_beambloom.gdshader" id="1_1k7sf"]
+[ext_resource type="Texture2D" uid="uid://4305b0ommceu" path="res://assets/skybox/skybox_beambloom.png" id="1_wjpys"]
+[ext_resource type="Shader" uid="uid://c5u0e373tvinu" path="res://assets/shaders/lighting_triplanar.gdshader" id="2_fmrr4"]
+[ext_resource type="Texture2D" uid="uid://742jkup3wi6h" path="res://assets/textures/sway_1.png" id="3_8e44j"]
+[ext_resource type="Texture2D" uid="uid://c7h1cnr87d4wx" path="res://assets/textures/sway_1_normal.png" id="4_h45rl"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_u42qe"]
-shader = ExtResource("1_1k7sf")
-shader_parameter/main_color = Color(0.601223, 0.601223, 0.60122293, 1)
+[sub_resource type="Environment" id="Environment_48l54"]
+reflected_light_source = 1
+tonemap_mode = 2
 
-[sub_resource type="Sky" id="Sky_48l54"]
-sky_material = SubResource("ShaderMaterial_u42qe")
+[sub_resource type="Shader" id="Shader_b0ka4"]
+code = "shader_type spatial;
+render_mode unshaded, shadows_disabled;
 
-[sub_resource type="Environment" id="Environment_wjpys"]
-sky = SubResource("Sky_48l54")
-ambient_light_source = 3
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_nearest, repeat_enable;
+
+void vertex() {
+	MODELVIEW_MATRIX[3].xyz = vec3(0.0);
+}
+
+void fragment() {
+	vec4 albedo_tex = texture(texture_albedo, UV);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_agsqn"]
+render_priority = 0
+shader = SubResource("Shader_b0ka4")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("1_wjpys")
+
+[sub_resource type="BoxMesh" id="BoxMesh_em6uu"]
+material = SubResource("ShaderMaterial_agsqn")
+flip_faces = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rnb26"]
+render_priority = 0
+shader = ExtResource("2_fmrr4")
+shader_parameter/albedo = ExtResource("3_8e44j")
+shader_parameter/normal_map = ExtResource("4_h45rl")
+shader_parameter/normal_strength = -1.0
+shader_parameter/modulate = Color(1, 1, 1, 1)
+shader_parameter/uv1_scale = Vector3(0.3, 0.3, 0.3)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/uv1_blend_sharpness = 1.0000000475
+shader_parameter/uv2_blend_sharpness = 1.0000000475
 
 [node name="LevelBeambloomDesert" type="Node3D"]
 
 [node name="Environment" type="Node3D" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_wjpys")
+environment = SubResource("Environment_48l54")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
-transform = Transform3D(1, 0, 0, 0, 0.49879035, 0.86672264, 0, -0.86672264, 0.49879035, 0, 0, 0)
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Skybox" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(207.09865, 0, 0, 0, 207.09865, 0, 0, 0, 207.09865, 0, 0, 0)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("BoxMesh_em6uu")
+
+[node name="Collision" type="Node3D" parent="."]
+
+[node name="BigRock" type="CSGCombiner3D" parent="Collision"]
+material_override = SubResource("ShaderMaterial_rnb26")
+use_collision = true
+collision_mask = 0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Collision/BigRock"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0267944, -1.5761719, -3.6713867)
+size = Vector3(10.224731, 4.1523438, 20.847168)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.637806, 3.7312884, 0)
+radius = 15.385
+radial_segments = 39
+rings = 20
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(3.445469, 0, 0, 0, 1, 0, 0, 0, 3.0772758, 7.58152, -8.645678, -25.8653)
+radius = 11.782903
+radial_segments = 39
+rings = 20
+
+[node name="CSGSphere3D3" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(2.1885235, 0.77235675, 0, -2.6611314, 0.63518894, 0, 0, 0, 3.0772755, -8.3968315, -8.645681, -34.116936)
+radius = 11.782903
+radial_segments = 39
+rings = 20
+
+[node name="CSGSphere3D4" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(-2.0141313, 1.2828556, 0, -7.306279, -0.3536463, 0, 0, 0, 3.0772753, 6.0776043, -0.36348343, -26.852322)
+radius = 1.5136555
+radial_segments = 39
+rings = 20
+
+[node name="CSGSphere3D5" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(0.46912986, -0.29880172, -2.992638, -7.3062787, -0.35364628, 0, -1.9587346, 1.247572, -0.71675646, 18.345222, -0.36348343, -10.796215)
+radius = 1.9758277
+radial_segments = 39
+rings = 20
+
+[node name="CSGSphere3D5" type="CSGSphere3D" parent="Collision/BigRock/CSGSphere3D5"]
+transform = Transform3D(0.46912974, -0.2988016, -2.992638, -7.3062787, -0.35364577, 4.7683716e-07, -1.9587346, 1.2475718, -0.7167562, 4.5356503, -2.9214468, 0.12311649)
+operation = 2
+radius = 1.9758277
+radial_segments = 39
+rings = 20
+
+[node name="CSGSphere3D6" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(1.2156689, -0.77429295, -2.4535427, -7.3062787, -0.3536463, -4.67943e-10, -1.6058873, 1.0228336, -1.8573505, 19.8488, -2.6609173, -13.406894)
+radius = 1.9758277
+radial_segments = 39
+rings = 20
+
+[node name="CSGSphere3D5" type="CSGSphere3D" parent="Collision/BigRock/CSGSphere3D6"]
+transform = Transform3D(0.46912974, -0.29880157, -2.9926376, -7.306278, -0.3536458, 1.1920929e-06, -1.9587345, 1.2475717, -0.7167561, 4.2731996, 2.5007477, 1.1050639)
+operation = 2
+radius = 1.9758277
+radial_segments = 39
+rings = 20
