@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8e2r7s0iqkyr"]
+
+[ext_resource type="Shader" uid="uid://c6b5u72i5yvwl" path="res://sky_beambloom.gdshader" id="1_1k7sf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u42qe"]
+shader = ExtResource("1_1k7sf")
+shader_parameter/main_color = Color(0.601223, 0.601223, 0.60122293, 1)
+
+[sub_resource type="Sky" id="Sky_48l54"]
+sky_material = SubResource("ShaderMaterial_u42qe")
+
+[sub_resource type="Environment" id="Environment_wjpys"]
+sky = SubResource("Sky_48l54")
+ambient_light_source = 3
+
+[node name="LevelBeambloomDesert" type="Node3D"]
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_wjpys")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 0.49879035, 0.86672264, 0, -0.86672264, 0.49879035, 0, 0, 0)
