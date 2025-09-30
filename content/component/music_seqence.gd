@@ -129,7 +129,7 @@ class Track:
 	
 	func build_signal(sequence_length: float):
 		for index in range(notes.size()):
-			Rhythm.beats(sequence_length, true, note_start_beats[index]).connect(func(beat): note_played.emit(note_lengths[index], notes[index].pitch_scale, notes[index]))
+			Rhythm.beats(sequence_length, true, 1.0 + note_start_beats[index]).connect(func(beat): note_played.emit(note_lengths[index], notes[index].pitch_scale, notes[index]))
 
 static func proccess_pattern(cleaned_pattern: String, multiplier: float = 1.0, octave_offset: int = 0, data: Track = Track.new(0.0, [], [])) -> Track:
 	var notes_and_patterns_matches: Array[RegExMatch] = patterns_and_notes.search_all(cleaned_pattern)

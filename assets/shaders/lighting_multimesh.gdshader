@@ -1,15 +1,20 @@
 shader_type spatial;
 
-uniform sampler2D albedo: filter_nearest;
-uniform sampler2D normal_map: hint_normal, filter_nearest;
+uniform sampler2D albedo: filter_nearest, repeat_enable;
+uniform sampler2D normal_map: hint_normal, filter_nearest, repeat_enable;
 uniform float normal_strength = 1.0;
 uniform vec3 modulate: source_color = vec3(1.0);
 uniform bool disable_light = false;
 uniform float light_strength = 1.0;
+uniform int image_count = 1;
 
 void fragment() {
-	vec4 albedo_color = texture(albedo, UV);
-	NORMAL_MAP = texture(albedo, UV).rgb;
+	float image_width = 1.0 / float(image_count);
+	float offset = float(int(float(VIEW_INDEX)));
+	vec2 uv = UV * vec2(image_width, 1) + vec2(image_width * offset, 1);
+	vec4 albedo_color = texture(albedo, uv);
+	NORMAL_MAP = texture(albedo, uv).rgb;
+	
 	NORMAL_MAP_DEPTH = normal_strength;
 	ALBEDO = albedo_color.rgb * modulate;
 	ALPHA = albedo_color.a;

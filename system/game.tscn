@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://4ax2lruikqyq" path="res://system/game.gd" id="1_uwgih"]
 [ext_resource type="PackedScene" uid="uid://db6dv4pdde6co" path="res://content/player/player.tscn" id="2_g4eph"]
 [ext_resource type="Texture2D" uid="uid://dw34slpm2n76g" path="res://assets/sprites/crosshair_1.png" id="3_aywbb"]
-[ext_resource type="PackedScene" uid="uid://cjafvcx1lqj1o" path="res://content/levels/stratosphere/level_stratosphere.tscn" id="3_m3agx"]
+[ext_resource type="PackedScene" uid="uid://c8e2r7s0iqkyr" path="res://content/levels/beambloom_desert/level_beambloom_desert.tscn" id="3_w6m87"]
 [ext_resource type="Script" uid="uid://bkbpcrbxsc4gf" path="res://system/hud.gd" id="4_nvi61"]
 [ext_resource type="Script" uid="uid://cip3mcqdx4frc" path="res://system/fps_shower.gd" id="5_gsj3s"]
 [ext_resource type="Script" uid="uid://cfbgio25yma8y" path="res://content/hud/gun_hud.gd" id="5_m0p3p"]
@@ -67,7 +67,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8317046, 0)
 
 [node name="Spawned" type="Node3D" parent="Game3D/3DViewport"]
 
-[node name="LevelStratosphere" parent="Game3D/3DViewport" instance=ExtResource("3_m3agx")]
+[node name="LevelBeambloomDesert" parent="Game3D/3DViewport" instance=ExtResource("3_w6m87")]
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
