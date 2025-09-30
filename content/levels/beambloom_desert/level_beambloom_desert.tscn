@@ -1,6 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://c8e2r7s0iqkyr"]
+[gd_scene load_steps=17 format=3 uid="uid://c8e2r7s0iqkyr"]
 
 [ext_resource type="Texture2D" uid="uid://4305b0ommceu" path="res://assets/skybox/skybox_beambloom.png" id="1_wjpys"]
+[ext_resource type="Shader" uid="uid://bhicfe387f8d2" path="res://content/levels/beambloom_desert/sun_positioner.gdshader" id="2_agsqn"]
 [ext_resource type="Shader" uid="uid://c5u0e373tvinu" path="res://assets/shaders/lighting_triplanar.gdshader" id="2_fmrr4"]
 [ext_resource type="Texture2D" uid="uid://bery80d3iqdoc" path="res://assets/sprites/environment/sun.png" id="3_em6uu"]
 [ext_resource type="Texture2D" uid="uid://r5wyrx7bpy11" path="res://assets/textures/sand_1.png" id="3_wjpys"]
@@ -41,6 +42,13 @@ shader_parameter/texture_albedo = ExtResource("1_wjpys")
 [sub_resource type="BoxMesh" id="BoxMesh_em6uu"]
 material = SubResource("ShaderMaterial_agsqn")
 flip_faces = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_em6uu"]
+render_priority = 0
+shader = ExtResource("2_agsqn")
+shader_parameter/color_texture = ExtResource("3_em6uu")
+shader_parameter/modulate = Color(1, 0.63529414, 0.11372549, 1)
+shader_parameter/sun_distance = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8e44j"]
 render_priority = 0
@@ -94,8 +102,9 @@ light_bake_mode = 1
 sky_mode = 1
 
 [node name="SUN" type="Sprite3D" parent="Environment"]
-transform = Transform3D(-8.768936e-08, 0.9738929, 2.006099, 4.2570207e-08, 2.006099, -0.9738929, -2.23, 0, -9.747639e-08, -1068.0864, 1326.7944, 0)
-modulate = Color(0.99999946, 0.94168496, 0.880587, 1)
+transform = Transform3D(2.23, -4.257021e-08, 9.787016e-09, 4.2570207e-08, 2.006099, -0.9738929, 9.787037e-09, 0.9738928, 2.0060987, -5.5632324, 1326.7944, -1958.3967)
+material_override = SubResource("ShaderMaterial_em6uu")
+modulate = Color(0.9999998, 0.6337041, 0.1126026, 1)
 pixel_size = 5.0
 texture_filter = 0
 texture = ExtResource("3_em6uu")
