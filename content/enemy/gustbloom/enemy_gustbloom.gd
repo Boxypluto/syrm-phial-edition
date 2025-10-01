@@ -11,13 +11,13 @@ class_name EnemyGustbloom
 const GUST = preload("uid://ca4tm6hy5mb31")
 
 var spiral_count: int = 3
-var spiral_gust_count: int = 6
+var spiral_gust_count: int = 7
 var vertical_gust_count: int = 5
 
 var sprial_rotation_speed: float = 1.5 
 
-var spiral_gusts_seperation: float = 2.0
-var spiral_y_position: float = 1.0
+var spiral_gusts_seperation: float = 1.7
+var spiral_y_position: float = 0.5
 var spiral_movement_base: float = 0.1
 var spiral_drag: float = 0.75
 

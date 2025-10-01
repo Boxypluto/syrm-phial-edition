@@ -161,4 +161,21 @@ beats = 1
 shrink_speed = 3.0
 on_beat = false
 
+[node name="BeatsAlt" type="Node2D" parent="HUD/BeatSyncer"]
+modulate = Color(0.99999994, 0.7631997, 0.39013636, 1)
+position = Vector2(160, 144)
+scale = Vector2(0.6379601, -0.6020423)
+script = ExtResource("18_vscnc")
+texture_left = SubResource("AtlasTexture_fdhvp")
+texture_right = SubResource("AtlasTexture_fkdic")
+
+[node name="Heart" type="Sprite2D" parent="HUD/BeatSyncer/BeatsAlt"]
+texture = ExtResource("18_m3agx")
+script = ExtResource("5_wvlmy")
+strength = 1.5
+beats = 1
+shrink_speed = 3.0
+on_beat = false
+
 [connection signal="beat_centered" from="HUD/BeatSyncer/Beats" to="HUD/BeatSyncer/Beats/Heart" method="pulse"]
+[connection signal="beat_centered" from="HUD/BeatSyncer/BeatsAlt" to="HUD/BeatSyncer/BeatsAlt/Heart" method="pulse"]

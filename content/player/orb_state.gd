@@ -7,6 +7,8 @@ class_name OrbState
 
 @export var string_sequence: String
 @onready var sequence: Seqence
+@export var charge_string_sequence: String
+@onready var charge_sequence: Seqence
 
 var required_beat: float = 1.0
 var leeway: float = 0.2
@@ -14,10 +16,14 @@ var damage: float = 1.0
 
 func _ready() -> void:
 	sequence = Seqence.build([string_sequence], true)
+	charge_sequence = Seqence.build([charge_string_sequence], true)
+	
 	if not Game.are_game_refrences_ready: await Game.GAME.game_refrences_ready
+	
 	Game.HUD.BEAT_SYNCER.beats_sequence = sequence
 	Game.HUD.BEAT_SYNCER.setup()
-	#Rhythm.beats(1).connect(weapon_input)
+	Game.HUD.BEAT_SYNCER_ALT.beats_sequence = charge_sequence
+	Game.HUD.BEAT_SYNCER_ALT.setup()
 
 func weapon_input() -> void:
 	

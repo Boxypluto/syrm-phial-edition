@@ -86,7 +86,6 @@ metadata/_custom_type_script = "uid://cvdxyomux8pmi"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1700997, 0)
 pixel_size = 0.05
 billboard = 2
-shaded = true
 alpha_cut = 2
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_a2u33")
@@ -97,7 +96,7 @@ animation = &"Idle"
 [node name="Thump" type="AudioStreamPlayer3D" parent="SFX"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8607903, 0)
 stream = ExtResource("3_8hb0a")
-volume_db = 0.2
+volume_db = 1.478
 bus = &"SFX"
 script = ExtResource("4_nj8qf")
 metadata/_custom_type_script = "uid://c2ndi6ftfs5m4"

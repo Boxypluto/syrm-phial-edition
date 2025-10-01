@@ -1,54 +1,47 @@
-[gd_scene load_steps=17 format=3 uid="uid://c8e2r7s0iqkyr"]
+[gd_scene load_steps=27 format=3 uid="uid://c8e2r7s0iqkyr"]
 
 [ext_resource type="Texture2D" uid="uid://4305b0ommceu" path="res://assets/skybox/skybox_beambloom.png" id="1_wjpys"]
-[ext_resource type="Shader" uid="uid://bhicfe387f8d2" path="res://content/levels/beambloom_desert/sun_positioner.gdshader" id="2_agsqn"]
 [ext_resource type="Shader" uid="uid://c5u0e373tvinu" path="res://assets/shaders/lighting_triplanar.gdshader" id="2_fmrr4"]
 [ext_resource type="Texture2D" uid="uid://bery80d3iqdoc" path="res://assets/sprites/environment/sun.png" id="3_em6uu"]
 [ext_resource type="Texture2D" uid="uid://r5wyrx7bpy11" path="res://assets/textures/sand_1.png" id="3_wjpys"]
 [ext_resource type="Texture2D" uid="uid://de5oey11rg1k2" path="res://assets/textures/sand_1_normal.png" id="4_fmrr4"]
 [ext_resource type="Script" uid="uid://ndo4d4agq3vk" path="res://content/component/pulse_3d.gd" id="4_rnb26"]
+[ext_resource type="Shader" uid="uid://b5rd00k6i4dgs" path="res://content/levels/beambloom_desert/skybox_face_texture.gdshader" id="4_stnf7"]
 [ext_resource type="Texture2D" uid="uid://cx1hi5akh1uab" path="res://assets/textures/plants_1.png" id="5_8e44j"]
+[ext_resource type="Shader" uid="uid://bkdbe6feamqsk" path="res://content/levels/beambloom_desert/skybox_face_color.gdshader" id="6_174bo"]
 [ext_resource type="Texture2D" uid="uid://ie63vq1rxmk8" path="res://assets/textures/plants_1_normal.png" id="6_h45rl"]
+[ext_resource type="PackedScene" uid="uid://cmxvrvtkghl04" path="res://content/enemy/sliz/enemy_sliz.tscn" id="11_174bo"]
+[ext_resource type="PackedScene" uid="uid://cop7xblcpkud5" path="res://content/enemy/gustbloom/enemy_gustbloom.tscn" id="12_rx5e1"]
+[ext_resource type="PackedScene" uid="uid://dntwirrcck4k4" path="res://content/enemy/thumper/enemy_thumper.tscn" id="13_wmxdb"]
 
 [sub_resource type="Environment" id="Environment_48l54"]
 reflected_light_source = 1
 tonemap_mode = 2
 
-[sub_resource type="Shader" id="Shader_b0ka4"]
-code = "shader_type spatial;
-render_mode unshaded, shadows_disabled, cull_back;
-
-
-uniform vec4 albedo : source_color;
-uniform sampler2D texture_albedo : source_color, filter_nearest, repeat_enable;
-
-void vertex() {
-	MODELVIEW_MATRIX[3].xyz = vec3(0.0);
-}
-
-void fragment() {
-	vec4 albedo_tex = texture(texture_albedo, UV);
-	ALBEDO = albedo.rgb * albedo_tex.rgb;
-	DEPTH = 0.0;
-}
-"
+[sub_resource type="QuadMesh" id="QuadMesh_rnb26"]
+center_offset = Vector3(0, 0.275, -0.5)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_agsqn"]
 render_priority = 0
-shader = SubResource("Shader_b0ka4")
+shader = ExtResource("4_stnf7")
 shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/texture_albedo = ExtResource("1_wjpys")
 
-[sub_resource type="BoxMesh" id="BoxMesh_em6uu"]
-material = SubResource("ShaderMaterial_agsqn")
-flip_faces = true
+[sub_resource type="QuadMesh" id="QuadMesh_stnf7"]
+center_offset = Vector3(0, 0, -0.5)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_em6uu"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rx5e1"]
 render_priority = 0
-shader = ExtResource("2_agsqn")
-shader_parameter/color_texture = ExtResource("3_em6uu")
-shader_parameter/modulate = Color(1, 0.63529414, 0.11372549, 1)
-shader_parameter/sun_distance = 0.0
+shader = ExtResource("6_174bo")
+shader_parameter/albedo = Color(0.9882353, 0.87058824, 0.6509804, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_174bo"]
+center_offset = Vector3(0, 0.275, -0.085)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wmxdb"]
+render_priority = 0
+shader = ExtResource("6_174bo")
+shader_parameter/albedo = Color(0.98039216, 0.41568628, 0.039215688, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8e44j"]
 render_priority = 0
@@ -57,6 +50,7 @@ shader_parameter/albedo = ExtResource("3_wjpys")
 shader_parameter/normal_map = ExtResource("4_fmrr4")
 shader_parameter/normal_strength = 1.0
 shader_parameter/modulate = Color(1, 1, 1, 1)
+shader_parameter/texture_normal_map_scale = 2.0
 shader_parameter/uv1_scale = Vector3(0.3, 0.3, 0.3)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
@@ -71,12 +65,31 @@ shader_parameter/albedo = ExtResource("5_8e44j")
 shader_parameter/normal_map = ExtResource("6_h45rl")
 shader_parameter/normal_strength = 0.4
 shader_parameter/modulate = Color(0.7527232, 0.81166965, 0.70465267, 1)
+shader_parameter/texture_normal_map_scale = 2.0
 shader_parameter/uv1_scale = Vector3(0.3, 0.3, 0.3)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/uv1_blend_sharpness = 1.0000000475
 shader_parameter/uv2_blend_sharpness = 1.0000000475
+
+[sub_resource type="Curve" id="Curve_174bo"]
+_data = [Vector2(0.001838237, 0.005778432), 0.0, 0.0, 0, 0, Vector2(0.20772061, 0.8939497), 0.54631966, 0.54631966, 0, 0, Vector2(0.8566177, 0.8674371), -0.80126894, -0.80126894, 0, 0, Vector2(0.99632365, 0.010197163), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_rx5e1"]
+curve = SubResource("Curve_174bo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wmxdb"]
+emission_shape_scale = Vector3(20, 20, 20)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_rx5e1")
+
+[sub_resource type="BoxMesh" id="BoxMesh_4jevh"]
 
 [node name="LevelBeambloomDesert" type="Node3D"]
 
@@ -89,29 +102,85 @@ environment = SubResource("Environment_48l54")
 transform = Transform3D(-0.8660254, -0.43301278, 0.24999999, -0.27535698, 0.8303824, 0.48440024, -0.4173471, 0.35066366, -0.8383653, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Skybox" type="MeshInstance3D" parent="Environment"]
-transform = Transform3D(207.09865, 0, 0, 0, 207.09865, 0, 0, 0, 207.09865, 0, 0, 0)
-cast_shadow = 0
-gi_mode = 0
-mesh = SubResource("BoxMesh_em6uu")
-
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Environment"]
 transform = Transform3D(-0.13173364, -0.5317183, 0.83661336, -0.27535704, 0.83038247, 0.48440033, -0.95227355, -0.16655551, -0.25580162, 0, 0, 0)
+visible = false
 light_energy = 0.015
 light_bake_mode = 1
 sky_mode = 1
 
 [node name="SUN" type="Sprite3D" parent="Environment"]
-transform = Transform3D(2.23, -4.257021e-08, 9.787016e-09, 4.2570207e-08, 2.006099, -0.9738929, 9.787037e-09, 0.9738928, 2.0060987, -5.5632324, 1326.7944, -1958.3967)
-material_override = SubResource("ShaderMaterial_em6uu")
+transform = Transform3D(2.23, 0, 0, 0, 2.23, 0, 0, 0, 2.2299998, 1338.6608, 1669.3721, -1958.3967)
 modulate = Color(0.9999998, 0.6337041, 0.1126026, 1)
 pixel_size = 5.0
+billboard = 1
 texture_filter = 0
 texture = ExtResource("3_em6uu")
 script = ExtResource("4_rnb26")
 strength = 1.4
 beats = 1
 shrink_speed = 5.0
+
+[node name="Skybox" type="Node3D" parent="Environment"]
+
+[node name="FaceZ-" type="MeshInstance3D" parent="Environment/Skybox"]
+cast_shadow = 0
+extra_cull_margin = 10000.0
+lod_bias = 0.001
+gi_mode = 0
+mesh = SubResource("QuadMesh_rnb26")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_agsqn")
+
+[node name="FaceX+" type="MeshInstance3D" parent="Environment/Skybox"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+cast_shadow = 0
+extra_cull_margin = 10000.0
+lod_bias = 0.001
+gi_mode = 0
+mesh = SubResource("QuadMesh_rnb26")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_agsqn")
+
+[node name="FaceZ+" type="MeshInstance3D" parent="Environment/Skybox"]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+cast_shadow = 0
+extra_cull_margin = 10000.0
+lod_bias = 0.001
+gi_mode = 0
+mesh = SubResource("QuadMesh_rnb26")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_agsqn")
+
+[node name="FaceX-" type="MeshInstance3D" parent="Environment/Skybox"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+cast_shadow = 0
+extra_cull_margin = 10000.0
+lod_bias = 0.001
+gi_mode = 0
+mesh = SubResource("QuadMesh_rnb26")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_agsqn")
+
+[node name="FaceY+" type="MeshInstance3D" parent="Environment/Skybox"]
+transform = Transform3D(7.54979e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, 7.54979e-08, -3.300118e-15, 0, 0, 0)
+cast_shadow = 0
+extra_cull_margin = 10000.0
+lod_bias = 0.001
+gi_mode = 0
+mesh = SubResource("QuadMesh_stnf7")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_rx5e1")
+
+[node name="FaceY-" type="MeshInstance3D" parent="Environment/Skybox"]
+transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, 0, 0, 0)
+cast_shadow = 0
+extra_cull_margin = 10000.0
+lod_bias = 0.001
+gi_mode = 0
+mesh = SubResource("QuadMesh_174bo")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_wmxdb")
 
 [node name="Collision" type="Node3D" parent="."]
 
@@ -296,3 +365,44 @@ transform = Transform3D(1, 0, 0, 0, 1.6528628, 0, 0, 0, 1, -13.016113, -1.721837
 radius = 15.385
 radial_segments = 16
 rings = 16
+
+[node name="Objects" type="Node3D" parent="."]
+
+[node name="Enemies" type="Node3D" parent="."]
+
+[node name="EnemySliz" parent="Enemies" instance=ExtResource("11_174bo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.399761, 3.214209, -23.068426)
+string_sequence = "A A A A"
+
+[node name="EnemySliz2" parent="Enemies" instance=ExtResource("11_174bo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9384377, 3.5787487, -28.920506)
+string_sequence = "G1 G1 G1 G1"
+
+[node name="EnemySliz3" parent="Enemies" instance=ExtResource("11_174bo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.186526, 2.4373977, -14.161434)
+string_sequence = "D D D D"
+
+[node name="EnemyGustbloom" parent="Enemies" instance=ExtResource("12_rx5e1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.287856, 0.31335372, 7.7400126)
+
+[node name="EnemyGustbloom2" parent="Enemies" instance=ExtResource("12_rx5e1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.485833, 3.7423124, -32.794624)
+
+[node name="EnemyThumper" parent="Enemies" instance=ExtResource("13_wmxdb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.576066, 1.1524656, -6.0541654)
+string_sequence = "A - - -"
+
+[node name="EnemyThumper2" parent="Enemies" instance=ExtResource("13_wmxdb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.105472, 3.58436, -21.56599)
+string_sequence = "- - A -"
+
+[node name="Particles" type="Node3D" parent="."]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Particles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.158745, 6.979705, 0)
+cast_shadow = 0
+gi_mode = 0
+amount = 100
+lifetime = 5.0
+process_material = SubResource("ParticleProcessMaterial_wmxdb")
+draw_pass_1 = SubResource("BoxMesh_4jevh")

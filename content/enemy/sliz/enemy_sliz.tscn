@@ -74,7 +74,6 @@ script = ExtResource("2_7aqgi")
 offset = Vector2(0, 32)
 pixel_size = 0.05
 billboard = 2
-shaded = true
 alpha_cut = 2
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_monnn")
@@ -105,12 +104,12 @@ texture = ExtResource("5_1ehr1")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3673115, 0)
 
 [node name="SFX" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2128649, -6.883475, 5.702145)
 
 [node name="Shoot" type="AudioStreamPlayer3D" parent="SFX"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4038804, 0)
 stream = ExtResource("7_dufm4")
 volume_db = 0.2
+unit_size = 5.0
 bus = &"SFX"
 script = ExtResource("6_monnn")
 

@@ -50,7 +50,6 @@ debug_color = Color(0.7987184, 0.044899873, 0.99999994, 0.41960785)
 [node name="SpiralGusts" type="Node3D" parent="."]
 
 [node name="SFX" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0279992, -4.746648, -2.826631)
 
 [node name="Spiral" type="AudioStreamPlayer3D" parent="SFX"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8967042, 0)
