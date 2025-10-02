@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://4ax2lruikqyq" path="res://system/game.gd" id="1_uwgih"]
 [ext_resource type="PackedScene" uid="uid://db6dv4pdde6co" path="res://content/player/player.tscn" id="2_g4eph"]
-[ext_resource type="Texture2D" uid="uid://dw34slpm2n76g" path="res://assets/sprites/crosshair_1.png" id="3_aywbb"]
 [ext_resource type="PackedScene" uid="uid://c8e2r7s0iqkyr" path="res://content/levels/beambloom_desert/level_beambloom_desert.tscn" id="3_w6m87"]
 [ext_resource type="Script" uid="uid://bkbpcrbxsc4gf" path="res://system/hud.gd" id="4_nvi61"]
 [ext_resource type="Script" uid="uid://cip3mcqdx4frc" path="res://system/fps_shower.gd" id="5_gsj3s"]
 [ext_resource type="Script" uid="uid://cfbgio25yma8y" path="res://content/hud/gun_hud.gd" id="5_m0p3p"]
 [ext_resource type="Script" uid="uid://d3wgwrudwcjna" path="res://content/component/pulse.gd" id="5_wvlmy"]
 [ext_resource type="Texture2D" uid="uid://dsqvyovk6nixl" path="res://assets/sprites/gun_prototype_3_orb.png" id="6_nvi61"]
+[ext_resource type="Texture2D" uid="uid://c4ob60vhxre8d" path="res://assets/sprites/crosshair_2.png" id="6_w6m87"]
 [ext_resource type="Shader" uid="uid://bequahm58x16c" path="res://content/hud/weapon/orb/orb.gdshader" id="7_fxm5u"]
 [ext_resource type="Texture2D" uid="uid://daswedmdexvkk" path="res://assets/sprites/gun_prototype_3_hand.png" id="7_jt55s"]
 [ext_resource type="Script" uid="uid://dmyk3kebnukm0" path="res://content/hud/orb.gd" id="8_3w5he"]
@@ -103,7 +103,8 @@ offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(16, 16)
-texture = ExtResource("3_aywbb")
+texture = ExtResource("6_w6m87")
+stretch_mode = 3
 
 [node name="Gun" type="Node2D" parent="HUD"]
 position = Vector2(56, 0)

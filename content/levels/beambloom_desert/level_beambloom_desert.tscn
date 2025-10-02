@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c8e2r7s0iqkyr"]
+[gd_scene load_steps=32 format=3 uid="uid://c8e2r7s0iqkyr"]
 
 [ext_resource type="Texture2D" uid="uid://4305b0ommceu" path="res://assets/skybox/skybox_beambloom.png" id="1_wjpys"]
 [ext_resource type="Shader" uid="uid://c5u0e373tvinu" path="res://assets/shaders/lighting_triplanar.gdshader" id="2_fmrr4"]
@@ -7,16 +7,29 @@
 [ext_resource type="Texture2D" uid="uid://de5oey11rg1k2" path="res://assets/textures/sand_1_normal.png" id="4_fmrr4"]
 [ext_resource type="Script" uid="uid://ndo4d4agq3vk" path="res://content/component/pulse_3d.gd" id="4_rnb26"]
 [ext_resource type="Shader" uid="uid://b5rd00k6i4dgs" path="res://content/levels/beambloom_desert/skybox_face_texture.gdshader" id="4_stnf7"]
-[ext_resource type="Texture2D" uid="uid://cx1hi5akh1uab" path="res://assets/textures/plants_1.png" id="5_8e44j"]
 [ext_resource type="Shader" uid="uid://bkdbe6feamqsk" path="res://content/levels/beambloom_desert/skybox_face_color.gdshader" id="6_174bo"]
-[ext_resource type="Texture2D" uid="uid://ie63vq1rxmk8" path="res://assets/textures/plants_1_normal.png" id="6_h45rl"]
-[ext_resource type="PackedScene" uid="uid://cmxvrvtkghl04" path="res://content/enemy/sliz/enemy_sliz.tscn" id="11_174bo"]
+[ext_resource type="Shader" uid="uid://cr6hhspqfq1ib" path="res://assets/shaders/lighting_triplanar_runes.gdshader" id="6_stnf7"]
 [ext_resource type="PackedScene" uid="uid://cop7xblcpkud5" path="res://content/enemy/gustbloom/enemy_gustbloom.tscn" id="12_rx5e1"]
-[ext_resource type="PackedScene" uid="uid://dntwirrcck4k4" path="res://content/enemy/thumper/enemy_thumper.tscn" id="13_wmxdb"]
+[ext_resource type="Material" uid="uid://pu22o46unbyv" path="res://assets/shaders/materials/runes_pulser.tres" id="12_wmxdb"]
+[ext_resource type="Texture2D" uid="uid://n0y2nb0g33os" path="res://assets/textures/sand_2.png" id="13_wmxdb"]
+[ext_resource type="Texture2D" uid="uid://ic61wwoexbx3" path="res://assets/textures/sand_2_normal.png" id="14_4jevh"]
+[ext_resource type="PackedScene" uid="uid://cl3mspgi6m00t" path="res://content/object/beambloom/flower/flower.tscn" id="14_rx5e1"]
+[ext_resource type="PackedScene" uid="uid://cmxvrvtkghl04" path="res://content/enemy/sliz/enemy_sliz.tscn" id="15_sp0f2"]
+[ext_resource type="PackedScene" uid="uid://dmu6kttgjfcny" path="res://content/object/beambloom/flower/flower_giant.tscn" id="15_wmxdb"]
+[ext_resource type="PackedScene" uid="uid://dntwirrcck4k4" path="res://content/enemy/thumper/enemy_thumper.tscn" id="16_f42we"]
 
 [sub_resource type="Environment" id="Environment_48l54"]
 reflected_light_source = 1
 tonemap_mode = 2
+fog_enabled = true
+fog_light_color = Color(0.8256755, 0.42900828, 5.7756904e-07, 1)
+fog_light_energy = 1.86
+fog_sun_scatter = 0.05
+fog_sky_affect = 0.75
+volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(0.95580417, 0.46186036, 1.1551381e-06, 1)
+volumetric_fog_emission = Color(0.95691234, 0.29150236, 1.1551381e-06, 1)
+volumetric_fog_sky_affect = 0.87
 
 [sub_resource type="QuadMesh" id="QuadMesh_rnb26"]
 center_offset = Vector3(0, 0.275, -0.5)
@@ -45,8 +58,11 @@ shader_parameter/albedo = Color(0.98039216, 0.41568628, 0.039215688, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8e44j"]
 render_priority = 0
-shader = ExtResource("2_fmrr4")
+shader = ExtResource("6_stnf7")
 shader_parameter/albedo = ExtResource("3_wjpys")
+shader_parameter/runes_modulate = Color(1, 1, 1, 1)
+shader_parameter/runes_scale = 1.0
+shader_parameter/runes_bpm = 1.0
 shader_parameter/normal_map = ExtResource("4_fmrr4")
 shader_parameter/normal_strength = 1.0
 shader_parameter/modulate = Color(1, 1, 1, 1)
@@ -58,13 +74,13 @@ shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/uv1_blend_sharpness = 1.0000000475
 shader_parameter/uv2_blend_sharpness = 1.0000000475
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_b0ka4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4jevh"]
 render_priority = 0
 shader = ExtResource("2_fmrr4")
-shader_parameter/albedo = ExtResource("5_8e44j")
-shader_parameter/normal_map = ExtResource("6_h45rl")
-shader_parameter/normal_strength = 0.4
-shader_parameter/modulate = Color(0.7527232, 0.81166965, 0.70465267, 1)
+shader_parameter/albedo = ExtResource("13_wmxdb")
+shader_parameter/normal_map = ExtResource("14_4jevh")
+shader_parameter/normal_strength = 0.28
+shader_parameter/modulate = Color(1, 1, 1, 1)
 shader_parameter/texture_normal_map_scale = 2.0
 shader_parameter/uv1_scale = Vector3(0.3, 0.3, 0.3)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
@@ -73,23 +89,42 @@ shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/uv1_blend_sharpness = 1.0000000475
 shader_parameter/uv2_blend_sharpness = 1.0000000475
 
-[sub_resource type="Curve" id="Curve_174bo"]
-_data = [Vector2(0.001838237, 0.005778432), 0.0, 0.0, 0, 0, Vector2(0.20772061, 0.8939497), 0.54631966, 0.54631966, 0, 0, Vector2(0.8566177, 0.8674371), -0.80126894, -0.80126894, 0, 0, Vector2(0.99632365, 0.010197163), 0.0, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_rx5e1"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.104779415, 1), 0.0, 0.0, 0, 0, Vector2(0.86213243, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="CurveTexture" id="CurveTexture_rx5e1"]
-curve = SubResource("Curve_174bo")
+[sub_resource type="CurveTexture" id="CurveTexture_wmxdb"]
+curve = SubResource("Curve_rx5e1")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wmxdb"]
-emission_shape_scale = Vector3(20, 20, 20)
+emission_shape_scale = Vector3(16.195, 21.915, 39.49)
 emission_shape = 3
 emission_box_extents = Vector3(1, 1, 1)
-initial_velocity_min = 10.0
-initial_velocity_max = 10.0
+spread = 0.0
+initial_velocity_min = 20.0
+initial_velocity_max = 40.0
 gravity = Vector3(0, 0, 0)
-scale_curve = SubResource("CurveTexture_rx5e1")
+attractor_interaction_enabled = false
+scale_curve = SubResource("CurveTexture_wmxdb")
+turbulence_enabled = true
+turbulence_noise_strength = 0.1
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.011000001
+turbulence_initial_displacement_min = 1.490116e-06
+turbulence_initial_displacement_max = 8.800001
 
-[sub_resource type="BoxMesh" id="BoxMesh_4jevh"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_174bo"]
+shading_mode = 0
+albedo_color = Color(0.83343375, 0.60577744, 0.04059127, 1)
+texture_filter = 0
+disable_receive_shadows = true
+billboard_mode = 1
+grow_amount = 9.645
+stencil_flags = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_rx5e1"]
+material = SubResource("StandardMaterial3D_174bo")
+size = Vector2(0.1, 0.1)
 
 [node name="LevelBeambloomDesert" type="Node3D"]
 
@@ -102,15 +137,8 @@ environment = SubResource("Environment_48l54")
 transform = Transform3D(-0.8660254, -0.43301278, 0.24999999, -0.27535698, 0.8303824, 0.48440024, -0.4173471, 0.35066366, -0.8383653, 0, 0, 0)
 shadow_enabled = true
 
-[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Environment"]
-transform = Transform3D(-0.13173364, -0.5317183, 0.83661336, -0.27535704, 0.83038247, 0.48440033, -0.95227355, -0.16655551, -0.25580162, 0, 0, 0)
-visible = false
-light_energy = 0.015
-light_bake_mode = 1
-sky_mode = 1
-
 [node name="SUN" type="Sprite3D" parent="Environment"]
-transform = Transform3D(2.23, 0, 0, 0, 2.23, 0, 0, 0, 2.2299998, 1338.6608, 1669.3721, -1958.3967)
+transform = Transform3D(2.23, 0, 0, 0, 2.23, 0, 0, 0, 2.2299998, 610.7748, 944.55884, -1958.3967)
 modulate = Color(0.9999998, 0.6337041, 0.1126026, 1)
 pixel_size = 5.0
 billboard = 1
@@ -200,7 +228,7 @@ radial_segments = 39
 rings = 20
 
 [node name="CSGSphere3D3" type="CSGSphere3D" parent="Collision/BigRock"]
-transform = Transform3D(1.3529468, 0.9196776, 0, -3.1687207, 0.3926742, 0, 0, 0, 3.0772753, -8.3968315, -8.645681, -34.116936)
+transform = Transform3D(1.3529468, 0.9196776, 0, -3.1687207, 0.3926742, 0, 0, 0, 3.0772753, -8.439095, -8.686636, -34.138813)
 radius = 11.782903
 radial_segments = 39
 rings = 20
@@ -212,7 +240,7 @@ radial_segments = 16
 rings = 16
 
 [node name="CSGSphere3D5" type="CSGSphere3D" parent="Collision/BigRock"]
-transform = Transform3D(0.46912986, -0.29880172, -2.992638, -7.3062787, -0.35364628, 0, -1.9587346, 1.247572, -0.71675646, 18.345222, -0.36348343, -10.796215)
+transform = Transform3D(0.46912986, -0.29880172, -2.992638, -7.3062787, -0.35364628, 0, -1.9587346, 1.247572, -0.71675646, 25.172144, -0.36348343, 5.5635567)
 radius = 1.9758277
 radial_segments = 16
 rings = 16
@@ -225,7 +253,7 @@ radial_segments = 39
 rings = 20
 
 [node name="CSGSphere3D6" type="CSGSphere3D" parent="Collision/BigRock"]
-transform = Transform3D(1.2156689, -0.77429295, -2.4535427, -7.3062787, -0.3536463, -4.67943e-10, -1.6058873, 1.0228336, -1.8573505, 19.8488, -2.6609173, -13.406894)
+transform = Transform3D(1.2156689, -0.77429295, -2.4535427, -7.3062787, -0.3536463, -4.67943e-10, -1.6058873, 1.0228336, -1.8573505, 26.675722, -2.6609173, 2.952878)
 radius = 1.9758277
 radial_segments = 16
 rings = 16
@@ -265,14 +293,50 @@ operation = 2
 size = Vector3(7.866455, 9.970581, 35.53601)
 
 [node name="CSGSphere3D8" type="CSGSphere3D" parent="Collision/BigRock"]
-transform = Transform3D(1.2715966, 0.86437905, -1.050976, -3.1874995, 0.3768736, -0.14118461, 0.30683774, 0.33288965, 2.8887956, -17.638912, -8.645685, -4.0135345)
+transform = Transform3D(1.2715966, 0.86437905, -1.050976, -3.1874995, 0.3768736, -0.14118461, 0.30683774, 0.33288965, 2.8887956, -17.625557, -8.645685, -4.0091467)
 radius = 11.782903
 radial_segments = 39
 rings = 20
 
+[node name="CSGSphere3D9" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(1, 0, 0, 0, 1.6528628, 0, 0, 0, 2.9509172, 57.792183, -1.7218394, -9.47378)
+radius = 15.385
+radial_segments = 16
+rings = 16
+
+[node name="CSGSphere3D10" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(0.080407225, -0.37392104, -2.8646042, 0.018674372, 1.610012, -0.6652969, 0.99658716, 0, 0.24359022, 32.193317, -1.7218356, 31.11862)
+radius = 15.385
+radial_segments = 16
+rings = 16
+
+[node name="CSGSphere3D11" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(0.61826146, -2.595261, 0.39764437, 0.7388906, 2.579428, 0, -0.26794285, 1.1247373, 0.91753954, 44.5523, 21.34786, -52.90928)
+radius = 10.2015295
+radial_segments = 16
+rings = 16
+
+[node name="CSGSphere3D12" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(-0.5726949, -8.031921, 0.37996754, 1.1475667, -4.3142195, 0.117241815, 0.090527676, 3.8774104, 0.9175395, 3.3518867, 27.336552, -30.45758)
+radius = 3.840408
+radial_segments = 16
+rings = 16
+
+[node name="CSGSphere3D13" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(-0.735521, -7.201622, 0.37996763, 1.040497, -5.702944, 0.117241815, 0.1716377, 3.7110188, 0.9175396, 1.5842743, 32.707836, -33.730614)
+radius = 3.2203887
+radial_segments = 16
+rings = 16
+
+[node name="CSGSphere3D14" type="CSGSphere3D" parent="Collision/BigRock"]
+transform = Transform3D(0.08370854, 2.8359218, 0.9559434, -0.1417945, -9.412558, 0.2919843, 1.275136, -1.232842, -0.030286126, 50.162354, 32.707836, -3.2094345)
+radius = 8.486721
+radial_segments = 16
+rings = 16
+
 [node name="BigGrass" type="CSGCombiner3D" parent="Collision"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.014832, 0, 0)
-material_override = SubResource("ShaderMaterial_b0ka4")
+material_override = SubResource("ShaderMaterial_4jevh")
 use_collision = true
 collision_mask = 0
 
@@ -366,43 +430,106 @@ radius = 15.385
 radial_segments = 16
 rings = 16
 
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Collision"]
+material_override = ExtResource("12_wmxdb")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Collision/CSGCombiner3D"]
+transform = Transform3D(-0.029444382, 0.9666826, 0.9205238, 0, 2.3493268, -0.38182864, -0.3276572, -0.08686938, -0.0827214, 21.467733, -0.203516, 0.49825096)
+radius = 4.645
+radial_segments = 17
+rings = 12
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="Collision/CSGCombiner3D"]
+transform = Transform3D(0.30498606, 0.3638519, 0.3464781, -0.11554394, 1.6644136, 0.6692524, -0.04311967, -1.8864506, 0.65730816, -0.17765903, -0.203516, -12.892494)
+radius = 4.361298
+radial_segments = 17
+rings = 12
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Collision/CSGCombiner3D"]
+transform = Transform3D(0.9747573, 0.22326712, 0, -0.20361927, 0.88897717, 0.41019362, 0.09158275, -0.39983922, 0.91199845, 9.964821, 10.206073, 10.588423)
+radius = 3.769043
+height = 24.811035
+cone = true
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Collision/CSGCombiner3D"]
+transform = Transform3D(-0.471013, -0.60473895, 0.6422133, -0.034826454, 0.74020946, 0.67147404, -0.88143873, 0.29390687, -0.36970899, 20.472029, 8.847415, -46.25571)
+radius = 3.769043
+height = 24.811035
+cone = true
+
+[node name="CSGCombiner3D2" type="CSGCombiner3D" parent="Collision"]
+visible = false
+material_override = SubResource("ShaderMaterial_4jevh")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Collision/CSGCombiner3D2"]
+transform = Transform3D(-0.029444382, 0.9666826, 0.9205238, 0, 2.3493268, -0.38182864, -0.3276572, -0.08686938, -0.0827214, 16.23634, -0.20351505, -22.643345)
+radius = 4.645
+radial_segments = 17
+rings = 12
+
 [node name="Objects" type="Node3D" parent="."]
 
+[node name="Flower" parent="Objects" instance=ExtResource("14_rx5e1")]
+transform = Transform3D(0.689643, 0.36685678, -0.62434673, -0.6123961, 0.7556003, -0.23246309, 0.38647592, 0.54266405, 0.74575615, -3.185454, 1.1658216, -9.568578)
+
+[node name="Flower2" parent="Objects" instance=ExtResource("14_rx5e1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.758179, -0.017593265, 6.4792643)
+
+[node name="Flower3" parent="Objects" instance=ExtResource("14_rx5e1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.082138, -0.46870208, 0.685369)
+
+[node name="Flower4" parent="Objects" instance=ExtResource("14_rx5e1")]
+transform = Transform3D(0.7237625, -0.6900492, -1.48606e-08, -0.09392491, -0.09851375, -0.99069333, 0.6836271, 0.7170267, -0.13611332, 24.335424, 4.973027, -23.873302)
+
+[node name="Flower5" parent="Objects" instance=ExtResource("14_rx5e1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32781792, -0.54757655, 12.898113)
+
+[node name="EnemyGustbloom" parent="Objects" instance=ExtResource("12_rx5e1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.002043, 3.4230628, -38.69028)
+
+[node name="EnemySliz" parent="Objects" instance=ExtResource("15_sp0f2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.94203, 2.2811587, -15.792577)
+
+[node name="EnemySliz2" parent="Objects" instance=ExtResource("15_sp0f2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6612432, 3.4205484, -24.54151)
+
+[node name="EnemyThumper" parent="Objects" instance=ExtResource("16_f42we")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.476572, 1.3698142, -8.75635)
+
+[node name="EnemyThumper2" parent="Objects" instance=ExtResource("16_f42we")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.145048, 3.4157965, -28.055681)
+
 [node name="Enemies" type="Node3D" parent="."]
-
-[node name="EnemySliz" parent="Enemies" instance=ExtResource("11_174bo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.399761, 3.214209, -23.068426)
-string_sequence = "A A A A"
-
-[node name="EnemySliz2" parent="Enemies" instance=ExtResource("11_174bo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9384377, 3.5787487, -28.920506)
-string_sequence = "G1 G1 G1 G1"
-
-[node name="EnemySliz3" parent="Enemies" instance=ExtResource("11_174bo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.186526, 2.4373977, -14.161434)
-string_sequence = "D D D D"
+visible = false
 
 [node name="EnemyGustbloom" parent="Enemies" instance=ExtResource("12_rx5e1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.287856, 0.31335372, 7.7400126)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.387104, 3.241257, -19.129303)
 
 [node name="EnemyGustbloom2" parent="Enemies" instance=ExtResource("12_rx5e1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.485833, 3.7423124, -32.794624)
 
-[node name="EnemyThumper" parent="Enemies" instance=ExtResource("13_wmxdb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.576066, 1.1524656, -6.0541654)
-string_sequence = "A - - -"
-
-[node name="EnemyThumper2" parent="Enemies" instance=ExtResource("13_wmxdb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.105472, 3.58436, -21.56599)
-string_sequence = "- - A -"
-
 [node name="Particles" type="Node3D" parent="."]
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Particles"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.158745, 6.979705, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.898657, 5.6144667, -21.862194)
 cast_shadow = 0
 gi_mode = 0
-amount = 100
+visibility_range_begin = 3.0
+visibility_range_begin_margin = 0.5
+visibility_range_fade_mode = 1
+amount = 8000
 lifetime = 5.0
+preprocess = 10.0
+fixed_fps = 15
+visibility_aabb = AABB(-4, -4, -4, 1000, 1000, 1000)
 process_material = SubResource("ParticleProcessMaterial_wmxdb")
-draw_pass_1 = SubResource("BoxMesh_4jevh")
+draw_pass_1 = SubResource("QuadMesh_rx5e1")
+
+[node name="FlowerGiant" parent="." instance=ExtResource("15_wmxdb")]
+transform = Transform3D(0.9994669, 0.031844374, -0.007205061, -0.032238822, 0.9276869, -0.3719646, -0.005160937, 0.37199855, 0.92821896, 7.4041905, 2.9009764, -16.214977)
+
+[node name="FlowerGiant2" parent="." instance=ExtResource("15_wmxdb")]
+transform = Transform3D(0.5460328, -0.34575948, -0.7630849, 0.1908755, 0.9382478, -0.2885441, 0.8157298, 0.011900381, 0.57831085, 15.415453, 0.7545984, 0.5203703)
+
+[node name="FlowerGiant3" parent="." instance=ExtResource("15_wmxdb")]
+transform = Transform3D(0.51307726, 0.77927613, -0.359834, -0.83522236, 0.5499124, 0, 0.19787717, 0.3005414, 0.93301636, -2.852865, 6.2561035, -26.232473)

@@ -1,0 +1,25 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://pu22o46unbyv"]
+
+[ext_resource type="Shader" uid="uid://cr6hhspqfq1ib" path="res://assets/shaders/lighting_triplanar_runes.gdshader" id="1_vevw0"]
+[ext_resource type="Texture2D" uid="uid://r5wyrx7bpy11" path="res://assets/textures/sand_1.png" id="2_wdi0g"]
+[ext_resource type="Texture2D" uid="uid://de5oey11rg1k2" path="res://assets/textures/sand_1_normal.png" id="3_rtuem"]
+[ext_resource type="Texture2D" uid="uid://c0hqngv66kcia" path="res://assets/textures/runes_1.png" id="4_cvr6n"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_vevw0")
+shader_parameter/albedo = ExtResource("2_wdi0g")
+shader_parameter/runes = ExtResource("4_cvr6n")
+shader_parameter/runes_modulate = Color(0, 0.94616586, 0.95633227, 1)
+shader_parameter/runes_scale = 1.0
+shader_parameter/runes_bpm = 91.0
+shader_parameter/normal_map = ExtResource("3_rtuem")
+shader_parameter/normal_strength = 0.4
+shader_parameter/modulate = Color(0.7527232, 0.81166965, 0.70465267, 1)
+shader_parameter/texture_normal_map_scale = 2.0
+shader_parameter/uv1_scale = Vector3(0.3, 0.3, 0.3)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/uv1_blend_sharpness = 1.0000000475
+shader_parameter/uv2_blend_sharpness = 1.0000000475

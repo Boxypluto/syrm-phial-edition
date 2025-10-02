@@ -134,3 +134,6 @@ func on_hit() -> void:
 	Game.HUD.HURT.do_effect()
 	camera.shake(0.4, 0.4)
 	#Freeze.freeze(0.2)
+
+func bounce(area: Area3D) -> void:
+	velocity.y = 20

@@ -1,0 +1,129 @@
+[gd_scene load_steps=7 format=3 uid="uid://cl3mspgi6m00t"]
+
+[ext_resource type="Texture2D" uid="uid://coj3744fqery6" path="res://assets/sprites/objects/beam.png" id="1_dr28h"]
+[ext_resource type="Script" uid="uid://c8fi0aair2g7w" path="res://content/object/beambloom/flower/beambloom_pedal.gd" id="1_l5bnl"]
+[ext_resource type="Texture2D" uid="uid://c6a4gx5x1flau" path="res://assets/sprites/objects/flower.png" id="1_x0888"]
+[ext_resource type="Texture2D" uid="uid://c4773mw1tmdn6" path="res://assets/sprites/objects/flower2.png" id="2_qydwa"]
+[ext_resource type="Script" uid="uid://dxppuixs1mt40" path="res://content/object/beambloom/flower/beam.gd" id="2_sgbdi"]
+[ext_resource type="Texture2D" uid="uid://b5bq74iro1cjk" path="res://assets/sprites/objects/flower3.png" id="3_l5bnl"]
+
+[node name="Flower" type="Node3D"]
+
+[node name="Beam" type="Sprite3D" parent="."]
+offset = Vector2(0, 256)
+modulate = Color(1, 0.57, 0.78499997, 0.08235294)
+pixel_size = 0.1
+texture_filter = 0
+texture = ExtResource("1_dr28h")
+region_rect = Rect2(0, 0, 128, 384)
+script = ExtResource("2_sgbdi")
+
+[node name="Pedal" type="Node3D" parent="."]
+
+[node name="Sprite3D" type="Sprite3D" parent="Pedal"]
+transform = Transform3D(1, 0, 0, 0, 0.87630665, 0.4817537, 0, -0.4817537, 0.87630665, 0, 0, -0.108)
+offset = Vector2(0, 16)
+pixel_size = 0.05
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("1_x0888")
+script = ExtResource("1_l5bnl")
+
+[node name="Pedal2" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="Pedal2"]
+transform = Transform3D(1, 0, 0, 0, 0.87630665, 0.4817537, 0, -0.4817537, 0.87630665, 0, 0, -0.108)
+offset = Vector2(0, 16)
+pixel_size = 0.05
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("1_x0888")
+script = ExtResource("1_l5bnl")
+
+[node name="Pedal3" type="Node3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="Pedal3"]
+transform = Transform3D(1, 0, 0, 0, 0.87630665, 0.4817537, 0, -0.4817537, 0.87630665, 0, 0, -0.108)
+offset = Vector2(0, 16)
+pixel_size = 0.05
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("1_x0888")
+script = ExtResource("1_l5bnl")
+
+[node name="Pedal4" type="Node3D" parent="."]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 0, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="Pedal4"]
+transform = Transform3D(1, 0, 0, 0, 0.87630665, 0.4817537, 0, -0.4817537, 0.87630665, 0, 0, -0.108)
+offset = Vector2(0, 16)
+pixel_size = 0.05
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("1_x0888")
+script = ExtResource("1_l5bnl")
+
+[node name="Pedal5" type="Node3D" parent="."]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="Pedal5"]
+transform = Transform3D(1, 0, 0, 0, 0.5224985, 0.8526402, 0, -0.8526402, 0.5224985, 0, 0, -0.448)
+offset = Vector2(0, 16)
+modulate = Color(0.7157119, 0.56545573, 1, 1)
+pixel_size = 0.05
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("2_qydwa")
+script = ExtResource("1_l5bnl")
+pulse_angle = -1.4
+
+[node name="Pedal6" type="Node3D" parent="."]
+transform = Transform3D(-0.7071068, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071068, 0, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="Pedal6"]
+transform = Transform3D(1, 0, 0, 0, 0.5224985, 0.8526402, 0, -0.8526402, 0.5224985, 0, 0, -0.448)
+offset = Vector2(0, 16)
+modulate = Color(0.7157119, 0.56545573, 1, 1)
+pixel_size = 0.05
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("2_qydwa")
+script = ExtResource("1_l5bnl")
+pulse_angle = -1.4
+
+[node name="Pedal7" type="Node3D" parent="."]
+transform = Transform3D(0.7071067, 0, -0.7071068, 0, 1, 0, 0.7071068, 0, 0.7071067, 0, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="Pedal7"]
+transform = Transform3D(1, 0, 0, 0, 0.5224985, 0.8526402, 0, -0.8526402, 0.5224985, 0, 0, -0.448)
+offset = Vector2(0, 16)
+modulate = Color(0.7157119, 0.56545573, 1, 1)
+pixel_size = 0.05
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("2_qydwa")
+script = ExtResource("1_l5bnl")
+pulse_angle = -1.4
+
+[node name="Pedal8" type="Node3D" parent="."]
+transform = Transform3D(-0.70710665, 0, 0.7071069, 0, 1, 0, -0.7071069, 0, -0.70710665, 0, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="Pedal8"]
+transform = Transform3D(1, 0, 0, 0, 0.5224985, 0.8526402, 0, -0.8526402, 0.5224985, 0, 0, -0.448)
+offset = Vector2(0, 16)
+modulate = Color(0.7157119, 0.56545573, 1, 1)
+pixel_size = 0.05
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("2_qydwa")
+script = ExtResource("1_l5bnl")
+pulse_angle = -1.4
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0.9703573, 0)
+pixel_size = 0.05
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("3_l5bnl")

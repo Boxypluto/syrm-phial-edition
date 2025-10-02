@@ -94,4 +94,12 @@ metadata/_custom_type_script = "uid://bog6bqfmnioad"
 shape = SubResource("CapsuleShape3D_vx4xa")
 debug_color = Color(0.90188205, 0.1411309, 0.6783571, 0.41960785)
 
+[node name="Bouncer" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bouncer"]
+shape = SubResource("CapsuleShape3D_x4mxd")
+
 [connection signal="hit" from="HitBox" to="." method="on_hit"]
+[connection signal="area_entered" from="Bouncer" to="." method="bounce"]
