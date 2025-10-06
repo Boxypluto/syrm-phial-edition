@@ -1,14 +1,16 @@
-[gd_scene load_steps=26 format=3 uid="uid://d3fghnjmt3yp8"]
+[gd_scene load_steps=31 format=3 uid="uid://d3fghnjmt3yp8"]
 
 [ext_resource type="Script" uid="uid://4ax2lruikqyq" path="res://system/game.gd" id="1_uwgih"]
 [ext_resource type="PackedScene" uid="uid://db6dv4pdde6co" path="res://content/player/player.tscn" id="2_g4eph"]
-[ext_resource type="PackedScene" uid="uid://c8e2r7s0iqkyr" path="res://content/levels/beambloom_desert/level_beambloom_desert.tscn" id="3_w6m87"]
+[ext_resource type="PackedScene" uid="uid://d3wksdk62wfdy" path="res://content/levels/beambloom_desert/level_beambloom.tscn" id="3_w6m87"]
 [ext_resource type="Script" uid="uid://bkbpcrbxsc4gf" path="res://system/hud.gd" id="4_nvi61"]
 [ext_resource type="Script" uid="uid://cip3mcqdx4frc" path="res://system/fps_shower.gd" id="5_gsj3s"]
 [ext_resource type="Script" uid="uid://cfbgio25yma8y" path="res://content/hud/gun_hud.gd" id="5_m0p3p"]
 [ext_resource type="Script" uid="uid://d3wgwrudwcjna" path="res://content/component/pulse.gd" id="5_wvlmy"]
+[ext_resource type="Script" uid="uid://cule0430m0x0h" path="res://system/debug_enemies.gd" id="6_fdhvp"]
 [ext_resource type="Texture2D" uid="uid://dsqvyovk6nixl" path="res://assets/sprites/gun_prototype_3_orb.png" id="6_nvi61"]
 [ext_resource type="Texture2D" uid="uid://c4ob60vhxre8d" path="res://assets/sprites/crosshair_2.png" id="6_w6m87"]
+[ext_resource type="Script" uid="uid://cvheaitiuae1c" path="res://system/debug_music.gd" id="7_fkdic"]
 [ext_resource type="Shader" uid="uid://bequahm58x16c" path="res://content/hud/weapon/orb/orb.gdshader" id="7_fxm5u"]
 [ext_resource type="Texture2D" uid="uid://daswedmdexvkk" path="res://assets/sprites/gun_prototype_3_hand.png" id="7_jt55s"]
 [ext_resource type="Script" uid="uid://dmyk3kebnukm0" path="res://content/hud/orb.gd" id="8_3w5he"]
@@ -21,6 +23,21 @@
 [ext_resource type="Script" uid="uid://c5hpove6jevd1" path="res://assets/hud/beat_syncer.gd" id="18_vscnc"]
 [ext_resource type="Texture2D" uid="uid://c7lm8a8i3cjb6" path="res://assets/sprites/heart_beat.png" id="19_fdhvp"]
 [ext_resource type="Script" uid="uid://8p31pkl0wuf8" path="res://content/player/hurt.gd" id="19_m3agx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_w6m87"]
+line_spacing = 1.0
+paragraph_spacing = -3.35
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_fdhvp"]
+line_spacing = 1.0
+paragraph_spacing = -3.35
+font_size = 3
+
+[sub_resource type="LabelSettings" id="LabelSettings_fkdic"]
+line_spacing = 1.0
+paragraph_spacing = -3.35
+font_size = 5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jt55s"]
 shader = ExtResource("7_fxm5u")
@@ -79,15 +96,33 @@ grow_vertical = 2
 size_flags_vertical = 3
 script = ExtResource("4_nvi61")
 
-[node name="FPS" type="Label" parent="HUD"]
+[node name="DebugTexts" type="VBoxContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 18.0
+grow_vertical = 2
+
+[node name="FPS" type="Label" parent="HUD/DebugTexts"]
 z_index = 3
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 48.0
-offset_bottom = 31.0
+layout_mode = 2
 text = "FPS: "
+label_settings = SubResource("LabelSettings_w6m87")
 script = ExtResource("5_gsj3s")
+
+[node name="Enemies" type="Label" parent="HUD/DebugTexts"]
+z_index = 3
+layout_mode = 2
+text = "FPS: "
+label_settings = SubResource("LabelSettings_fdhvp")
+script = ExtResource("6_fdhvp")
+
+[node name="Music" type="Label" parent="HUD/DebugTexts"]
+z_index = 3
+layout_mode = 2
+text = "Music: None"
+label_settings = SubResource("LabelSettings_fkdic")
+script = ExtResource("7_fkdic")
 
 [node name="Crosshair" type="TextureRect" parent="HUD"]
 layout_mode = 1
@@ -121,6 +156,7 @@ centered = false
 script = ExtResource("8_3w5he")
 
 [node name="Hurt" type="TextureRect" parent="HUD"]
+visible = false
 texture_repeat = 2
 material = SubResource("ShaderMaterial_8mfh0")
 layout_mode = 0

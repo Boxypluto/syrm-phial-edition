@@ -11,15 +11,15 @@ class_name EnemyGustbloom
 const GUST = preload("uid://ca4tm6hy5mb31")
 
 var spiral_count: int = 3
-var spiral_gust_count: int = 7
+var spiral_gust_count: int = 17
 var vertical_gust_count: int = 5
 
 var sprial_rotation_speed: float = 1.5 
 
-var spiral_gusts_seperation: float = 1.7
+var spiral_gusts_seperation: float = 1.2
 var spiral_y_position: float = 0.5
 var spiral_movement_base: float = 0.1
-var spiral_drag: float = 0.75
+var spiral_drag: float = 0.9
 
 var vertical_gusts_seperation: float = 2.7
 var veritcal_gusts_y_position: float = 4.0
@@ -59,7 +59,9 @@ func _ready() -> void:
 		gust.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_INHERIT
 	
 	sequence.setup_exported()
-	sequence.tracks[0].note_played.connect(func(_a, _b, _c): spin_spirals())
+	sequence.tracks[0].note_played.connect(func(_a, _b, _c):
+		if not Debug.flags.get("gustbloom"): return
+		spin_spirals())
 
 func _physics_process(delta: float) -> void:
 	
@@ -67,7 +69,6 @@ func _physics_process(delta: float) -> void:
 	#position_verticals()
 
 func spin_spirals():
-	print("SPIN")
 	spiral.play_note(sequence.next(Rhythm.current_position / Rhythm.beat_length).note)
 	spirals_rotation += (1.0 / spiral_count) * PI
 

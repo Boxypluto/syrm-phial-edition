@@ -5,7 +5,6 @@ var inital_angle: float = rotation.x
 var return_factor: float = 0.02
 
 func _ready() -> void:
-	print(inital_angle)
 	Rhythm.beats(1).connect(func(_a): pulse())
 
 func _physics_process(delta: float) -> void:

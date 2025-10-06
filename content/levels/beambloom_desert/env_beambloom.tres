@@ -1,0 +1,14 @@
+[gd_resource type="Environment" format=3 uid="uid://dv4x6sid3es7m"]
+
+[resource]
+reflected_light_source = 1
+tonemap_mode = 2
+fog_enabled = true
+fog_light_color = Color(0.8256755, 0.42900828, 5.7756904e-07, 1)
+fog_light_energy = 1.86
+fog_sun_scatter = 0.05
+fog_sky_affect = 0.75
+volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(0.95580417, 0.46186036, 1.1551381e-06, 1)
+volumetric_fog_emission = Color(0.95691234, 0.29150236, 1.1551381e-06, 1)
+volumetric_fog_sky_affect = 0.87

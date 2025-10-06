@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://bam70ys1vxtwk"]
+
+[ext_resource type="Shader" uid="uid://cro62vrt05tw0" path="res://content/enemy/lenzen/lenzen_laser_shader.gdshader" id="1_f6flr"]
+[ext_resource type="Texture2D" uid="uid://dyfrq6jfmtl38" path="res://assets/sprites/enemy/lenzen_laser.png" id="2_fj06t"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_fj06t"]
+center_offset = Vector3(0, 0.5, 0.255)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uyjjd"]
+render_priority = 0
+shader = ExtResource("1_f6flr")
+shader_parameter/albedo_texture = ExtResource("2_fj06t")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fj06t"]
+height = 200.0
+
+[node name="LenzenLaser" type="Node3D"]
+
+[node name="Scaler" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -8.742278e-06, 1, 0, -200, -4.371139e-08, 0, 0, 0)
+
+[node name="Face1" type="MeshInstance3D" parent="Scaler"]
+mesh = SubResource("QuadMesh_fj06t")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_uyjjd")
+
+[node name="Face2" type="MeshInstance3D" parent="Scaler"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("QuadMesh_fj06t")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_uyjjd")
+
+[node name="Face3" type="MeshInstance3D" parent="Scaler"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_fj06t")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_uyjjd")
+
+[node name="Face4" type="MeshInstance3D" parent="Scaler"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("QuadMesh_fj06t")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_uyjjd")
+
+[node name="Damager" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+collision_layer = 8
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape3D" parent="Damager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)
+shape = SubResource("CapsuleShape3D_fj06t")
+debug_color = Color(0.9545869, 6.738305e-07, 0.55017483, 0.41960785)

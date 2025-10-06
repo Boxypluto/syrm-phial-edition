@@ -8,8 +8,8 @@ class_name Player
 
 @onready var state_orb: OrbState = $WeaponStates/Orb
 
-var speed: float = 10.0
-var jump_strength: float = 10.0
+var speed: float = 15.0
+var jump_strength: float = 12.0
 var gravity: float = 20.0
 
 var mouse_sensitivity: float = 3.0

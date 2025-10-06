@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5afmmte8jjns"]
+
+[ext_resource type="Texture2D" uid="uid://bvtpk3j1iw1y5" path="res://assets/sprites/enemy/lenzen_charge.png" id="1_fhr7b"]
+[ext_resource type="Script" uid="uid://7xp3hk4yms1k" path="res://content/enemy/lenzen/enemy_lenzen_charge_effect.gd" id="2_sb6ht"]
+
+[node name="EnemyLenzenChargeEffect" type="Sprite3D"]
+pixel_size = 0.05
+billboard = 1
+texture_filter = 0
+texture = ExtResource("1_fhr7b")
+script = ExtResource("2_sb6ht")

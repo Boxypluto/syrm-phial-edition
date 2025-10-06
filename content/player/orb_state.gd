@@ -5,9 +5,9 @@ class_name OrbState
 @onready var sfx_shoot: MusicalAudioGlobal = $"../../SFX/Orb/Shoot"
 @onready var sfx_fail: MusicalAudioGlobal = $"../../SFX/Orb/Fail"
 
-@export var string_sequence: String
+@export_multiline var string_sequence: String
 @onready var sequence: Seqence
-@export var charge_string_sequence: String
+@export_multiline var charge_string_sequence: String
 @onready var charge_sequence: Seqence
 
 var required_beat: float = 1.0

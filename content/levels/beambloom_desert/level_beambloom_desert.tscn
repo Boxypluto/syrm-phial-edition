@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://c8e2r7s0iqkyr"]
+[gd_scene load_steps=36 format=3 uid="uid://c8e2r7s0iqkyr"]
 
 [ext_resource type="Texture2D" uid="uid://4305b0ommceu" path="res://assets/skybox/skybox_beambloom.png" id="1_wjpys"]
 [ext_resource type="Shader" uid="uid://c5u0e373tvinu" path="res://assets/shaders/lighting_triplanar.gdshader" id="2_fmrr4"]
@@ -13,7 +13,9 @@
 [ext_resource type="Material" uid="uid://pu22o46unbyv" path="res://assets/shaders/materials/runes_pulser.tres" id="12_wmxdb"]
 [ext_resource type="Texture2D" uid="uid://n0y2nb0g33os" path="res://assets/textures/sand_2.png" id="13_wmxdb"]
 [ext_resource type="Texture2D" uid="uid://ic61wwoexbx3" path="res://assets/textures/sand_2_normal.png" id="14_4jevh"]
+[ext_resource type="PackedScene" uid="uid://drqh0yj6e81qv" path="res://content/enemy/lenzen/enemy_lenzen.tscn" id="14_8kota"]
 [ext_resource type="PackedScene" uid="uid://cl3mspgi6m00t" path="res://content/object/beambloom/flower/flower.tscn" id="14_rx5e1"]
+[ext_resource type="Script" uid="uid://bsnc4lbnm1xpd" path="res://content/component/music_seqence.gd" id="15_f42we"]
 [ext_resource type="PackedScene" uid="uid://cmxvrvtkghl04" path="res://content/enemy/sliz/enemy_sliz.tscn" id="15_sp0f2"]
 [ext_resource type="PackedScene" uid="uid://dmu6kttgjfcny" path="res://content/object/beambloom/flower/flower_giant.tscn" id="15_wmxdb"]
 [ext_resource type="PackedScene" uid="uid://dntwirrcck4k4" path="res://content/enemy/thumper/enemy_thumper.tscn" id="16_f42we"]
@@ -60,6 +62,8 @@ shader_parameter/albedo = Color(0.98039216, 0.41568628, 0.039215688, 1)
 render_priority = 0
 shader = ExtResource("6_stnf7")
 shader_parameter/albedo = ExtResource("3_wjpys")
+shader_parameter/fixed_albedo = ExtResource("3_wjpys")
+shader_parameter/used_fixed = false
 shader_parameter/runes_modulate = Color(1, 1, 1, 1)
 shader_parameter/runes_scale = 1.0
 shader_parameter/runes_bpm = 1.0
@@ -78,6 +82,7 @@ shader_parameter/uv2_blend_sharpness = 1.0000000475
 render_priority = 0
 shader = ExtResource("2_fmrr4")
 shader_parameter/albedo = ExtResource("13_wmxdb")
+shader_parameter/used_fixed = false
 shader_parameter/normal_map = ExtResource("14_4jevh")
 shader_parameter/normal_strength = 0.28
 shader_parameter/modulate = Color(1, 1, 1, 1)
@@ -88,6 +93,18 @@ shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/uv1_blend_sharpness = 1.0000000475
 shader_parameter/uv2_blend_sharpness = 1.0000000475
+
+[sub_resource type="Resource" id="Resource_8kota"]
+script = ExtResource("15_f42we")
+sequence_strings = Array[String](["G# - G# -"])
+exported_include_signal = true
+metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
+
+[sub_resource type="Resource" id="Resource_ud1vu"]
+script = ExtResource("15_f42we")
+sequence_strings = Array[String](["A - - - - - - - - - - - - - - -", "- - - - A - - - - - - - - - - -", "- - - - - - - - - - - - A - - -"])
+exported_include_signal = true
+metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
 
 [sub_resource type="Curve" id="Curve_rx5e1"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.104779415, 1), 0.0, 0.0, 0, 0, Vector2(0.86213243, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -484,29 +501,31 @@ transform = Transform3D(0.7237625, -0.6900492, -1.48606e-08, -0.09392491, -0.098
 [node name="Flower5" parent="Objects" instance=ExtResource("14_rx5e1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32781792, -0.54757655, 12.898113)
 
-[node name="EnemyGustbloom" parent="Objects" instance=ExtResource("12_rx5e1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.002043, 3.4230628, -38.69028)
-
-[node name="EnemySliz" parent="Objects" instance=ExtResource("15_sp0f2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.94203, 2.2811587, -15.792577)
-
-[node name="EnemySliz2" parent="Objects" instance=ExtResource("15_sp0f2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6612432, 3.4205484, -24.54151)
-
-[node name="EnemyThumper" parent="Objects" instance=ExtResource("16_f42we")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.476572, 1.3698142, -8.75635)
-
-[node name="EnemyThumper2" parent="Objects" instance=ExtResource("16_f42we")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.145048, 3.4157965, -28.055681)
-
 [node name="Enemies" type="Node3D" parent="."]
-visible = false
 
-[node name="EnemyGustbloom" parent="Enemies" instance=ExtResource("12_rx5e1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.387104, 3.241257, -19.129303)
+[node name="EnemyGustbloom3" parent="Enemies" instance=ExtResource("12_rx5e1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.002043, 3.4230628, -38.69028)
+sequence = SubResource("Resource_8kota")
 
-[node name="EnemyGustbloom2" parent="Enemies" instance=ExtResource("12_rx5e1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.485833, 3.7423124, -32.794624)
+[node name="EnemySliz" parent="Enemies" instance=ExtResource("15_sp0f2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.94203, 2.2811587, -15.792577)
+string_sequence = "3[D - ] G# -"
+
+[node name="EnemySliz2" parent="Enemies" instance=ExtResource("15_sp0f2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6612432, 3.4205484, -24.54151)
+string_sequence = "- E - E"
+
+[node name="EnemyThumper" parent="Enemies" instance=ExtResource("16_f42we")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.476572, 1.3698142, -8.75635)
+string_sequence = "A - - -"
+
+[node name="EnemyThumper2" parent="Enemies" instance=ExtResource("16_f42we")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.145048, 3.4157965, -28.055681)
+string_sequence = "- - A -"
+
+[node name="EnemyLenzen" parent="Enemies" instance=ExtResource("14_8kota")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.31682396, 0)
+sequence = SubResource("Resource_ud1vu")
 
 [node name="Particles" type="Node3D" parent="."]
 

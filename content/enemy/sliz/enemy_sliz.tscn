@@ -65,10 +65,10 @@ height = 2.4814453
 
 [node name="EnemySliz" type="Node3D"]
 script = ExtResource("1_ssju7")
-shoot_velocity = 10.0
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_7aqgi")
+current_health = 30.0
 
 [node name="Animation" type="AnimatedSprite3D" parent="."]
 offset = Vector2(0, 32)

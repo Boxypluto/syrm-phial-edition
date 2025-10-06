@@ -7,8 +7,8 @@ class_name ShockwaveRed
 
 @export var alpha_curve: Curve
 
-var target_scale: float = 8.0
-var expand_speed: float = 12.0
+var target_scale: float = 16.0
+var expand_speed: float = 24.0
 var no_hurt_point: float = 0.7
 
 func _physics_process(delta: float) -> void:

@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://cl3mspgi6m00t"]
+[gd_scene load_steps=10 format=3 uid="uid://cl3mspgi6m00t"]
 
+[ext_resource type="Shader" uid="uid://c134p1rnd5icp" path="res://content/object/beambloom/flower/beam.gdshader" id="1_cn21u"]
 [ext_resource type="Texture2D" uid="uid://coj3744fqery6" path="res://assets/sprites/objects/beam.png" id="1_dr28h"]
 [ext_resource type="Script" uid="uid://c8fi0aair2g7w" path="res://content/object/beambloom/flower/beambloom_pedal.gd" id="1_l5bnl"]
 [ext_resource type="Texture2D" uid="uid://c6a4gx5x1flau" path="res://assets/sprites/objects/flower.png" id="1_x0888"]
@@ -7,7 +8,27 @@
 [ext_resource type="Script" uid="uid://dxppuixs1mt40" path="res://content/object/beambloom/flower/beam.gd" id="2_sgbdi"]
 [ext_resource type="Texture2D" uid="uid://b5bq74iro1cjk" path="res://assets/sprites/objects/flower3.png" id="3_l5bnl"]
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_loqjr"]
+top_radius = 4.328
+bottom_radius = 0.066
+height = 32.0
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sergx"]
+render_priority = 0
+shader = ExtResource("1_cn21u")
+shader_parameter/modulate = Color(1, 0.57, 0.78499997, 0.03137255)
+
 [node name="Flower" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16, 0)
+visible = false
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("CylinderMesh_loqjr")
+surface_material_override/0 = SubResource("ShaderMaterial_sergx")
+script = ExtResource("2_sgbdi")
 
 [node name="Beam" type="Sprite3D" parent="."]
 offset = Vector2(0, 256)

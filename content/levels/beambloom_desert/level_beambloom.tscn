@@ -1,0 +1,271 @@
+[gd_scene load_steps=30 format=3 uid="uid://d3wksdk62wfdy"]
+
+[ext_resource type="Texture2D" uid="uid://bery80d3iqdoc" path="res://assets/sprites/environment/sun.png" id="1_lsjvh"]
+[ext_resource type="Script" uid="uid://ndo4d4agq3vk" path="res://content/component/pulse_3d.gd" id="2_eik8g"]
+[ext_resource type="Shader" uid="uid://b5rd00k6i4dgs" path="res://content/levels/beambloom_desert/skybox_face_texture.gdshader" id="3_8g3dw"]
+[ext_resource type="Texture2D" uid="uid://4305b0ommceu" path="res://assets/skybox/skybox_beambloom.png" id="4_fu18d"]
+[ext_resource type="Shader" uid="uid://bkdbe6feamqsk" path="res://content/levels/beambloom_desert/skybox_face_color.gdshader" id="5_kbhk2"]
+[ext_resource type="Texture2D" uid="uid://cscwbjff33hxo" path="res://assets/textures/testing.png" id="8_jadsp"]
+[ext_resource type="Shader" uid="uid://c5u0e373tvinu" path="res://assets/shaders/lighting_triplanar.gdshader" id="9_vo2av"]
+[ext_resource type="Texture2D" uid="uid://cyqn5ndyw60gs" path="res://assets/textures/testing_normal.png" id="9_wjxmb"]
+[ext_resource type="PackedScene" uid="uid://cop7xblcpkud5" path="res://content/enemy/gustbloom/enemy_gustbloom.tscn" id="14_xplia"]
+[ext_resource type="Script" uid="uid://bsnc4lbnm1xpd" path="res://content/component/music_seqence.gd" id="15_5sym7"]
+[ext_resource type="PackedScene" uid="uid://cmxvrvtkghl04" path="res://content/enemy/sliz/enemy_sliz.tscn" id="16_32apw"]
+[ext_resource type="PackedScene" uid="uid://dntwirrcck4k4" path="res://content/enemy/thumper/enemy_thumper.tscn" id="17_xloso"]
+[ext_resource type="PackedScene" uid="uid://drqh0yj6e81qv" path="res://content/enemy/lenzen/enemy_lenzen.tscn" id="18_tqo7p"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_rnb26"]
+center_offset = Vector3(0, 0.275, -0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_agsqn"]
+render_priority = 0
+shader = ExtResource("3_8g3dw")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("4_fu18d")
+
+[sub_resource type="QuadMesh" id="QuadMesh_stnf7"]
+center_offset = Vector3(0, 0, -0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rx5e1"]
+render_priority = 0
+shader = ExtResource("5_kbhk2")
+shader_parameter/albedo = Color(0.9882353, 0.87058824, 0.6509804, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_174bo"]
+center_offset = Vector3(0, 0.275, -0.085)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wmxdb"]
+render_priority = 0
+shader = ExtResource("5_kbhk2")
+shader_parameter/albedo = Color(0.98039216, 0.41568628, 0.039215688, 1)
+
+[sub_resource type="Curve" id="Curve_rx5e1"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.104779415, 1), 0.0, 0.0, 0, 0, Vector2(0.86213243, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_wmxdb"]
+curve = SubResource("Curve_rx5e1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wmxdb"]
+emission_shape_scale = Vector3(16.195, 21.915, 39.49)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+spread = 0.0
+initial_velocity_min = 20.0
+initial_velocity_max = 40.0
+gravity = Vector3(0, 0, 0)
+attractor_interaction_enabled = false
+scale_curve = SubResource("CurveTexture_wmxdb")
+turbulence_enabled = true
+turbulence_noise_strength = 0.1
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.011000001
+turbulence_initial_displacement_min = 1.490116e-06
+turbulence_initial_displacement_max = 8.800001
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_174bo"]
+shading_mode = 0
+albedo_color = Color(0.83343375, 0.60577744, 0.04059127, 1)
+texture_filter = 0
+disable_receive_shadows = true
+billboard_mode = 1
+grow_amount = 9.645
+stencil_flags = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_rx5e1"]
+material = SubResource("StandardMaterial3D_174bo")
+size = Vector2(0.1, 0.1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r1nue"]
+render_priority = 0
+shader = ExtResource("9_vo2av")
+shader_parameter/albedo = ExtResource("8_jadsp")
+shader_parameter/fixed_albedo = ExtResource("8_jadsp")
+shader_parameter/used_fixed = false
+shader_parameter/normal_map = ExtResource("9_wjxmb")
+shader_parameter/normal_strength = 1.0
+shader_parameter/modulate = Color(1, 1, 1, 1)
+shader_parameter/texture_normal_map_scale = 2.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/uv1_blend_sharpness = 1.0000000475
+shader_parameter/uv2_blend_sharpness = 1.0000000475
+
+[sub_resource type="Resource" id="Resource_030qi"]
+script = ExtResource("15_5sym7")
+sequence_strings = Array[String](["12[-] 4A", "4G# 12[-]", "4[-] 4E 8[-]"])
+exported_include_signal = true
+metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
+
+[sub_resource type="Resource" id="Resource_vjd1r"]
+script = ExtResource("15_5sym7")
+sequence_strings = Array[String](["12[-] 4D", "4E 12[-]", "4[-] 4E 8[-]"])
+exported_include_signal = true
+metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
+
+[sub_resource type="Resource" id="Resource_3ppjp"]
+script = ExtResource("15_5sym7")
+sequence_strings = Array[String](["D - E - G# - E -"])
+exported_include_signal = true
+metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
+
+[sub_resource type="Resource" id="Resource_46n82"]
+script = ExtResource("15_5sym7")
+sequence_strings = Array[String](["- D - E - G# - E"])
+exported_include_signal = true
+metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
+
+[node name="LevelBeambloomDesert" type="Node3D"]
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(-0.8660254, -0.43301278, 0.24999999, -0.27535698, 0.8303824, 0.48440024, -0.4173471, 0.35066366, -0.8383653, 0, 3.4081168, 0)
+shadow_enabled = true
+
+[node name="SUN" type="Sprite3D" parent="Environment"]
+transform = Transform3D(2.23, 0, 0, 0, 2.23, 0, 0, 0, 2.2299998, 610.7748, 944.55884, -1958.3967)
+modulate = Color(0.9999998, 0.6337041, 0.1126026, 1)
+pixel_size = 5.0
+billboard = 1
+texture_filter = 0
+texture = ExtResource("1_lsjvh")
+script = ExtResource("2_eik8g")
+strength = 1.4
+beats = 1
+shrink_speed = 5.0
+
+[node name="Skybox" type="Node3D" parent="Environment"]
+visible = false
+
+[node name="FaceZ-" type="MeshInstance3D" parent="Environment/Skybox"]
+cast_shadow = 0
+extra_cull_margin = 10000.0
+lod_bias = 0.001
+gi_mode = 0
+mesh = SubResource("QuadMesh_rnb26")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_agsqn")
+
+[node name="FaceX+" type="MeshInstance3D" parent="Environment/Skybox"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+cast_shadow = 0
+extra_cull_margin = 10000.0
+lod_bias = 0.001
+gi_mode = 0
+mesh = SubResource("QuadMesh_rnb26")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_agsqn")
+
+[node name="FaceZ+" type="MeshInstance3D" parent="Environment/Skybox"]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0, 0)
+cast_shadow = 0
+extra_cull_margin = 10000.0
+lod_bias = 0.001
+gi_mode = 0
+mesh = SubResource("QuadMesh_rnb26")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_agsqn")
+
+[node name="FaceX-" type="MeshInstance3D" parent="Environment/Skybox"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+cast_shadow = 0
+extra_cull_margin = 10000.0
+lod_bias = 0.001
+gi_mode = 0
+mesh = SubResource("QuadMesh_rnb26")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_agsqn")
+
+[node name="FaceY+" type="MeshInstance3D" parent="Environment/Skybox"]
+transform = Transform3D(7.54979e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, 7.54979e-08, -3.300118e-15, 0, 0, 0)
+cast_shadow = 0
+extra_cull_margin = 10000.0
+lod_bias = 0.001
+gi_mode = 0
+mesh = SubResource("QuadMesh_stnf7")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_rx5e1")
+
+[node name="FaceY-" type="MeshInstance3D" parent="Environment/Skybox"]
+transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, 0, 0, 0)
+cast_shadow = 0
+extra_cull_margin = 10000.0
+lod_bias = 0.001
+gi_mode = 0
+mesh = SubResource("QuadMesh_174bo")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_wmxdb")
+
+[node name="Particles" type="Node3D" parent="Environment"]
+visible = false
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Environment/Particles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.898657, 5.6144667, -21.862194)
+cast_shadow = 0
+gi_mode = 0
+visibility_range_begin = 3.0
+visibility_range_begin_margin = 0.5
+visibility_range_fade_mode = 1
+amount = 8000
+lifetime = 5.0
+preprocess = 10.0
+fixed_fps = 15
+visibility_aabb = AABB(-4, -4, -4, 1000, 1000, 1000)
+process_material = SubResource("ParticleProcessMaterial_wmxdb")
+draw_pass_1 = SubResource("QuadMesh_rx5e1")
+
+[node name="Terrain" type="Node3D" parent="."]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Terrain"]
+material_override = SubResource("ShaderMaterial_r1nue")
+use_collision = true
+collision_mask = 0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Terrain/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -4.5)
+size = Vector3(43, 1, 60)
+
+[node name="Objects" type="Node3D" parent="."]
+
+[node name="Enemies" type="Node3D" parent="."]
+
+[node name="EnemySliz" parent="Enemies" instance=ExtResource("16_32apw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.154813, 0.34857416, -4.203018)
+string_sequence = "A - - -"
+
+[node name="EnemySliz2" parent="Enemies" instance=ExtResource("16_32apw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5709505, 0.34857416, -7.1492724)
+string_sequence = "- E - -"
+
+[node name="EnemySliz3" parent="Enemies" instance=ExtResource("16_32apw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.664566, 0.34857416, -7.5618215)
+string_sequence = "- - D -"
+
+[node name="EnemySliz4" parent="Enemies" instance=ExtResource("16_32apw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.386073, 0.34857416, -4.0452743)
+string_sequence = "- - - G#"
+
+[node name="EnemyThumper" parent="Enemies" instance=ExtResource("17_xloso")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.485744, 0)
+string_sequence = "A - - -"
+
+[node name="EnemyLenzen" parent="Enemies" instance=ExtResource("18_tqo7p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.0465, 0, -26.220276)
+sequence = SubResource("Resource_030qi")
+
+[node name="EnemyLenzen2" parent="Enemies" instance=ExtResource("18_tqo7p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.841513, 0, -27.636208)
+sequence = SubResource("Resource_vjd1r")
+
+[node name="EnemyGustbloom" parent="Enemies" instance=ExtResource("14_xplia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.081093, 0, -5.445965)
+sequence = SubResource("Resource_3ppjp")
+
+[node name="EnemyGustbloom2" parent="Enemies" instance=ExtResource("14_xplia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.778904, 0, -6.1470966)
+sequence = SubResource("Resource_46n82")

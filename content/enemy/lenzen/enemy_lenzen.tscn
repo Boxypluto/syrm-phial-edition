@@ -1,0 +1,107 @@
+[gd_scene load_steps=15 format=3 uid="uid://drqh0yj6e81qv"]
+
+[ext_resource type="Script" uid="uid://dl16as7geelti" path="res://content/enemy/lenzen/enemy_lenzen.gd" id="1_2b803"]
+[ext_resource type="Script" uid="uid://cvdxyomux8pmi" path="res://content/component/health.gd" id="2_e3m7y"]
+[ext_resource type="Texture2D" uid="uid://xfkc3tajd0ta" path="res://assets/sprites/enemy/enemy_lenzen.png" id="3_x2sln"]
+[ext_resource type="Script" uid="uid://bog6bqfmnioad" path="res://multi_scripts/hit_box.gd" id="4_n6emx"]
+[ext_resource type="AudioStream" uid="uid://de3wqbkcsbbec" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_lenzen_charge.wav" id="4_x2sln"]
+[ext_resource type="Script" uid="uid://5t0i5fcvv63q" path="res://content/component/hit_effect.gd" id="5_215wj"]
+[ext_resource type="Script" uid="uid://c2ndi6ftfs5m4" path="res://content/component/musical_audio_3d.gd" id="5_n6emx"]
+[ext_resource type="AudioStream" uid="uid://ctg0vpoledv3a" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_lenzen_charge #3.wav" id="6_n6emx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tr2pu"]
+atlas = ExtResource("3_x2sln")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ac6fe"]
+atlas = ExtResource("3_x2sln")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rl6jd"]
+atlas = ExtResource("3_x2sln")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4du6g"]
+atlas = ExtResource("3_x2sln")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ugxek"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tr2pu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ac6fe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rl6jd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4du6g")
+}],
+"loop": true,
+"name": &"Main",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m51cx"]
+radius = 1.0
+height = 3.727539
+
+[node name="EnemyLenzen" type="Node3D"]
+script = ExtResource("1_2b803")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_e3m7y")
+current_health = 12.0
+max_health = 12.0
+metadata/_custom_type_script = "uid://cvdxyomux8pmi"
+
+[node name="Animation" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1700997, 0)
+pixel_size = 0.05
+billboard = 2
+alpha_cut = 2
+texture_filter = 0
+render_priority = -1
+sprite_frames = SubResource("SpriteFrames_ugxek")
+animation = &"Main"
+autoplay = "Main"
+frame = 1
+frame_progress = 0.17031445
+
+[node name="SFX" type="Node3D" parent="."]
+
+[node name="Charge" type="AudioStreamPlayer3D" parent="SFX"]
+stream = ExtResource("4_x2sln")
+unit_size = 50.0
+script = ExtResource("5_n6emx")
+metadata/_custom_type_script = "uid://c2ndi6ftfs5m4"
+
+[node name="Fire" type="AudioStreamPlayer3D" parent="SFX"]
+stream = ExtResource("6_n6emx")
+unit_size = 50.0
+script = ExtResource("5_n6emx")
+metadata/_custom_type_script = "uid://c2ndi6ftfs5m4"
+
+[node name="HitBox" type="Area3D" parent="."]
+script = ExtResource("4_n6emx")
+metadata/_custom_type_script = "uid://bog6bqfmnioad"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9038086, 0)
+shape = SubResource("CapsuleShape3D_m51cx")
+debug_color = Color(0.61, 0.5388333, 0, 0.6627451)
+
+[node name="HitEffect" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 1.9947944, 0)
+pixel_size = 0.05
+shaded = true
+script = ExtResource("5_215wj")
+metadata/_custom_type_script = "uid://5t0i5fcvv63q"
+
+[node name="LaserPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6703446, 0)
+
+[connection signal="hit" from="HitBox" to="HitEffect" method="do_effect"]

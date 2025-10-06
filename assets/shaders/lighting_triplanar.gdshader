@@ -1,6 +1,8 @@
 shader_type spatial;
 
 uniform sampler2D albedo: filter_nearest;
+uniform sampler2D fixed_albedo: filter_nearest, source_color;
+uniform bool used_fixed = false;
 uniform sampler2D normal_map: hint_normal, filter_nearest;
 uniform float normal_strength = 1.0;
 uniform vec3 modulate: source_color = vec3(1.0);
@@ -13,13 +15,13 @@ varying vec3 uv2_triplanar_pos;
 varying vec3 uv1_power_normal;
 varying vec3 uv2_power_normal;
 
-uniform vec3 uv1_scale;
+uniform vec3 uv1_scale = vec3(1.0);
 uniform vec3 uv1_offset;
-uniform vec3 uv2_scale;
+uniform vec3 uv2_scale = vec3(1.0);
 uniform vec3 uv2_offset;
 
-uniform float uv1_blend_sharpness : hint_range(0.0, 150.0, 0.001);
-uniform float uv2_blend_sharpness : hint_range(0.0, 150.0, 0.001);
+uniform float uv1_blend_sharpness : hint_range(0.0, 150.0, 0.001) = 1.0;
+uniform float uv2_blend_sharpness : hint_range(0.0, 150.0, 0.001) = 1.0;
 
 void vertex() {
 	vec3 normal = NORMAL;
@@ -56,10 +58,16 @@ vec4 triplanar_texture(sampler2D p_sampler, vec3 p_weights, vec3 p_triplanar_pos
 }
 
 void fragment() {
-	vec4 albedo_color = triplanar_texture(albedo, uv1_power_normal, uv1_triplanar_pos);
+	vec4 albedo_color;
 	
+	if(used_fixed) {
+		albedo_color = triplanar_texture(fixed_albedo, uv1_power_normal, uv1_triplanar_pos);
+	} else {
+		albedo_color = triplanar_texture(albedo, uv1_power_normal, uv1_triplanar_pos);
+	}
+
 	NORMAL_MAP = triplanar_texture(normal_map, uv1_power_normal, uv1_triplanar_pos).rgb;
-	
+
 	NORMAL_MAP_DEPTH = normal_strength;
 	ALBEDO = albedo_color.rgb * modulate;
 }
@@ -78,7 +86,7 @@ float snap(float value, float threshold) {
 void light() {
 	vec3 surface_normal = normalize(NORMAL);
 	vec3 light_normal = normalize(LIGHT);
-	
+
 	// Lambertian-Diffuise-style lighting rounded
 	float lighting_soft = max(dot(surface_normal, light_normal), 0.0);
 	float lighting = round_interval(lighting_soft, 0.2);

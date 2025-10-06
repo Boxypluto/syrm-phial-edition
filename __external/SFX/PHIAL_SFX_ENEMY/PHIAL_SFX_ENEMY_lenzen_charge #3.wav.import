@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ctg0vpoledv3a"
+path="res://.godot/imported/PHIAL_SFX_ENEMY_lenzen_charge #3.wav-f5f4522da2c44e40c68c020ec7e7c329.sample"
+
+[deps]
+
+source_file="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_lenzen_charge #3.wav"
+dest_files=["res://.godot/imported/PHIAL_SFX_ENEMY_lenzen_charge #3.wav-f5f4522da2c44e40c68c020ec7e7c329.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

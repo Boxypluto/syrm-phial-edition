@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cw026kl2enlfk"
+path="res://.godot/imported/music_pedals_in_beamlight.ogg-d47ca0f6d57868decd744b13d395bf2d.oggvorbisstr"
+
+[deps]
+
+source_file="res://__external/Music/Pedals in Beamlight/music_pedals_in_beamlight.ogg"
+dest_files=["res://.godot/imported/music_pedals_in_beamlight.ogg-d47ca0f6d57868decd744b13d395bf2d.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=180.0
+beat_count=0
+bar_beats=4

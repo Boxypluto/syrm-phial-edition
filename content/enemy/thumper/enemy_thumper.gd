@@ -13,8 +13,12 @@ const SHOCKWAVE_RED = preload("uid://byuxxh5o13cas")
 var thump_beat: int = 4
 
 func _ready() -> void:
-	Rhythm.beats(1).connect(func(beat): next_action())
-	sequence.tracks[0].note_played.connect(func(l: float, p: float, note: Note): next_action(note))
+	Rhythm.beats(1).connect(func(beat):
+		if not Debug.flags.get("thumper"): return
+		next_action())
+	sequence.tracks[0].note_played.connect(func(l: float, p: float, note: Note):
+		if not Debug.flags.get("thumper"): return
+		next_action(note))
 
 func next_action(note: Note = null) -> void:
 	if note:

@@ -10,7 +10,7 @@ class_name EnemySliz
 @export_multiline var string_sequence: String
 @onready var sequence: Seqence = Seqence.build([string_sequence], true)
 @export var beat_offset: int = 0
-@export var shoot_velocity: float = 5.0
+const shoot_velocity: float = 30.0
 
 var target: Node3D
 
@@ -20,6 +20,7 @@ const SIMPLE_PROJECTILE = preload("uid://b3lqj7yowmppk")
 
 func _ready() -> void:
 	sequence.tracks[0].note_played.connect(func(length: float, pitch: float, note: Note):
+		if not Debug.flags.get("sliz"): return
 		shoot(note)
 		beat_action.emit(Rhythm.current_beat)
 	)
@@ -31,7 +32,7 @@ func shoot(note: Note):
 	Game.add_spawned(projectile)
 	projectile.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	projectile.global_position = shoot_point.global_position
-	projectile.direction = projectile.global_position.direction_to(Game.PLAYER.global_position)
+	projectile.direction = projectile.global_position.direction_to(Game.PLAYER.camera.global_position)
 	projectile.speed = shoot_velocity
 	projectile.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_INHERIT
 

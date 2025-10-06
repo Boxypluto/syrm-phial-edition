@@ -1,4 +1,4 @@
-extends Sprite3D
+extends Node3D
 class_name Beam
 
 func _ready() -> void:
@@ -10,6 +10,8 @@ func _process(delta: float) -> void:
 	rotation.x = last_rotation.x
 	rotation.z = last_rotation.z
 	scale.x = move_toward(scale.x, 1.0, delta)
+	scale.z = move_toward(scale.z, 1.0, delta)
 
 func pulse():
 	scale.x = 0.5
+	scale.z = 0.5

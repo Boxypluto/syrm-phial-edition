@@ -1,7 +1,9 @@
 shader_type spatial;
 
 uniform sampler2D albedo: filter_nearest;
-uniform sampler2D runes: filter_nearest, hint_default_transparent;
+uniform sampler2D fixed_albedo: filter_nearest, source_color;
+uniform bool used_fixed = false;
+uniform sampler2D runes: filter_nearest, hint_default_transparent, source_color;
 uniform vec4 runes_modulate: source_color = vec4(1.0);
 uniform float runes_scale = 1.0;
 uniform float runes_bpm = 1.0;
@@ -61,7 +63,13 @@ vec4 triplanar_texture(sampler2D p_sampler, vec3 p_weights, vec3 p_triplanar_pos
 }
 
 void fragment() {
-	vec4 albedo_color = triplanar_texture(albedo, uv1_power_normal, uv1_triplanar_pos);
+	vec4 albedo_color;
+	
+	if(used_fixed) {
+		albedo_color = triplanar_texture(fixed_albedo, uv1_power_normal, uv1_triplanar_pos);
+	} else {
+		albedo_color = triplanar_texture(albedo, uv1_power_normal, uv1_triplanar_pos);
+	}
 	
 	NORMAL_MAP = triplanar_texture(normal_map, uv1_power_normal, uv1_triplanar_pos).rgb;
 	
