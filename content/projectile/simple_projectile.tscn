@@ -1,13 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://b3lqj7yowmppk"]
+[gd_scene load_steps=7 format=3 uid="uid://b3lqj7yowmppk"]
 
 [ext_resource type="Script" uid="uid://dj031d3a0k1u0" path="res://content/projectile/simple_projectile.gd" id="1_kwji5"]
 [ext_resource type="Texture2D" uid="uid://bery80d3iqdoc" path="res://assets/sprites/environment/sun.png" id="2_6pooa"]
+[ext_resource type="Script" uid="uid://lomp1cr0yce7" path="res://multi_scripts/damager.gd" id="3_6pooa"]
+[ext_resource type="Script" uid="uid://013kh1y3kvjg" path="res://multi_scripts/damage_info.gd" id="4_j0033"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_fvoic"]
 radius = 0.4
 
+[sub_resource type="Resource" id="Resource_1xvvg"]
+script = ExtResource("4_j0033")
+metadata/_custom_type_script = "uid://013kh1y3kvjg"
+
 [node name="SimpleProjectile" type="CharacterBody3D"]
-collision_layer = 8
+collision_layer = 0
 script = ExtResource("1_kwji5")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
@@ -20,3 +26,14 @@ billboard = 1
 alpha_cut = 2
 texture_filter = 0
 texture = ExtResource("2_6pooa")
+
+[node name="Damager" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("3_6pooa")
+damage = SubResource("Resource_1xvvg")
+metadata/_custom_type_script = "uid://lomp1cr0yce7"
+
+[node name="Collision" type="CollisionShape3D" parent="Damager"]
+shape = SubResource("SphereShape3D_fvoic")
+debug_color = Color(0.84, 0.16799998, 0.82879984, 0.7294118)

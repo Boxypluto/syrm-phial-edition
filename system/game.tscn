@@ -1,9 +1,10 @@
-[gd_scene load_steps=31 format=3 uid="uid://d3fghnjmt3yp8"]
+[gd_scene load_steps=33 format=3 uid="uid://d3fghnjmt3yp8"]
 
 [ext_resource type="Script" uid="uid://4ax2lruikqyq" path="res://system/game.gd" id="1_uwgih"]
 [ext_resource type="PackedScene" uid="uid://db6dv4pdde6co" path="res://content/player/player.tscn" id="2_g4eph"]
-[ext_resource type="PackedScene" uid="uid://d3wksdk62wfdy" path="res://content/levels/beambloom_desert/level_beambloom.tscn" id="3_w6m87"]
+[ext_resource type="PackedScene" uid="uid://ccuvbsr4nryxp" path="res://content/levels/_testing/testing_1.tscn" id="3_3fs1o"]
 [ext_resource type="Script" uid="uid://bkbpcrbxsc4gf" path="res://system/hud.gd" id="4_nvi61"]
+[ext_resource type="Script" uid="uid://c26d5htndjar5" path="res://system/debug_health.gd" id="5_3fs1o"]
 [ext_resource type="Script" uid="uid://cip3mcqdx4frc" path="res://system/fps_shower.gd" id="5_gsj3s"]
 [ext_resource type="Script" uid="uid://cfbgio25yma8y" path="res://content/hud/gun_hud.gd" id="5_m0p3p"]
 [ext_resource type="Script" uid="uid://d3wgwrudwcjna" path="res://content/component/pulse.gd" id="5_wvlmy"]
@@ -23,6 +24,8 @@
 [ext_resource type="Script" uid="uid://c5hpove6jevd1" path="res://assets/hud/beat_syncer.gd" id="18_vscnc"]
 [ext_resource type="Texture2D" uid="uid://c7lm8a8i3cjb6" path="res://assets/sprites/heart_beat.png" id="19_fdhvp"]
 [ext_resource type="Script" uid="uid://8p31pkl0wuf8" path="res://content/player/hurt.gd" id="19_m3agx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wk2eu"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_w6m87"]
 line_spacing = 1.0
@@ -84,7 +87,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8317046, 0)
 
 [node name="Spawned" type="Node3D" parent="Game3D/3DViewport"]
 
-[node name="LevelBeambloomDesert" parent="Game3D/3DViewport" instance=ExtResource("3_w6m87")]
+[node name="Testing1" parent="Game3D/3DViewport" instance=ExtResource("3_3fs1o")]
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
@@ -96,11 +99,24 @@ grow_vertical = 2
 size_flags_vertical = 3
 script = ExtResource("4_nvi61")
 
+[node name="Health" type="Label" parent="HUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Health: 100.0"
+label_settings = SubResource("LabelSettings_wk2eu")
+horizontal_alignment = 2
+script = ExtResource("5_3fs1o")
+
 [node name="DebugTexts" type="VBoxContainer" parent="HUD"]
 layout_mode = 1
-anchors_preset = 9
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 18.0
+grow_horizontal = 2
 grow_vertical = 2
 
 [node name="FPS" type="Label" parent="HUD/DebugTexts"]
@@ -156,7 +172,6 @@ centered = false
 script = ExtResource("8_3w5he")
 
 [node name="Hurt" type="TextureRect" parent="HUD"]
-visible = false
 texture_repeat = 2
 material = SubResource("ShaderMaterial_8mfh0")
 layout_mode = 0

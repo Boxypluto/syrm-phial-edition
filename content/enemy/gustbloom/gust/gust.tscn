@@ -1,14 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://ca4tm6hy5mb31"]
+[gd_scene load_steps=7 format=3 uid="uid://ca4tm6hy5mb31"]
 
+[ext_resource type="Script" uid="uid://lomp1cr0yce7" path="res://multi_scripts/damager.gd" id="1_86g3k"]
 [ext_resource type="Texture2D" uid="uid://dkteoq4sxrtp0" path="res://assets/sprites/enemy/swirler_attack.png" id="1_xp3jf"]
+[ext_resource type="Script" uid="uid://013kh1y3kvjg" path="res://multi_scripts/damage_info.gd" id="2_l5dfa"]
 [ext_resource type="Script" uid="uid://k1866xeie5k" path="res://content/component/spinning.gd" id="2_lmooh"]
+
+[sub_resource type="Resource" id="Resource_7rsgo"]
+script = ExtResource("2_l5dfa")
+metadata/_custom_type_script = "uid://013kh1y3kvjg"
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_86g3k"]
 radius = 0.755
 
 [node name="Gust" type="Area3D"]
-collision_layer = 8
-collision_mask = 0
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_86g3k")
+damage = SubResource("Resource_7rsgo")
+metadata/_custom_type_script = "uid://lomp1cr0yce7"
 
 [node name="SwirlX" type="Sprite3D" parent="."]
 transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0, 0, 0)

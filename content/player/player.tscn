@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://db6dv4pdde6co"]
+[gd_scene load_steps=21 format=3 uid="uid://db6dv4pdde6co"]
 
 [ext_resource type="Script" uid="uid://bq2fijtm5dps3" path="res://content/player/player.gd" id="1_2rga7"]
+[ext_resource type="Script" uid="uid://cvdxyomux8pmi" path="res://content/component/health.gd" id="2_tpspr"]
 [ext_resource type="Script" uid="uid://buf78j1ufodww" path="res://content/player/player_camera.gd" id="2_y66qv"]
 [ext_resource type="Texture2D" uid="uid://ddlkwdgu8x3on" path="res://assets/sprites/target.png" id="3_oq5wi"]
 [ext_resource type="Texture2D" uid="uid://dwh4kn7sj6wl3" path="res://assets/sprites/player_placeholder_1.png" id="3_vx4xa"]
@@ -12,6 +13,7 @@
 [ext_resource type="Script" uid="uid://b7jhnw6y6uf1p" path="res://content/player/orb_state.gd" id="7_gdtqi"]
 [ext_resource type="AudioStream" uid="uid://cg3cx7un2tl6y" path="res://__external/SFX/phial_sfx_player/phial_sfx_player_orb_fail.wav" id="7_rmk25"]
 [ext_resource type="Script" uid="uid://bog6bqfmnioad" path="res://multi_scripts/hit_box.gd" id="10_cvehv"]
+[ext_resource type="Script" uid="uid://013kh1y3kvjg" path="res://multi_scripts/damage_info.gd" id="13_v250f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5unhu"]
 atlas = ExtResource("3_vx4xa")
@@ -29,11 +31,21 @@ random_pitch = 2.0
 streams_count = 1
 stream_0/stream = ExtResource("7_rmk25")
 
+[sub_resource type="Resource" id="Resource_q05y8"]
+script = ExtResource("13_v250f")
+damage = 0.5
+metadata/_custom_type_script = "uid://013kh1y3kvjg"
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vx4xa"]
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 4
 script = ExtResource("1_2rga7")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_tpspr")
+current_health = 500.0
+metadata/_custom_type_script = "uid://cvdxyomux8pmi"
 
 [node name="Sprite3D" type="Sprite3D" parent="." node_paths=PackedStringArray("rotation_target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8215524, 0)
@@ -102,10 +114,11 @@ string_sequence = "0.5x[ 3[D E] 0.5x2[D] E]
 0.5x[ 3[D E] 0.5x2[D] E]
 0.5x[ 3[D E] 0.5x2[C] B]"
 charge_string_sequence = "4G 4D"
+damage = SubResource("Resource_q05y8")
 
 [node name="HitBox" type="Area3D" parent="."]
-collision_layer = 0
-collision_mask = 8
+collision_layer = 4
+collision_mask = 0
 script = ExtResource("10_cvehv")
 metadata/_custom_type_script = "uid://bog6bqfmnioad"
 

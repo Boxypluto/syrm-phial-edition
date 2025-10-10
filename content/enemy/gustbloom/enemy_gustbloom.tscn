@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cop7xblcpkud5"]
+[gd_scene load_steps=9 format=3 uid="uid://cop7xblcpkud5"]
 
 [ext_resource type="Script" uid="uid://fb8rciqakfyc" path="res://content/enemy/gustbloom/enemy_gustbloom.gd" id="1_3j7qb"]
 [ext_resource type="Texture2D" uid="uid://c84nflhkhabes" path="res://assets/sprites/enemy/swirler.png" id="1_mtd4w"]
 [ext_resource type="Script" uid="uid://bog6bqfmnioad" path="res://multi_scripts/hit_box.gd" id="2_3j7qb"]
+[ext_resource type="Script" uid="uid://cvdxyomux8pmi" path="res://content/component/health.gd" id="2_m44sh"]
 [ext_resource type="AudioStream" uid="uid://bofs1hoigyij1" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_gustbloom_spiral.wav" id="5_m44sh"]
 [ext_resource type="Script" uid="uid://c2ndi6ftfs5m4" path="res://content/component/musical_audio_3d.gd" id="6_sjby7"]
 
@@ -17,6 +18,10 @@ radius = 1.1206055
 [node name="EnemyGustbloom" type="Node3D"]
 script = ExtResource("1_3j7qb")
 
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_m44sh")
+metadata/_custom_type_script = "uid://cvdxyomux8pmi"
+
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5881426, 0)
 pixel_size = 0.05
@@ -25,6 +30,8 @@ texture_filter = 0
 texture = ExtResource("1_mtd4w")
 
 [node name="HitBox" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("2_3j7qb")
 metadata/_custom_type_script = "uid://bog6bqfmnioad"
 
@@ -50,3 +57,6 @@ unit_size = 20.0
 bus = &"SFX"
 script = ExtResource("6_sjby7")
 metadata/_custom_type_script = "uid://c2ndi6ftfs5m4"
+
+[connection signal="on_damaged_zero" from="Health" to="." method="on_zero_health"]
+[connection signal="hit" from="HitBox" to="." method="on_hit"]

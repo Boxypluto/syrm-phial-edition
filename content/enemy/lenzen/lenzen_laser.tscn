@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bam70ys1vxtwk"]
+[gd_scene load_steps=9 format=3 uid="uid://bam70ys1vxtwk"]
 
 [ext_resource type="Shader" uid="uid://cro62vrt05tw0" path="res://content/enemy/lenzen/lenzen_laser_shader.gdshader" id="1_f6flr"]
 [ext_resource type="Texture2D" uid="uid://dyfrq6jfmtl38" path="res://assets/sprites/enemy/lenzen_laser.png" id="2_fj06t"]
+[ext_resource type="Script" uid="uid://lomp1cr0yce7" path="res://multi_scripts/damager.gd" id="3_uyjjd"]
+[ext_resource type="Script" uid="uid://013kh1y3kvjg" path="res://multi_scripts/damage_info.gd" id="4_xv7nt"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_fj06t"]
 center_offset = Vector3(0, 0.5, 0.255)
@@ -10,6 +12,11 @@ center_offset = Vector3(0, 0.5, 0.255)
 render_priority = 0
 shader = ExtResource("1_f6flr")
 shader_parameter/albedo_texture = ExtResource("2_fj06t")
+
+[sub_resource type="Resource" id="Resource_ya54o"]
+script = ExtResource("4_xv7nt")
+damage = 100.0
+metadata/_custom_type_script = "uid://013kh1y3kvjg"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fj06t"]
 height = 200.0
@@ -44,8 +51,11 @@ surface_material_override/0 = SubResource("ShaderMaterial_uyjjd")
 
 [node name="Damager" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
-collision_layer = 8
-collision_mask = 0
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("3_uyjjd")
+damage = SubResource("Resource_ya54o")
+metadata/_custom_type_script = "uid://lomp1cr0yce7"
 
 [node name="Shape" type="CollisionShape3D" parent="Damager"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0)

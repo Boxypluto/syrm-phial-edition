@@ -7,10 +7,10 @@ func _input(event: InputEvent) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 var flags: Dictionary[String, bool] = {
-	"sliz": false,
-	"thumper": false,
-	"gustbloom": false,
-	"lenzen": false,
+	"sliz": true,
+	"thumper": true,
+	"gustbloom": true,
+	"lenzen": true,
 }
 
 func _process(delta: float) -> void:

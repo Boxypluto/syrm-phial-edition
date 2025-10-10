@@ -1,9 +1,10 @@
-extends Node3D
+extends RoomEntity
 class_name EnemyThumper
 
 @onready var animation: AnimatedSprite3D = $Animation
 @onready var sfx_thump: MusicalAudio3D = $SFX/Thump
 @onready var shockwave_point: Marker3D = $ShockwavePoint
+@onready var health: Health = $Health
 
 @export var string_sequence: String
 @onready var sequence: Seqence = Seqence.build([string_sequence], true)
@@ -12,12 +13,14 @@ const SHOCKWAVE_RED = preload("uid://byuxxh5o13cas")
 
 var thump_beat: int = 4
 
-func _ready() -> void:
-	Rhythm.beats(1).connect(func(beat):
+func room_load() -> void:
+	Rhythm.beats(0.5).connect(func(beat):
 		if not Debug.flags.get("thumper"): return
+		if not is_room_active: return
 		next_action())
 	sequence.tracks[0].note_played.connect(func(l: float, p: float, note: Note):
 		if not Debug.flags.get("thumper"): return
+		if not is_room_active: return
 		next_action(note))
 
 func next_action(note: Note = null) -> void:
@@ -52,3 +55,6 @@ func spawn_shockwave():
 
 func kill() -> void:
 	queue_free()
+
+func on_damaged(damage: DamageInfo) -> void:
+	health.damage(damage.damage)

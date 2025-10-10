@@ -1,4 +1,4 @@
-extends Node3D
+extends RoomEntity
 class_name EnemySliz
 
 @onready var animation: AnimatedSprite3D = $Animation
@@ -18,9 +18,10 @@ signal beat_action(beat: float)
 
 const SIMPLE_PROJECTILE = preload("uid://b3lqj7yowmppk")
 
-func _ready() -> void:
+func room_load() -> void:
 	sequence.tracks[0].note_played.connect(func(length: float, pitch: float, note: Note):
 		if not Debug.flags.get("sliz"): return
+		if not is_room_active: return
 		shoot(note)
 		beat_action.emit(Rhythm.current_beat)
 	)
@@ -36,7 +37,8 @@ func shoot(note: Note):
 	projectile.speed = shoot_velocity
 	projectile.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_INHERIT
 
-func on_hit() -> void:
+func on_hit(damage: DamageInfo) -> void:
+	health.damage(damage.damage)
 	animation.flip_h = randf() < 0.5
 	animation.frame = 0
 	animation.play("Pulse")

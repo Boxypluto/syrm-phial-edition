@@ -10,6 +10,6 @@ func _ready() -> void:
 	animation = "Hit"
 	frame = animation.length()
 
-func do_effect():
+func do_effect(_damage: DamageInfo):
 	frame = 0
 	play()

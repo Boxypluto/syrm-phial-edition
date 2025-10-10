@@ -3,7 +3,7 @@ class_name ShockwaveRed
 
 @onready var scaler: Node3D = $Scaler
 @onready var sprite: Sprite3D = $Scaler/Sprite
-@onready var collision_shape: CollisionShape3D = $Scaler/Hurter/CollisionShape
+@onready var collision_shape: CollisionShape3D = $Scaler/Damager/CollisionShape
 
 @export var alpha_curve: Curve
 

@@ -12,7 +12,7 @@ class_name OrbState
 
 var required_beat: float = 1.0
 var leeway: float = 0.2
-var damage: float = 1.0
+@export var damage: DamageInfo
 
 func _ready() -> void:
 	sequence = Seqence.build([string_sequence], true)
@@ -46,7 +46,7 @@ func attack_action() -> void:
 	
 	if shoot_result.did_hit_object():
 		if shoot_result.hit_object is HitBox:
-			shoot_result.hit_object.on_hurt(damage)
+			shoot_result.hit_object.on_hit(damage)
 	
 	var note: Note = sequence.next(Rhythm.current_position / Rhythm.beat_length - leeway / 2.0, 0).note
 	sfx_shoot.play_note(note)

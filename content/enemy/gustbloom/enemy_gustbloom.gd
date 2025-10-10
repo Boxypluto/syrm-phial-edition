@@ -1,8 +1,9 @@
-extends Node3D
+extends RoomEntity
 class_name EnemyGustbloom
 
 @onready var vertical_gusts_node: Node3D = $VerticalGusts
 @onready var spiral_gusts_node: Node3D = $SpiralGusts
+@onready var health: Health = $Health
 
 @onready var spiral: MusicalAudio3D = $SFX/Spiral
 
@@ -31,7 +32,7 @@ var all_gusts: Array[Node3D]
 var spirals_rotation: float = 0.0
 var spirals_rotations: Array[float]
 
-func _ready() -> void:
+func room_load() -> void:
 	
 	spirals_rotations.resize(spiral_gust_count)
 	
@@ -61,9 +62,10 @@ func _ready() -> void:
 	sequence.setup_exported()
 	sequence.tracks[0].note_played.connect(func(_a, _b, _c):
 		if not Debug.flags.get("gustbloom"): return
+		if not is_room_active: return
 		spin_spirals())
 
-func _physics_process(delta: float) -> void:
+func physics_update(delta: float) -> void:
 	
 	position_sprials()
 	#position_verticals()
@@ -90,3 +92,11 @@ func position_verticals():
 	for gust_index: int in range(vertical_gust_count):
 		var gust: Node3D = vertical_gusts[gust_index]
 		gust.position = Vector3(0, veritcal_gusts_y_position + vertical_gusts_seperation * gust_index, 0)
+
+
+
+func on_hit(damage: DamageInfo) -> void:
+	health.damage(damage.damage)
+
+func on_zero_health() -> void:
+	queue_free()

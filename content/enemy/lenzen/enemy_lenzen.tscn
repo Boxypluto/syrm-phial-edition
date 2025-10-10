@@ -86,6 +86,8 @@ script = ExtResource("5_n6emx")
 metadata/_custom_type_script = "uid://c2ndi6ftfs5m4"
 
 [node name="HitBox" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("4_n6emx")
 metadata/_custom_type_script = "uid://bog6bqfmnioad"
 
@@ -104,4 +106,5 @@ metadata/_custom_type_script = "uid://5t0i5fcvv63q"
 [node name="LaserPoint" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6703446, 0)
 
-[connection signal="hit" from="HitBox" to="HitEffect" method="do_effect"]
+[connection signal="on_damaged_zero" from="Health" to="." method="on_zero_health"]
+[connection signal="hit" from="HitBox" to="." method="on_hit"]

@@ -8,16 +8,22 @@ class_name Player
 
 @onready var state_orb: OrbState = $WeaponStates/Orb
 
+@onready var health: Health = $Health
+
 var speed: float = 15.0
 var jump_strength: float = 12.0
 var gravity: float = 20.0
+var pound_speed: float = 128.0
 
-var mouse_sensitivity: float = 3.0
+var mouse_sensitivity: float = 3.0 * 5.0
 var forward_direction: Vector3 = Vector3.FORWARD
 var flat_forward_direction: Vector2 = Vector2.DOWN
 var flat_angle: float = 0.0
 
 var shoot_hit_layer: int = 0b11111
+
+var on_floor_last_frame: bool = false
+var last_frame_velocity: Vector3 = Vector3.ZERO
 
 const SHOOT_RAY_DISTANCE: float = 128.0
 
@@ -38,9 +44,16 @@ func _physics_process(delta: float) -> void:
 	run_process(delta)
 	gravity_process(delta)
 	jump_process(delta)
+	pound_process(delta)
 	
 	camera_process(delta)
 	
+	if not on_floor_last_frame and is_on_floor() and last_frame_velocity.y < -100.0:
+		print("BAM!")
+		camera.shake(0.2, 0.3)
+	
+	on_floor_last_frame = is_on_floor()
+	last_frame_velocity = velocity
 	move_and_slide()
 
 func input(event: InputEvent) -> void:
@@ -65,6 +78,10 @@ func gravity_process(delta: float):
 func jump_process(_delta: float):
 	if Input.is_action_just_pressed("Jump") and is_on_floor():
 		velocity.y = jump_strength
+
+func pound_process(_delta: float):
+	if Input.is_action_just_pressed("Pound"):
+		velocity.y = -pound_speed
 
 func camera_process(_delta):
 	
@@ -130,9 +147,10 @@ func draw_shot_particles(start: Vector3, end: Vector3, interval: float = 0.2, st
 		particle.global_position = direction * current_distance + start
 		current_distance += interval
 
-func on_hit() -> void:
+func on_hit(damage: DamageInfo) -> void:
 	Game.HUD.HURT.do_effect()
 	camera.shake(0.4, 0.4)
+	health.damage(damage.damage)
 	#Freeze.freeze(0.2)
 
 func bounce(area: Area3D) -> void:
