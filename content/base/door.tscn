@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://bm4fjwesnjcq1" path="res://content/base/door.gd" id="1_nioso"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nioso"]
-size = Vector3(4, 6, 1)
+size = Vector3(6, 6, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_2sy7h"]
-size = Vector3(4, 6, 1)
+size = Vector3(6, 6, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nioso"]
 albedo_color = Color(0.5242167, 0.2595073, 0.6425664, 1)
@@ -18,9 +18,11 @@ size = Vector3(7, 8, 3)
 script = ExtResource("1_nioso")
 
 [node name="Collision" type="StaticBody3D" parent="."]
+collision_mask = 0
 
 [node name="Shape" type="CollisionShape3D" parent="Collision"]
 shape = SubResource("BoxShape3D_nioso")
+debug_color = Color(0.9764706, 0, 0.40784314, 1)
 
 [node name="DebugVisuals" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_2sy7h")

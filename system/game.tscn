@@ -1,8 +1,6 @@
-[gd_scene load_steps=33 format=3 uid="uid://d3fghnjmt3yp8"]
+[gd_scene load_steps=31 format=3 uid="uid://d3fghnjmt3yp8"]
 
 [ext_resource type="Script" uid="uid://4ax2lruikqyq" path="res://system/game.gd" id="1_uwgih"]
-[ext_resource type="PackedScene" uid="uid://db6dv4pdde6co" path="res://content/player/player.tscn" id="2_g4eph"]
-[ext_resource type="PackedScene" uid="uid://ccuvbsr4nryxp" path="res://content/levels/_testing/testing_1.tscn" id="3_3fs1o"]
 [ext_resource type="Script" uid="uid://bkbpcrbxsc4gf" path="res://system/hud.gd" id="4_nvi61"]
 [ext_resource type="Script" uid="uid://c26d5htndjar5" path="res://system/debug_health.gd" id="5_3fs1o"]
 [ext_resource type="Script" uid="uid://cip3mcqdx4frc" path="res://system/fps_shower.gd" id="5_gsj3s"]
@@ -82,12 +80,7 @@ audio_listener_enable_3d = true
 size = Vector2i(640, 360)
 render_target_update_mode = 4
 
-[node name="Player" parent="Game3D/3DViewport" instance=ExtResource("2_g4eph")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8317046, 0)
-
 [node name="Spawned" type="Node3D" parent="Game3D/3DViewport"]
-
-[node name="Testing1" parent="Game3D/3DViewport" instance=ExtResource("3_3fs1o")]
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3

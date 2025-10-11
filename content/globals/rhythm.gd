@@ -21,8 +21,5 @@ func _ready():
 	super._ready()
 	if Engine.is_editor_hint(): return
 	audio_stream_player = AudioStreamPlayer.new()
-	running = true
 	add_child(audio_stream_player)
-	audio_stream_player.stream = ETERNAL_SUNSTORM
 	audio_stream_player.bus = "Music"
-	bpm = 75

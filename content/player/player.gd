@@ -155,3 +155,6 @@ func on_hit(damage: DamageInfo) -> void:
 
 func bounce(area: Area3D) -> void:
 	velocity.y = 20
+
+func on_zero_health() -> void:
+	Game.GAME.restart()

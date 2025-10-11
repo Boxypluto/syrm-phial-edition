@@ -1,4 +1,4 @@
-extends RoomEntity
+extends RoomEnemy
 class_name EnemyGustbloom
 
 @onready var vertical_gusts_node: Node3D = $VerticalGusts
@@ -33,7 +33,6 @@ var spirals_rotation: float = 0.0
 var spirals_rotations: Array[float]
 
 func room_load() -> void:
-	
 	spirals_rotations.resize(spiral_gust_count)
 	
 	for spiral_index in range(spiral_count):
@@ -61,8 +60,7 @@ func room_load() -> void:
 	
 	sequence.setup_exported()
 	sequence.tracks[0].note_played.connect(func(_a, _b, _c):
-		if not Debug.flags.get("gustbloom"): return
-		if not is_room_active: return
+		if not should_be_active(): return
 		spin_spirals())
 
 func physics_update(delta: float) -> void:
@@ -93,10 +91,13 @@ func position_verticals():
 		var gust: Node3D = vertical_gusts[gust_index]
 		gust.position = Vector3(0, veritcal_gusts_y_position + vertical_gusts_seperation * gust_index, 0)
 
-
-
 func on_hit(damage: DamageInfo) -> void:
 	health.damage(damage.damage)
 
 func on_zero_health() -> void:
-	queue_free()
+	is_defeated = true
+	visible = false
+	defeated.emit()
+
+func should_be_active() -> bool:
+	return is_room_active and Debug.flags.get("gustbloom") and not is_defeated

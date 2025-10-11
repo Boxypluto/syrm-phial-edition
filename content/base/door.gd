@@ -10,13 +10,11 @@ class_name Door
 @onready var north_opening: Area3D = $NorthOpening
 @onready var south_opening: Area3D = $SouthOpening
 
-var active: bool = true:
-	set(new):
-		active = new
-		shape.disabled = not new
+var active: bool = true
 
 func _physics_process(_delta: float) -> void:
 	debug_visuals.visible = active
+	shape.disabled = not active
 
 func _ready() -> void:
 	north_room.doors.append(self)

@@ -1,4 +1,4 @@
-extends RoomEntity
+extends RoomEnemy
 class_name EnemyLenzen
 
 @onready var laser_point: Marker3D = $LaserPoint
@@ -29,19 +29,17 @@ var state: int = IDLE
 func room_load() -> void:
 	sequence.setup_exported()
 	sequence.tracks[0].note_played.connect(func(_a, _b, note: Note):
-		if not Debug.flags.get("lenzen"): return
-		if not is_room_active: return
+		if not should_be_active(): return
 		charge_laser(note))
 	sequence.tracks[1].note_played.connect(func(_a, _b, note: Note):
-		if not Debug.flags.get("lenzen"): return
-		if not is_room_active: return
+		if not should_be_active(): return
 		fire_laser(note))
 	sequence.tracks[2].note_played.connect(func(_a, _b, note: Note):
-		if not Debug.flags.get("lenzen"): return
+		if not should_be_active(): return
 		end_laser(note))
 	
 	Rhythm.beats(0.125).connect(func(_b):
-		if not Debug.flags.get("lenzen"): return
+		if not should_be_active(): return
 		change_effect())
 	
 	laser = LENZEN_LASER.instantiate()
@@ -114,7 +112,12 @@ func set_laser(on: bool):
 	laser.set_physics_process(on)
 
 func on_zero_health() -> void:
-	queue_free()
+	is_defeated = true
+	visible = false
+	defeated.emit()
 
 func on_hit(damage: DamageInfo) -> void:
 	health.damage(damage.damage)
+
+func should_be_active() -> bool:
+	return is_room_active and Debug.flags.get("lenzen") and not is_defeated

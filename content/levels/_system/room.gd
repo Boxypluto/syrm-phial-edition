@@ -1,7 +1,7 @@
 extends Node3D
 class_name Room
 
-var _entities: Array[RoomEntity]
+var _entities: Array[RoomEnemy]
 
 @export_category("Doors")
 
@@ -18,12 +18,23 @@ var is_complete: bool = false
 var doors: Array[Door]
 
 func _ready() -> void:
-	var e = find_children("*", "RoomEntity")
+	var e = find_children("*", "RoomEnemy")
 	for en in e:
 		_entities.append(en)
+		en.defeated.connect(update_all_enemies_defeated)
 	load_room()
 	if first_room:
 		begin_room()
+
+func update_all_enemies_defeated() -> void:
+	if not is_active or is_complete: return
+	var are_all_defeated: bool = true
+	for enemy in _entities:
+		if not enemy.is_defeated:
+			are_all_defeated = false
+			break
+	if are_all_defeated:
+		complete_room()
 
 func room_enter():
 	if is_active: return
@@ -63,3 +74,6 @@ func complete_room() -> void:
 	for door in doors:
 		door.active = false
 		door.active = false
+
+func enemy_death() -> void:
+	pass

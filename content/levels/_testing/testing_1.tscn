@@ -1,8 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://ccuvbsr4nryxp"]
+[gd_scene load_steps=31 format=3 uid="uid://ccuvbsr4nryxp"]
 
+[ext_resource type="Script" uid="uid://cb0vydbp4g856" path="res://content/levels/_system/level.gd" id="1_3oc40"]
 [ext_resource type="Script" uid="uid://yivgpgxxtksp" path="res://content/levels/_system/room.gd" id="1_suwu8"]
 [ext_resource type="Texture2D" uid="uid://bery80d3iqdoc" path="res://assets/sprites/environment/sun.png" id="1_sv48e"]
 [ext_resource type="Script" uid="uid://ndo4d4agq3vk" path="res://content/component/pulse_3d.gd" id="2_d6e0q"]
+[ext_resource type="AudioStream" uid="uid://brwmmu6uuw578" path="res://assets/music/eternal_sunstorm.ogg" id="2_jxf8x"]
 [ext_resource type="Shader" uid="uid://c5u0e373tvinu" path="res://assets/shaders/lighting_triplanar.gdshader" id="2_npy7d"]
 [ext_resource type="Texture2D" uid="uid://cscwbjff33hxo" path="res://assets/textures/testing.png" id="3_kaelk"]
 [ext_resource type="Shader" uid="uid://b5rd00k6i4dgs" path="res://content/levels/beambloom_desert/skybox_face_texture.gdshader" id="3_mbd41"]
@@ -11,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://3fym5kap4wxd" path="res://content/base/door.tscn" id="5_kaelk"]
 [ext_resource type="Shader" uid="uid://bkdbe6feamqsk" path="res://content/levels/beambloom_desert/skybox_face_color.gdshader" id="5_piknv"]
 [ext_resource type="PackedScene" uid="uid://cmxvrvtkghl04" path="res://content/enemy/sliz/enemy_sliz.tscn" id="11_nqf7a"]
+[ext_resource type="Script" uid="uid://wreyv5hbmr4f" path="res://content/levels/_testing/room_state_sensor.gd" id="11_w1j4f"]
 [ext_resource type="PackedScene" uid="uid://drqh0yj6e81qv" path="res://content/enemy/lenzen/enemy_lenzen.tscn" id="12_piknv"]
 [ext_resource type="Script" uid="uid://bsnc4lbnm1xpd" path="res://content/component/music_seqence.gd" id="13_piknv"]
 [ext_resource type="PackedScene" uid="uid://dntwirrcck4k4" path="res://content/enemy/thumper/enemy_thumper.tscn" id="13_w1j4f"]
@@ -100,6 +103,9 @@ sequence_strings = Array[String](["A", "A", "A"])
 metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
 
 [node name="Testing1" type="Node3D"]
+script = ExtResource("1_3oc40")
+music = ExtResource("2_jxf8x")
+bpm_scale = 0.5
 
 [node name="Environment" type="Node3D" parent="."]
 
@@ -122,7 +128,6 @@ beats = 1
 shrink_speed = 5.0
 
 [node name="Skybox" type="Node3D" parent="Environment"]
-visible = false
 
 [node name="FaceZ-" type="MeshInstance3D" parent="Environment/Skybox"]
 cast_shadow = 0
@@ -224,6 +229,15 @@ collision_mask = 0
 [node name="CSGBox3D" type="CSGBox3D" parent="Begin/Terrain/CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.528)
 size = Vector3(21, 2, 16)
+
+[node name="RoomStateSensor" type="Label3D" parent="Begin" node_paths=PackedStringArray("room")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41, 3, -3)
+pixel_size = 0.05
+billboard = 1
+texture_filter = 0
+text = "ROOM STATE"
+script = ExtResource("11_w1j4f")
+room = NodePath("../../First")
 
 [node name="First" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 0)

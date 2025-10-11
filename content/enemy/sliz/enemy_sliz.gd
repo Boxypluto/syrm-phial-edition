@@ -1,4 +1,4 @@
-extends RoomEntity
+extends RoomEnemy
 class_name EnemySliz
 
 @onready var animation: AnimatedSprite3D = $Animation
@@ -20,8 +20,7 @@ const SIMPLE_PROJECTILE = preload("uid://b3lqj7yowmppk")
 
 func room_load() -> void:
 	sequence.tracks[0].note_played.connect(func(length: float, pitch: float, note: Note):
-		if not Debug.flags.get("sliz"): return
-		if not is_room_active: return
+		if not should_be_active(): return
 		shoot(note)
 		beat_action.emit(Rhythm.current_beat)
 	)
@@ -44,4 +43,9 @@ func on_hit(damage: DamageInfo) -> void:
 	animation.play("Pulse")
 
 func kill():
-	queue_free()
+	is_defeated = true
+	visible = false
+	defeated.emit()
+
+func should_be_active() -> bool:
+	return is_room_active and Debug.flags.get("sliz") and not is_defeated

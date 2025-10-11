@@ -1,4 +1,4 @@
-extends RoomEntity
+extends RoomEnemy
 class_name EnemyThumper
 
 @onready var animation: AnimatedSprite3D = $Animation
@@ -15,12 +15,10 @@ var thump_beat: int = 4
 
 func room_load() -> void:
 	Rhythm.beats(0.5).connect(func(beat):
-		if not Debug.flags.get("thumper"): return
-		if not is_room_active: return
+		if not should_be_active(): return
 		next_action())
 	sequence.tracks[0].note_played.connect(func(l: float, p: float, note: Note):
-		if not Debug.flags.get("thumper"): return
-		if not is_room_active: return
+		if not should_be_active(): return
 		next_action(note))
 
 func next_action(note: Note = null) -> void:
@@ -54,7 +52,12 @@ func spawn_shockwave():
 	shockwave.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_INHERIT
 
 func kill() -> void:
-	queue_free()
+	is_defeated = true
+	visible = false
+	defeated.emit()
 
 func on_damaged(damage: DamageInfo) -> void:
 	health.damage(damage.damage)
+
+func should_be_active() -> bool:
+	return is_room_active and Debug.flags.get("thumper") and not is_defeated
