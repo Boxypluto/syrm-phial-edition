@@ -2,6 +2,7 @@
 extends Node3D
 class_name RoomEntity
 
+var room: Room
 var is_room_active: bool = false
 
 func physics_update(delta: float) -> void: pass

@@ -3,8 +3,8 @@ class_name Room
 
 var _entities: Array[RoomEnemy]
 
-@export_category("Doors")
-
+@export_category("Optional Features")
+@export var navmesh: NavigationRegion3D
 @export_category("Settings")
 @export var auto_clear: bool = false
 @export var first_room: bool = false
@@ -22,6 +22,7 @@ func _ready() -> void:
 	for en in e:
 		_entities.append(en)
 		en.defeated.connect(update_all_enemies_defeated)
+		en.room = self
 	load_room()
 	if first_room:
 		begin_room()

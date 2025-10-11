@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://ccuvbsr4nryxp"]
+[gd_scene load_steps=33 format=3 uid="uid://ccuvbsr4nryxp"]
 
 [ext_resource type="Script" uid="uid://cb0vydbp4g856" path="res://content/levels/_system/level.gd" id="1_3oc40"]
 [ext_resource type="Script" uid="uid://yivgpgxxtksp" path="res://content/levels/_system/room.gd" id="1_suwu8"]
@@ -14,9 +14,9 @@
 [ext_resource type="Shader" uid="uid://bkdbe6feamqsk" path="res://content/levels/beambloom_desert/skybox_face_color.gdshader" id="5_piknv"]
 [ext_resource type="PackedScene" uid="uid://cmxvrvtkghl04" path="res://content/enemy/sliz/enemy_sliz.tscn" id="11_nqf7a"]
 [ext_resource type="Script" uid="uid://wreyv5hbmr4f" path="res://content/levels/_testing/room_state_sensor.gd" id="11_w1j4f"]
-[ext_resource type="PackedScene" uid="uid://drqh0yj6e81qv" path="res://content/enemy/lenzen/enemy_lenzen.tscn" id="12_piknv"]
 [ext_resource type="Script" uid="uid://bsnc4lbnm1xpd" path="res://content/component/music_seqence.gd" id="13_piknv"]
 [ext_resource type="PackedScene" uid="uid://dntwirrcck4k4" path="res://content/enemy/thumper/enemy_thumper.tscn" id="13_w1j4f"]
+[ext_resource type="PackedScene" uid="uid://umff5gv13q40" path="res://content/enemy/lynlyn/enemy_lynlyn.tscn" id="16_3oc40"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_w1j4f"]
 center_offset = Vector3(0, 0.275, -0.5)
@@ -97,9 +97,18 @@ shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/uv1_blend_sharpness = 1.0000000475
 shader_parameter/uv2_blend_sharpness = 1.0000000475
 
-[sub_resource type="Resource" id="Resource_w1j4f"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_w1j4f"]
+vertices = PackedVector3Array(-10, 1.40095, 13.222, 1.75, 1.65095, 13.222, 1.75, 1.40095, 12.722, 9.25, 1.40095, 12.722, 9.5, 1.40095, -15.028, -10, 1.40095, -15.028, 11, 1.40095, 12.972, 10.75, 1.40095, 22.222, 32, 1.40095, 22.222, 32, 1.40095, -15.028, 28, 12.4009495, 1.9720001, 33.5, 12.4009495, -1.2779999, 33, 12.4009495, -1.5279999, 33, 12.4009495, -5.528, -9.25, 12.4009495, -5.528, -9.25, 12.4009495, 1.9720001, 28.5, 12.4009495, 2.2220001, 35.75, 12.4009495, -1.2779999, 28.25, 12.4009495, 11.472, 35.75, 12.4009495, 11.472, 28, 12.4009495, 21.222, 28.25, 12.4009495, 22.472, 35.5, 12.4009495, 22.472, 28, 12.4009495, 13.722, 26, 11.6509495, 13.722, 26, 11.6509495, 21.222, 3.75, 2.65095, 21.222, 3.75, 2.65095, 13.722, 1.75, 1.65095, 13.722, 1.75, 1.65095, 21.222, -10, 1.40095, 22.222, 1.75, 1.40095, 22.222)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 2), PackedInt32Array(0, 5, 2), PackedInt32Array(2, 5, 4), PackedInt32Array(8, 7, 6), PackedInt32Array(6, 3, 4), PackedInt32Array(4, 9, 6), PackedInt32Array(6, 9, 8), PackedInt32Array(12, 11, 10), PackedInt32Array(12, 10, 13), PackedInt32Array(13, 10, 15), PackedInt32Array(13, 15, 14), PackedInt32Array(16, 10, 11), PackedInt32Array(11, 17, 16), PackedInt32Array(16, 17, 18), PackedInt32Array(18, 17, 19), PackedInt32Array(21, 20, 22), PackedInt32Array(22, 20, 23), PackedInt32Array(22, 23, 18), PackedInt32Array(22, 18, 19), PackedInt32Array(20, 25, 23), PackedInt32Array(23, 25, 24), PackedInt32Array(29, 28, 26), PackedInt32Array(26, 28, 27), PackedInt32Array(28, 29, 0), PackedInt32Array(0, 29, 30), PackedInt32Array(0, 1, 28), PackedInt32Array(29, 31, 30), PackedInt32Array(27, 24, 26), PackedInt32Array(26, 24, 25)]
+
+[sub_resource type="Resource" id="Resource_jxf8x"]
 script = ExtResource("13_piknv")
-sequence_strings = Array[String](["A", "A", "A"])
+sequence_strings = Array[String](["2E 2D"])
+metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
+
+[sub_resource type="Resource" id="Resource_nhmwf"]
+script = ExtResource("13_piknv")
+sequence_strings = Array[String](["2G# 2E"])
 metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
 
 [node name="Testing1" type="Node3D"]
@@ -239,40 +248,64 @@ text = "ROOM STATE"
 script = ExtResource("11_w1j4f")
 room = NodePath("../../First")
 
-[node name="First" type="Node3D" parent="."]
+[node name="First" type="Node3D" parent="." node_paths=PackedStringArray("navmesh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 0)
 script = ExtResource("1_suwu8")
+navmesh = NodePath("NavMesh")
 metadata/_custom_type_script = "uid://yivgpgxxtksp"
 
-[node name="Terrain" type="Node3D" parent="First"]
+[node name="NavMesh" type="NavigationRegion3D" parent="First"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.015151978, 9.536743e-07, -0.046214104)
+navigation_mesh = SubResource("NavigationMesh_w1j4f")
+use_edge_connections = false
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="First/Terrain"]
+[node name="Terrain" type="Node3D" parent="First/NavMesh"]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="First/NavMesh/Terrain"]
 material_override = SubResource("ShaderMaterial_v4kjs")
 use_collision = true
 collision_mask = 0
 
-[node name="CSGBox3D" type="CSGBox3D" parent="First/Terrain/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -1.528)
-size = Vector3(43, 2, 28)
+[node name="CSGBox3D" type="CSGBox3D" parent="First/NavMesh/Terrain/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 3.591385)
+size = Vector3(43, 2, 38.23877)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="First/NavMesh/Terrain/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.877605, 11.058906, -1.7992058)
+size = Vector3(43, 2, 8.15625)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="First/NavMesh/Terrain/CSGCombiner3D"]
+transform = Transform3D(-0.014887109, 0, -0.9998892, 0, 1, 0, 0.9998892, 0, -0.014887109, 32.071865, 11.058906, 10.610671)
+size = Vector3(24.703857, 2, 8.15625)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="First/NavMesh/Terrain/CSGCombiner3D"]
+transform = Transform3D(0.9250109, -0.37994057, 0, 0.37994057, 0.9250109, 0, 0, 0, 1, 12.755413, 4.725388, 17.487846)
+size = Vector3(33.686462, 2, 8.15625)
 
 [node name="Entities" type="Node3D" parent="First"]
 
 [node name="EnemySliz" parent="First/Entities" instance=ExtResource("11_nqf7a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 2, 4)
-string_sequence = "A"
+string_sequence = "E E E E"
 
 [node name="EnemySliz2" parent="First/Entities" instance=ExtResource("11_nqf7a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 2, -10)
-string_sequence = "A"
-
-[node name="EnemyLenzen" parent="First/Entities" instance=ExtResource("12_piknv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 1, -2)
-sequence = SubResource("Resource_w1j4f")
+string_sequence = "0.5x4[- G#-1]"
 
 [node name="EnemyThumper" parent="First/Entities" instance=ExtResource("13_w1j4f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, -1)
-string_sequence = "A"
+string_sequence = "A - - -"
 
 [node name="EnemyThumper2" parent="First/Entities" instance=ExtResource("13_w1j4f")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 1, 0)
-string_sequence = "A"
+string_sequence = "- - A -"
+
+[node name="EnemyLynlyn" parent="First/Entities" instance=ExtResource("16_3oc40")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.743889, 1.0000002, -10.697409)
+leap_sequence = SubResource("Resource_jxf8x")
+note = "E"
+
+[node name="EnemyLynlyn2" parent="First/Entities" instance=ExtResource("16_3oc40")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.743889, 1.0000002, 9.918009)
+leap_sequence = SubResource("Resource_nhmwf")
+note = "G#"

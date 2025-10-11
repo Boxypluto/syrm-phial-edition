@@ -1,0 +1,78 @@
+[gd_scene load_steps=10 format=3 uid="uid://umff5gv13q40"]
+
+[ext_resource type="Texture2D" uid="uid://boswhvctv3swx" path="res://assets/sprites/enemy/enemy_lynlyn.png" id="1_4khdi"]
+[ext_resource type="Script" uid="uid://bgwwid7wriy3h" path="res://content/enemy/lynlyn/enemy_lynlyn.gd" id="1_6mpy5"]
+[ext_resource type="Script" uid="uid://c2ndi6ftfs5m4" path="res://content/component/musical_audio_3d.gd" id="3_iy06o"]
+[ext_resource type="AudioStream" uid="uid://dvdve2t16nxuw" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_lynlyn_leap.wav" id="3_yynju"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6mpy5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iy06o"]
+atlas = ExtResource("1_4khdi")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yynju"]
+atlas = ExtResource("1_4khdi")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6mpy5"]
+atlas = ExtResource("1_4khdi")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qlflr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iy06o")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yynju")
+}],
+"loop": true,
+"name": &"Lunge",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6mpy5")
+}],
+"loop": true,
+"name": &"Prepare",
+"speed": 5.0
+}]
+
+[node name="EnemyLynlyn" type="Node3D"]
+script = ExtResource("1_6mpy5")
+
+[node name="Body" type="CharacterBody3D" parent="."]
+collision_layer = 0
+
+[node name="Shape" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_6mpy5")
+
+[node name="Animation" type="AnimatedSprite3D" parent="Body"]
+offset = Vector2(0, 28)
+pixel_size = 0.05
+billboard = 2
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_qlflr")
+animation = &"Prepare"
+autoplay = "Prepare"
+
+[node name="Agent" type="NavigationAgent3D" parent="Body"]
+
+[node name="SFX" type="Node3D" parent="Body"]
+
+[node name="Leap" type="AudioStreamPlayer3D" parent="Body/SFX"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2313784, 0)
+stream = ExtResource("3_yynju")
+volume_db = 0.685
+unit_size = 20.0
+script = ExtResource("3_iy06o")
+metadata/_custom_type_script = "uid://c2ndi6ftfs5m4"
