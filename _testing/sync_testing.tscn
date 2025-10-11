@@ -1,0 +1,53 @@
+[gd_scene load_steps=10 format=3 uid="uid://cmf4jjrnarg6u"]
+
+[ext_resource type="Script" uid="uid://djdaalmydx1v" path="res://_testing/sync_testing.gd" id="1_hxwkx"]
+[ext_resource type="Script" uid="uid://bsnc4lbnm1xpd" path="res://content/component/music_seqence.gd" id="2_5ggfj"]
+[ext_resource type="Script" uid="uid://c5hpove6jevd1" path="res://assets/hud/beat_syncer.gd" id="2_i3bkp"]
+[ext_resource type="Texture2D" uid="uid://c7lm8a8i3cjb6" path="res://assets/sprites/heart_beat.png" id="3_5ggfj"]
+[ext_resource type="Texture2D" uid="uid://b5mfr4f5ta6de" path="res://assets/sprites/heart-2.png" id="4_7leb7"]
+[ext_resource type="Script" uid="uid://d3wgwrudwcjna" path="res://content/component/pulse.gd" id="5_8jna8"]
+
+[sub_resource type="Resource" id="Resource_7leb7"]
+script = ExtResource("2_5ggfj")
+sequence_strings = Array[String](["0.5x[A]"])
+metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5nrf7"]
+atlas = ExtResource("3_5ggfj")
+region = Rect2(0, 0, 9, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_skd27"]
+atlas = ExtResource("3_5ggfj")
+region = Rect2(9, 0, 9, 0)
+
+[node name="SyncTesting" type="Node2D"]
+script = ExtResource("1_hxwkx")
+sequence = SubResource("Resource_7leb7")
+
+[node name="BeatSyncer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Beats" type="Node2D" parent="BeatSyncer"]
+position = Vector2(160, 160)
+script = ExtResource("2_i3bkp")
+texture_left = SubResource("AtlasTexture_5nrf7")
+texture_right = SubResource("AtlasTexture_skd27")
+
+[node name="Heart" type="Sprite2D" parent="BeatSyncer/Beats"]
+texture = ExtResource("4_7leb7")
+script = ExtResource("5_8jna8")
+strength = 1.5
+beats = 1
+shrink_speed = 3.0
+on_beat = false
+
+[node name="Diff" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[connection signal="beat_centered" from="BeatSyncer/Beats" to="BeatSyncer/Beats/Heart" method="pulse"]

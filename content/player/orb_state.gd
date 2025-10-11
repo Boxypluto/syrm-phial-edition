@@ -12,6 +12,7 @@ class_name OrbState
 
 var required_beat: float = 1.0
 var leeway: float = 0.2
+var delay: float = 0.11
 @export var damage: DamageInfo
 
 func _ready() -> void:
@@ -27,7 +28,7 @@ func _ready() -> void:
 
 func weapon_input() -> void:
 	
-	var next_distance: float = sequence.next(Rhythm.current_position / Rhythm.beat_length - leeway / 2.0).note_distance * Rhythm.beat_length
+	var next_distance: float = sequence.next((Rhythm.current_position - delay) / Rhythm.beat_length - leeway / 2.0).note_distance * Rhythm.beat_length
 	
 	if next_distance <= leeway:
 		attack_action()
@@ -48,7 +49,7 @@ func attack_action() -> void:
 		if shoot_result.hit_object is HitBox:
 			shoot_result.hit_object.on_hit(damage)
 	
-	var note: Note = sequence.next(Rhythm.current_position / Rhythm.beat_length - leeway / 2.0, 0).note
+	var note: Note = sequence.next((Rhythm.current_position - delay) / Rhythm.beat_length - leeway / 2.0, 0).note
 	sfx_shoot.play_note(note)
 	Game.HUD.GUN.shoot()
 	if player.is_on_floor():
