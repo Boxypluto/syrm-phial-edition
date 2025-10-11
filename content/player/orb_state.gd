@@ -45,9 +45,8 @@ func attack_action() -> void:
 	
 	var shoot_result: Player.ShootResult = player.shoot_forward()
 	
-	if shoot_result.did_hit_object():
-		if shoot_result.hit_object is HitBox:
-			shoot_result.hit_object.on_hit(damage)
+	if shoot_result.hit_hitbox():
+		shoot_result.hit_object.on_hit(damage)
 	
 	var note: Note = sequence.next((Rhythm.current_position - delay) / Rhythm.beat_length - leeway / 2.0, 0).note
 	sfx_shoot.play_note(note)
@@ -55,7 +54,3 @@ func attack_action() -> void:
 	if player.is_on_floor():
 		player.camera.shake(0.2, 0.1)
 	player.particles_from_result(shoot_result, player.camera.SHOOT_POINT_ORB.global_position, 0.7)
-	
-	if shoot_result.hit_hitbox():
-			#Freeze.freeze(0.05)
-			shoot_result.hit_object.hit.emit()

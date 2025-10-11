@@ -11,6 +11,7 @@ var flags: Dictionary[String, bool] = {
 	"thumper": true,
 	"gustbloom": true,
 	"lenzen": true,
+	"lynlyn": true,
 }
 
 func _process(delta: float) -> void:

@@ -3,6 +3,8 @@ extends RoomEnemy
 @onready var body: CharacterBody3D = $Body
 @onready var agent: NavigationAgent3D = $Body/Agent
 @onready var animation: AnimatedSprite3D = $Body/Animation
+@onready var health: Health = $Health
+@onready var damager_shape: CollisionShape3D = $Body/Damager/CollisionShape3D
 
 @export var leap_sequence: Seqence
 
@@ -21,8 +23,12 @@ func room_load() -> void:
 
 func room_begin() -> void:
 	update_path()
-	Rhythm.beats(2.0, true, 0.5).connect(func(_a): prepare_lunge())
-	Rhythm.beats(2.0, true, 1.0).connect(func(_a): lunge())
+	Rhythm.beats(2.0, true, 0.5).connect(func(_a):
+		if not should_be_active(): return
+		prepare_lunge())
+	Rhythm.beats(2.0, true, 1.0).connect(func(_a):
+		if not should_be_active(): return
+		lunge())
 
 func physics_update(delta: float) -> void:
 	agent.get_next_path_position()
@@ -32,6 +38,9 @@ func physics_update(delta: float) -> void:
 	body.velocity /= delta
 	body.move_and_slide()
 	
+	if body.global_position.distance_to(current_target) < 0.7 and not damager_shape.disabled:
+		damager_shape.disabled = true
+		
 	if body.global_position.distance_to(current_target) < 0.7 and animation.animation == "Lunge":
 		animation.play("Idle")
 	animation.position.y = sin(clampf(body.global_position.distance_to(current_target) / (last_leap_start.distance_to(current_target) - 1), 0.0, 1.0)*PI) * 1.5
@@ -40,6 +49,7 @@ func prepare_lunge():
 	animation.play("Prepare")
 
 func lunge():
+	damager_shape.disabled = false
 	animation.play("Lunge")
 	sfx_leap.play_note(leap_sequence.next(Rhythm.current_beat).note)
 	last_leap_start = body.global_position
@@ -52,3 +62,15 @@ func update_path() -> void:
 	
 	var region_rid: RID = room.navmesh.get_region_rid()
 	current_target = NavigationServer3D.region_get_closest_point(region_rid, current_target)
+
+func on_hit(damage: DamageInfo) -> void:
+	health.damage(damage.damage)
+
+func on_zero_health() -> void:
+	damager_shape.disabled = true
+	is_defeated = true
+	visible = false
+	defeated.emit()
+
+func should_be_active() -> bool:
+	return is_room_active and Debug.flags.get("lynlyn") and not is_defeated
