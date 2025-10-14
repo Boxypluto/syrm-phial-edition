@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://ccuvbsr4nryxp"]
+[gd_scene load_steps=37 format=3 uid="uid://ccuvbsr4nryxp"]
 
 [ext_resource type="Script" uid="uid://cb0vydbp4g856" path="res://content/levels/_system/level.gd" id="1_3oc40"]
 [ext_resource type="Script" uid="uid://yivgpgxxtksp" path="res://content/levels/_system/room.gd" id="1_suwu8"]
@@ -111,11 +111,18 @@ metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
 [sub_resource type="Resource" id="Resource_ov27d"]
 script = ExtResource("13_piknv")
 sequence_strings = Array[String](["E - G# -"])
+exported_include_signal = true
 metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
 
 [sub_resource type="Resource" id="Resource_2hmnq"]
 script = ExtResource("13_piknv")
 sequence_strings = Array[String](["4[-] 4[-]  E - - - 4[-]", "4[-] 4[-] 4[-]  E - - -", "E - - - 4[-] 4[-] 4[-]"])
+exported_include_signal = true
+metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
+
+[sub_resource type="Resource" id="Resource_hik63"]
+script = ExtResource("13_piknv")
+sequence_strings = Array[String](["2x[E D E G# E D E B]"])
 metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
 
 [node name="Testing1" type="Node3D"]
@@ -402,3 +409,7 @@ sequence = SubResource("Resource_ov27d")
 [node name="EnemyLenzen" parent="Second/Entities" instance=ExtResource("18_ukfwn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 1, -12)
 sequence = SubResource("Resource_2hmnq")
+
+[node name="EnemyLynlyn" parent="Second/Entities" instance=ExtResource("16_3oc40")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.257523, 1, -9.214078)
+leap_sequence = SubResource("Resource_hik63")

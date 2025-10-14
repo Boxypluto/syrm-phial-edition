@@ -18,8 +18,9 @@ var is_complete: bool = false
 var doors: Array[Door]
 
 func _ready() -> void:
-	var e = find_children("*", "RoomEnemy")
+	var e = find_children("*")
 	for en in e:
+		if not en is RoomEnemy: continue
 		_entities.append(en)
 		en.defeated.connect(update_all_enemies_defeated)
 		en.room = self

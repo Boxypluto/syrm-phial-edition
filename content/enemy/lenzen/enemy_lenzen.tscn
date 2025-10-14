@@ -51,6 +51,7 @@ height = 3.727539
 
 [node name="EnemyLenzen" type="Node3D"]
 script = ExtResource("1_2b803")
+metadata/_custom_type_script = "uid://dl16as7geelti"
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_e3m7y")

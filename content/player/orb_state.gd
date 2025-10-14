@@ -11,8 +11,8 @@ class_name OrbState
 @onready var charge_sequence: Seqence
 
 var required_beat: float = 1.0
-var leeway: float = 0.2
-var delay: float = 0.11
+var leeway: float = 0.3
+var delay: float = 0.10
 @export var damage: DamageInfo
 
 func _ready() -> void:

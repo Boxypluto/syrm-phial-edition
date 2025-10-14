@@ -1,11 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://cop7xblcpkud5"]
+[gd_scene load_steps=11 format=3 uid="uid://cop7xblcpkud5"]
 
 [ext_resource type="Script" uid="uid://fb8rciqakfyc" path="res://content/enemy/gustbloom/enemy_gustbloom.gd" id="1_3j7qb"]
 [ext_resource type="Texture2D" uid="uid://c84nflhkhabes" path="res://assets/sprites/enemy/swirler.png" id="1_mtd4w"]
 [ext_resource type="Script" uid="uid://bog6bqfmnioad" path="res://multi_scripts/hit_box.gd" id="2_3j7qb"]
 [ext_resource type="Script" uid="uid://cvdxyomux8pmi" path="res://content/component/health.gd" id="2_m44sh"]
-[ext_resource type="AudioStream" uid="uid://bofs1hoigyij1" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_gustbloom_spiral.wav" id="5_m44sh"]
+[ext_resource type="Script" uid="uid://bsnc4lbnm1xpd" path="res://content/component/music_seqence.gd" id="2_sjby7"]
+[ext_resource type="AudioStream" uid="uid://dhayr6216f2p3" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_gustbloom_spiral.wav" id="5_m44sh"]
 [ext_resource type="Script" uid="uid://c2ndi6ftfs5m4" path="res://content/component/musical_audio_3d.gd" id="6_sjby7"]
+
+[sub_resource type="Resource" id="Resource_xlwl2"]
+script = ExtResource("2_sjby7")
+exported_include_signal = true
+metadata/_custom_type_script = "uid://bsnc4lbnm1xpd"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tlyem"]
 radius = 0.9711914
@@ -17,6 +23,8 @@ radius = 1.1206055
 
 [node name="EnemyGustbloom" type="Node3D"]
 script = ExtResource("1_3j7qb")
+sequence = SubResource("Resource_xlwl2")
+metadata/_custom_type_script = "uid://fb8rciqakfyc"
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_m44sh")

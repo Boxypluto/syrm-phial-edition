@@ -7,6 +7,7 @@ extends RoomEnemy
 @onready var damager_shape: CollisionShape3D = $Body/Damager/CollisionShape3D
 
 @export var leap_sequence: Seqence
+@export var leap_beat_interval: float = 2.0
 
 @export var note: String = "A"
 
@@ -23,10 +24,10 @@ func room_load() -> void:
 
 func room_begin() -> void:
 	update_path()
-	Rhythm.beats(2.0, true, 0.5).connect(func(_a):
+	Rhythm.beats(leap_beat_interval, true, leap_beat_interval / 4.0).connect(func(_a):
 		if not should_be_active(): return
 		prepare_lunge())
-	Rhythm.beats(2.0, true, 1.0).connect(func(_a):
+	Rhythm.beats(leap_beat_interval, true, leap_beat_interval / 2.0).connect(func(_a):
 		if not should_be_active(): return
 		lunge())
 
