@@ -13,6 +13,7 @@ static var current_level_packed: PackedScene
 
 const SCENE_PLAYER = preload("uid://db6dv4pdde6co")
 const SCENE_TESTING_1 = preload("uid://ccuvbsr4nryxp")
+const LEVEL_BEAMBLOOM_DESERT = preload("uid://c8e2r7s0iqkyr")
 
 signal game_refrences_ready
 
@@ -51,3 +52,6 @@ func _ready() -> void:
 
 static func add_spawned(node: Node):
 	SPAWNED.add_child(node)
+
+static func timer(start_time: float, timer_length: float) -> bool:
+	return (Time.get_ticks_msec() / 1000.0 - start_time) >= timer_length

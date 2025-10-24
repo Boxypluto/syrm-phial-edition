@@ -10,6 +10,8 @@ class_name Player
 
 @onready var health: Health = $Health
 
+@onready var animations: AnimatedSprite3D = $Animations
+
 var speed: float = 15.0
 var jump_strength: float = 12.0
 var gravity: float = 20.0
@@ -24,6 +26,11 @@ var shoot_hit_layer: int = 0b11111
 
 var on_floor_last_frame: bool = false
 var last_frame_velocity: Vector3 = Vector3.ZERO
+
+# Animation
+var last_spin_attack: float = -1000.0
+var spin_time: float = 0.3
+var spin_end_time: float = 0.2
 
 const SHOOT_RAY_DISTANCE: float = 128.0
 
@@ -47,6 +54,11 @@ func _physics_process(delta: float) -> void:
 	pound_process(delta)
 	
 	camera_process(delta)
+	
+	if Input.is_action_just_pressed("Shoot"):
+		last_spin_attack = Time.get_ticks_msec() / 1000.0
+	
+	animate()
 	
 	if not on_floor_last_frame and is_on_floor() and last_frame_velocity.y < -100.0:
 		print("BAM!")
@@ -152,6 +164,20 @@ func on_hit(damage: DamageInfo) -> void:
 	camera.shake(0.4, 0.4)
 	health.damage(damage.damage)
 	#Freeze.freeze(0.2)
+
+func animate():
+	if not animations.is_playing():
+		animations.play()
+	if not Game.timer(last_spin_attack, spin_time):
+		animations.animation = "Spin"
+	elif not Game.timer(last_spin_attack, spin_time + spin_end_time):
+		if animations.animation != "SpinEnd":
+			animations.play("SpinEnd")
+			animations.frame = randi_range(0, animations.sprite_frames.get_frame_count("SpinEnd") - 1)
+	elif get_move_input() == Vector2.ZERO or not is_on_floor():
+		animations.animation = "Idle"
+	else:
+		animations.animation = "Walk"
 
 func bounce(area: Area3D) -> void:
 	velocity.y = 20

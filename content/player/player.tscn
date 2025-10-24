@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://db6dv4pdde6co"]
+[gd_scene load_steps=33 format=3 uid="uid://db6dv4pdde6co"]
 
 [ext_resource type="Script" uid="uid://bq2fijtm5dps3" path="res://content/player/player.gd" id="1_2rga7"]
 [ext_resource type="Script" uid="uid://cvdxyomux8pmi" path="res://content/component/health.gd" id="2_tpspr"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://8kh2dpsmrruw" path="res://content/component/musical_audio_global.gd" id="5_3ac0f"]
 [ext_resource type="AudioStream" uid="uid://dq3krvt87dg1s" path="res://__external/SFX/phial_sfx_player/phial_sfx_player_Step.wav" id="5_bkj32"]
 [ext_resource type="AudioStream" uid="uid://hmtgbipbfdwj" path="res://__external/SFX/phial_sfx_player/phial_sfx_player_orb_attack.wav" id="5_o23i7"]
+[ext_resource type="Texture2D" uid="uid://0squyyb8jo03" path="res://assets/sprites/player/player_main.png" id="5_q05y8"]
 [ext_resource type="Script" uid="uid://b7jhnw6y6uf1p" path="res://content/player/orb_state.gd" id="7_gdtqi"]
 [ext_resource type="AudioStream" uid="uid://cg3cx7un2tl6y" path="res://__external/SFX/phial_sfx_player/phial_sfx_player_orb_fail.wav" id="7_rmk25"]
 [ext_resource type="Script" uid="uid://bog6bqfmnioad" path="res://multi_scripts/hit_box.gd" id="10_cvehv"]
@@ -18,6 +19,99 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_5unhu"]
 atlas = ExtResource("3_vx4xa")
 region = Rect2(0, 44.48, 0, 54.775)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sks62"]
+atlas = ExtResource("5_q05y8")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q05y8"]
+atlas = ExtResource("5_q05y8")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v3tlx"]
+atlas = ExtResource("5_q05y8")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pull8"]
+atlas = ExtResource("5_q05y8")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1esvc"]
+atlas = ExtResource("5_q05y8")
+region = Rect2(704, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3brj4"]
+atlas = ExtResource("5_q05y8")
+region = Rect2(768, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6pxk4"]
+atlas = ExtResource("5_q05y8")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5u4yr"]
+atlas = ExtResource("5_q05y8")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8jrco"]
+atlas = ExtResource("5_q05y8")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fmriv"]
+atlas = ExtResource("5_q05y8")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v3tlx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sks62")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q05y8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v3tlx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pull8")
+}],
+"loop": true,
+"name": &"Spin",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1esvc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3brj4")
+}],
+"loop": true,
+"name": &"SpinEnd",
+"speed": 0.01
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6pxk4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5u4yr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8jrco")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fmriv")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 12.0
+}]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x4mxd"]
 
@@ -49,6 +143,7 @@ metadata/_custom_type_script = "uid://cvdxyomux8pmi"
 
 [node name="Sprite3D" type="Sprite3D" parent="." node_paths=PackedStringArray("rotation_target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8215524, 0)
+visible = false
 offset = Vector2(0, 64)
 pixel_size = 0.022
 texture_filter = 0
@@ -57,11 +152,19 @@ region_rect = Rect2(1.71, 0, 0, 0)
 script = ExtResource("4_5unhu")
 rotation_target = NodePath("../CameraPivot")
 
+[node name="Animations" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23403752, 0)
+pixel_size = 0.04
+billboard = 2
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_v3tlx")
+animation = &"SpinEnd"
+
 [node name="CameraPivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="PlayerCamera" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.30045956, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2997918, 3.842868)
 script = ExtResource("2_y66qv")
 
 [node name="OrbShootPoint" type="Marker3D" parent="CameraPivot/PlayerCamera"]

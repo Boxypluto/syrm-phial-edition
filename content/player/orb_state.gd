@@ -30,7 +30,7 @@ func weapon_input() -> void:
 	
 	var next_distance: float = sequence.next((Rhythm.current_position - delay) / Rhythm.beat_length - leeway / 2.0).note_distance * Rhythm.beat_length
 	
-	if next_distance <= leeway:
+	if next_distance <= leeway or true:
 		attack_action()
 	else:
 		sfx_fail.play()

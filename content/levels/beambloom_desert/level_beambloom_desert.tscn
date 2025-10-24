@@ -1,7 +1,9 @@
-[gd_scene load_steps=36 format=3 uid="uid://c8e2r7s0iqkyr"]
+[gd_scene load_steps=38 format=3 uid="uid://c8e2r7s0iqkyr"]
 
+[ext_resource type="Script" uid="uid://cb0vydbp4g856" path="res://content/levels/_system/level.gd" id="1_hpoad"]
 [ext_resource type="Texture2D" uid="uid://4305b0ommceu" path="res://assets/skybox/skybox_beambloom.png" id="1_wjpys"]
 [ext_resource type="Shader" uid="uid://c5u0e373tvinu" path="res://assets/shaders/lighting_triplanar.gdshader" id="2_fmrr4"]
+[ext_resource type="AudioStream" uid="uid://brwmmu6uuw578" path="res://assets/music/eternal_sunstorm.ogg" id="2_xwy3o"]
 [ext_resource type="Texture2D" uid="uid://bery80d3iqdoc" path="res://assets/sprites/environment/sun.png" id="3_em6uu"]
 [ext_resource type="Texture2D" uid="uid://r5wyrx7bpy11" path="res://assets/textures/sand_1.png" id="3_wjpys"]
 [ext_resource type="Texture2D" uid="uid://de5oey11rg1k2" path="res://assets/textures/sand_1_normal.png" id="4_fmrr4"]
@@ -144,6 +146,10 @@ material = SubResource("StandardMaterial3D_174bo")
 size = Vector2(0.1, 0.1)
 
 [node name="LevelBeambloomDesert" type="Node3D"]
+script = ExtResource("1_hpoad")
+music = ExtResource("2_xwy3o")
+bpm = 75.0
+metadata/_custom_type_script = "uid://cb0vydbp4g856"
 
 [node name="Environment" type="Node3D" parent="."]
 
@@ -502,6 +508,7 @@ transform = Transform3D(0.7237625, -0.6900492, -1.48606e-08, -0.09392491, -0.098
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32781792, -0.54757655, 12.898113)
 
 [node name="Enemies" type="Node3D" parent="."]
+visible = false
 
 [node name="EnemyGustbloom3" parent="Enemies" instance=ExtResource("12_rx5e1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.002043, 3.4230628, -38.69028)

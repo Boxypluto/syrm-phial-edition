@@ -151,6 +151,7 @@ texture = ExtResource("6_w6m87")
 stretch_mode = 3
 
 [node name="Gun" type="Node2D" parent="HUD"]
+visible = false
 position = Vector2(56, 0)
 script = ExtResource("5_m0p3p")
 
@@ -185,6 +186,7 @@ rotation = -2.8905985
 texture = ExtResource("16_hxy0c")
 
 [node name="BeatSyncer" type="Control" parent="HUD"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

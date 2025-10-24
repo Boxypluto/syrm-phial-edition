@@ -28,7 +28,7 @@ func _process(delta: float) -> void:
 	rotation.z = rotate_toward(rotation.z, rotation_goal, delta * 10.0)
 	fov = move_toward(fov, base_fov + fov_goal, delta * 100.0)
 	
-	wobble_offset = sin(Time.get_ticks_msec() / 30.0) / 20
+	wobble_offset = sin(Time.get_ticks_msec() / 30.0) / 50
 	
 	h_offset = shake_offset.x
 	v_offset = shake_offset.y + (wobble_offset if Vector.flatten(Game.PLAYER.velocity) != Vector2.ZERO else 0)
