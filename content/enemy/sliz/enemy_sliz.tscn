@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://ndo4d4agq3vk" path="res://content/component/pulse_3d.gd" id="3_xb7i7"]
 [ext_resource type="Texture2D" uid="uid://bdlqyyqt7piko" path="res://assets/sprites/pulse.png" id="5_1ehr1"]
 [ext_resource type="Script" uid="uid://c2ndi6ftfs5m4" path="res://content/component/musical_audio_3d.gd" id="6_monnn"]
-[ext_resource type="AudioStream" uid="uid://bwu7kswu3oqpl" path="res://__external/SFX/PHIAL_SFX_ENEMY/untitled_SLIZ_SHOOT.wav" id="7_dufm4"]
+[ext_resource type="AudioStream" uid="uid://q5blx2blwq7t" path="res://__external/SFX/PHIAL_SFX_ENEMY/untitled_SLIZ_SHOOT.wav" id="7_dufm4"]
 [ext_resource type="Script" uid="uid://bog6bqfmnioad" path="res://multi_scripts/hit_box.gd" id="9_1qq75"]
 [ext_resource type="Script" uid="uid://5t0i5fcvv63q" path="res://content/component/hit_effect.gd" id="10_dufm4"]
 

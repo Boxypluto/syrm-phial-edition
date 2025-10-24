@@ -164,6 +164,9 @@ texture = ExtResource("6_nvi61")
 centered = false
 script = ExtResource("8_3w5he")
 
+[node name="Center" type="Marker2D" parent="HUD/Gun/Orb"]
+position = Vector2(200, 120)
+
 [node name="Hurt" type="TextureRect" parent="HUD"]
 texture_repeat = 2
 material = SubResource("ShaderMaterial_8mfh0")

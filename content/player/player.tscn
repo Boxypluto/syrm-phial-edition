@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://db6dv4pdde6co"]
+[gd_scene load_steps=25 format=3 uid="uid://db6dv4pdde6co"]
 
 [ext_resource type="Script" uid="uid://bq2fijtm5dps3" path="res://content/player/player.gd" id="1_2rga7"]
 [ext_resource type="Script" uid="uid://cvdxyomux8pmi" path="res://content/component/health.gd" id="2_tpspr"]
@@ -14,6 +14,9 @@
 [ext_resource type="AudioStream" uid="uid://cg3cx7un2tl6y" path="res://__external/SFX/phial_sfx_player/phial_sfx_player_orb_fail.wav" id="7_rmk25"]
 [ext_resource type="Script" uid="uid://bog6bqfmnioad" path="res://multi_scripts/hit_box.gd" id="10_cvehv"]
 [ext_resource type="Script" uid="uid://013kh1y3kvjg" path="res://multi_scripts/damage_info.gd" id="13_v250f"]
+[ext_resource type="Shader" uid="uid://cstwj8bmsi487" path="res://content/player/orb_shot.gdshader" id="14_sks62"]
+[ext_resource type="Texture2D" uid="uid://dqya08esuf38x" path="res://assets/noise/Grainy 4 - 256x256.png" id="15_6pxk4"]
+[ext_resource type="Texture2D" uid="uid://ckviyr7f4vh4a" path="res://assets/noise/Voronoi 12 - 256x256.png" id="16_6pxk4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5unhu"]
 atlas = ExtResource("3_vx4xa")
@@ -31,10 +34,22 @@ random_pitch = 2.0
 streams_count = 1
 stream_0/stream = ExtResource("7_rmk25")
 
-[sub_resource type="Resource" id="Resource_q05y8"]
+[sub_resource type="Resource" id="Resource_v250f"]
 script = ExtResource("13_v250f")
-damage = 30.0
 metadata/_custom_type_script = "uid://013kh1y3kvjg"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5u4yr"]
+render_priority = 0
+shader = ExtResource("14_sks62")
+shader_parameter/noise_a = ExtResource("15_6pxk4")
+shader_parameter/noise_b = ExtResource("16_6pxk4")
+shader_parameter/opacity = 0.999999977648
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/uv1_blend_sharpness = 1.0
+shader_parameter/uv2_blend_sharpness = 1.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vx4xa"]
 
@@ -109,12 +124,8 @@ script = ExtResource("5_3ac0f")
 
 [node name="Orb" type="Node" parent="WeaponStates"]
 script = ExtResource("7_gdtqi")
-string_sequence = "0.5x[ 3[D E] 0.5x2[D] E]
-0.5x[ 3[D E] 0.5x2[G#] E]
-0.5x[ 3[D E] 0.5x2[D] E]
-0.5x[ 3[D E] 0.5x2[C] B]"
-charge_string_sequence = "4G 4D"
-damage = SubResource("Resource_q05y8")
+damage = SubResource("Resource_v250f")
+shot_material = SubResource("ShaderMaterial_5u4yr")
 
 [node name="HitBox" type="Area3D" parent="."]
 collision_layer = 4
