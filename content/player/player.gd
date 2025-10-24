@@ -22,7 +22,7 @@ var forward_direction: Vector3 = Vector3.FORWARD
 var flat_forward_direction: Vector2 = Vector2.DOWN
 var flat_angle: float = 0.0
 
-var shoot_hit_layer: int = 0b11111
+var RAY_HIT_LAYER: int = 2 + 1
 
 var on_floor_last_frame: bool = false
 var last_frame_velocity: Vector3 = Vector3.ZERO
@@ -104,60 +104,19 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("Shoot"):
 		state_orb.weapon_input()
 
-class ShootResult:
-	var result_dict: Dictionary
-	var hit_object: Node3D
-	var ray_position: Vector3
-	var origin: Vector3
+func shoot_forward() -> RayResult:
+	var space_state: PhysicsDirectSpaceState3D = camera.get_world_3d().direct_space_state
 	
-	func _init(_result_dict: Dictionary, _hit_object: Node3D, _origin: Vector3, _ray_position: Vector3) -> void:
-		result_dict = _result_dict
-		hit_object = _hit_object
-		origin = _origin
-		ray_position = _ray_position
+	var viewport_center: Vector2 = camera.get_viewport().size / 2.0
+	var origin: Vector3 = camera.project_ray_origin(viewport_center)
+	var direction: Vector3 = camera.project_ray_normal(viewport_center)
+	var end: Vector3 = origin + direction * SHOOT_RAY_DISTANCE
 	
-	func did_hit_object() -> bool:
-		return hit_object != null
-	
-	func hit_hitbox() -> bool:
-		return hit_object is HitBox
-
-func shoot_forward():
-	var space_state: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
-	var query_server = PhysicsRayQueryParameters3D
-	
-	var origin: Vector3 = camera_pivot.global_position
-	var furthest_target: Vector3 = camera_pivot.global_position + forward_direction * SHOOT_RAY_DISTANCE
-	var query: PhysicsRayQueryParameters3D = query_server.create(origin, furthest_target)
-	query.collision_mask = shoot_hit_layer
+	var query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(origin, end, RAY_HIT_LAYER)
 	query.collide_with_areas = true
 	
-	var result: Dictionary = space_state.intersect_ray(query)
-	
-	if result:
-		var collider: Node3D = result.collider
-		var ray_position: Vector3 = result.position
-		return ShootResult.new(result, collider, origin, ray_position)
-	
-	return ShootResult.new(result, null, origin, furthest_target)
-
-func particles_from_result(result: ShootResult, start_position: Vector3, interval: float = 0.2) -> void:
-	draw_shot_particles(start_position, result.ray_position, interval)
-
-func draw_shot_particles(start: Vector3, end: Vector3, interval: float = 0.2, start_offset: float = 0.0) -> void:
-	
-	var distance: float = start.distance_to(end)
-	var direction: Vector3 = start.direction_to(end)
-	var current_distance: float = 0.0
-	
-	if interval <= 0.0: return
-	if start_offset > 0.0:
-		current_distance += start_offset
-	
-	while current_distance <= distance:
-		var particle: ParticleOrb = ParticleOrb.spawn()
-		particle.global_position = direction * current_distance + start
-		current_distance += interval
+	var result: RayResult = RayResult.new(space_state.intersect_ray(query), origin, direction, SHOOT_RAY_DISTANCE)
+	return result
 
 func on_hit(damage: DamageInfo) -> void:
 	Game.HUD.HURT.do_effect()

@@ -3,54 +3,40 @@ class_name OrbState
 
 @onready var player: Player = $"../.."
 @onready var sfx_shoot: MusicalAudioGlobal = $"../../SFX/Orb/Shoot"
-@onready var sfx_fail: MusicalAudioGlobal = $"../../SFX/Orb/Fail"
-
-@export_multiline var string_sequence: String
-@onready var sequence: Seqence
-@export_multiline var charge_string_sequence: String
-@onready var charge_sequence: Seqence
-
-var required_beat: float = 1.0
-var leeway: float = 0.3
-var delay: float = 0.10
 @export var damage: DamageInfo
+@export var shot_material: Material
 
-func _ready() -> void:
-	sequence = Seqence.build([string_sequence], true)
-	charge_sequence = Seqence.build([charge_string_sequence], true)
-	
-	if not Game.are_game_refrences_ready: await Game.GAME.game_refrences_ready
-	
-	Game.HUD.BEAT_SYNCER.beats_sequence = sequence
-	Game.HUD.BEAT_SYNCER.setup()
-	Game.HUD.BEAT_SYNCER_ALT.beats_sequence = charge_sequence
-	Game.HUD.BEAT_SYNCER_ALT.setup()
+var materials: Array[ShaderMaterial]
 
 func weapon_input() -> void:
-	
-	var next_distance: float = sequence.next((Rhythm.current_position - delay) / Rhythm.beat_length - leeway / 2.0).note_distance * Rhythm.beat_length
-	
-	if next_distance <= leeway or true:
-		attack_action()
-	else:
-		sfx_fail.play()
-		Game.HUD.GUN.find_child("Orb").fail()
+	var result: RayResult =player.shoot_forward()
+	print(result.collider)
+	damage_hitbox(result.collider, damage)
+	shoot_visual(result)
 
-func distance_from_closest_beat(test_position: float, beat_interval: float):
-	var wrapped_position: float = fmod(test_position, beat_interval)
-	var distance_from_next: float = beat_interval - wrapped_position
-	return minf(wrapped_position, distance_from_next)
+func shoot_visual(ray_result: RayResult):
+	Game.HUD.GUN.orb.shoot()
+	const RADIUS = 56
+	var mat: Material = shot_material.duplicate()
+	mat = mat as ShaderMaterial
+	materials.append(mat)
+	for direction: Vector2 in DIRECTIONS:
+		Visual.ray(Game.HUD.ORB_CENTER.global_position * 2.0 + direction * RADIUS, 2.0, ray_result, 0.1, mat)
 
-func attack_action() -> void:
-	
-	var shoot_result: Player.ShootResult = player.shoot_forward()
-	
-	if shoot_result.hit_hitbox():
-		shoot_result.hit_object.on_hit(damage)
-	
-	var note: Note = sequence.next((Rhythm.current_position - delay) / Rhythm.beat_length - leeway / 2.0, 0).note
-	sfx_shoot.play_note(note)
-	Game.HUD.GUN.shoot()
-	if player.is_on_floor():
-		player.camera.shake(0.2, 0.1)
-	player.particles_from_result(shoot_result, player.camera.SHOOT_POINT_ORB.global_position, 0.7)
+func _physics_process(delta: float) -> void:
+	var index: int = -1
+	for mat in materials:
+		index += 1
+		var opacity: float = mat.get_shader_parameter("opacity")
+		opacity = clampf(opacity - delta, 0.0, 1.0)
+		if opacity == 0.0:
+			materials.remove_at(index)
+			continue
+		mat.set_shader_parameter("opacity", opacity)
+
+const DIRECTIONS: PackedVector2Array = [
+	Vector2.UP,
+	Vector2.RIGHT,
+	Vector2.DOWN,
+	Vector2.LEFT,
+]

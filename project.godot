@@ -26,7 +26,6 @@ Rhythm="*res://content/globals/rhythm.gd"
 
 window/size/viewport_width=320
 window/size/viewport_height=180
-window/size/mode=4
 window/stretch/mode="canvas_items"
 
 [dotnet]
