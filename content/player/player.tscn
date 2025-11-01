@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://db6dv4pdde6co"]
+[gd_scene load_steps=42 format=3 uid="uid://db6dv4pdde6co"]
 
 [ext_resource type="Script" uid="uid://bq2fijtm5dps3" path="res://content/player/player.gd" id="1_2rga7"]
 [ext_resource type="Script" uid="uid://cvdxyomux8pmi" path="res://content/component/health.gd" id="2_tpspr"]
@@ -23,9 +23,21 @@
 atlas = ExtResource("3_vx4xa")
 region = Rect2(0, 44.48, 0, 54.775)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_0cq6f"]
+atlas = ExtResource("5_q05y8")
+region = Rect2(832, 0, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_sks62"]
 atlas = ExtResource("5_q05y8")
 region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mj7a3"]
+atlas = ExtResource("5_q05y8")
+region = Rect2(896, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfant"]
+atlas = ExtResource("5_q05y8")
+region = Rect2(1024, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q05y8"]
 atlas = ExtResource("5_q05y8")
@@ -47,6 +59,10 @@ region = Rect2(704, 0, 64, 64)
 atlas = ExtResource("5_q05y8")
 region = Rect2(768, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_2b4rs"]
+atlas = ExtResource("5_q05y8")
+region = Rect2(960, 0, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_6pxk4"]
 atlas = ExtResource("5_q05y8")
 region = Rect2(192, 0, 64, 64)
@@ -67,10 +83,34 @@ region = Rect2(384, 0, 64, 64)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_0cq6f")
+}],
+"loop": true,
+"name": &"Fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_sks62")
 }],
 "loop": true,
 "name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mj7a3")
+}],
+"loop": true,
+"name": &"Jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfant")
+}],
+"loop": true,
+"name": &"Land",
 "speed": 5.0
 }, {
 "frames": [{
@@ -100,6 +140,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_2b4rs")
+}],
+"loop": true,
+"name": &"Stomp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_6pxk4")
 }, {
 "duration": 1.0,
@@ -115,6 +163,8 @@ animations = [{
 "name": &"Walk",
 "speed": 12.0
 }]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5u4yr"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x4mxd"]
 
@@ -173,26 +223,32 @@ pixel_size = 0.04
 billboard = 2
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_v3tlx")
-animation = &"SpinEnd"
+animation = &"Fall"
 
 [node name="CameraPivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="PlayerCamera" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2997918, 3.842868)
+[node name="Arm" type="SpringArm3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2229753, 0)
+shape = SubResource("SphereShape3D_5u4yr")
+spring_length = 3.843
+
+[node name="PlayerCamera" type="Camera3D" parent="CameraPivot/Arm"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.19130898, 3.842868)
 script = ExtResource("2_y66qv")
 
-[node name="OrbShootPoint" type="Marker3D" parent="CameraPivot/PlayerCamera"]
+[node name="OrbShootPoint" type="Marker3D" parent="CameraPivot/Arm/PlayerCamera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.587516, -0.5516539, -2.955662)
 gizmo_extents = 0.1
 
-[node name="Sprite3D2" type="Sprite3D" parent="CameraPivot/PlayerCamera/OrbShootPoint"]
+[node name="Sprite3D2" type="Sprite3D" parent="CameraPivot/Arm/PlayerCamera/OrbShootPoint"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10313922, -0.036063254, -0.19076851)
 visible = false
 pixel_size = 0.001
 texture = ExtResource("3_oq5wi")
 
-[node name="Sprite3D" type="Sprite3D" parent="CameraPivot/PlayerCamera/OrbShootPoint"]
+[node name="Sprite3D" type="Sprite3D" parent="CameraPivot/Arm/PlayerCamera/OrbShootPoint"]
 visible = false
 pixel_size = 0.05
 texture_filter = 0

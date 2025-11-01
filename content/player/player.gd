@@ -2,7 +2,7 @@ extends CharacterBody3D
 class_name Player
 
 @onready var camera_pivot: Node3D = $CameraPivot
-@onready var camera: MainCamera = $CameraPivot/PlayerCamera
+@onready var camera: MainCamera = %PlayerCamera
 
 @onready var sfx_step: AudioStreamPlayer = $SFX/Step
 
@@ -17,6 +17,9 @@ var jump_strength: float = 12.0
 var gravity: float = 20.0
 var pound_speed: float = 128.0
 
+var walk_speed: float = 15.0
+var twirl_speed: float = 24.0
+
 var mouse_sensitivity: float = 3.0 * 5.0
 var forward_direction: Vector3 = Vector3.FORWARD
 var flat_forward_direction: Vector2 = Vector2.DOWN
@@ -26,18 +29,33 @@ var RAY_HIT_LAYER: int = 2 + 1
 
 var on_floor_last_frame: bool = false
 var last_frame_velocity: Vector3 = Vector3.ZERO
+var last_move_input: Vector2 = Vector2.ZERO
+
+var twirl_buffer_time: float = 0.3
+var twirl_buffer: Timer = Timer.new()
 
 # Animation
 var last_spin_attack: float = -1000.0
 var spin_time: float = 0.3
 var spin_end_time: float = 0.2
+var last_landing: float = -1000.0
+var stomp_animation_time: float = 0.1
 
+enum {
+	MOVE_NORMAL,
+	MOVE_TWIRL,
+}
+
+var move_state: int = MOVE_NORMAL
 const SHOOT_RAY_DISTANCE: float = 128.0
 
 func _ready() -> void:
 	In.input.connect(input)
-	Rhythm.beats(1, true, -1).connect(func(beats): camera.shake(0.1, 0.1))
+	Rhythm.beats(1, true, -1).connect(func(_beats): camera.shake(0.1, 0.1))
 	Rhythm.beats(0.25).connect(try_step)
+	add_child(twirl_buffer)
+	twirl_buffer.one_shot = true
+	twirl_buffer.wait_time = twirl_buffer_time
 
 func try_step(_beat: int = 0):
 	if velocity != Vector3.ZERO and is_on_floor():
@@ -48,21 +66,37 @@ func get_move_input():
 
 func _physics_process(delta: float) -> void:
 	
+	if move_state == MOVE_NORMAL:
+		last_move_input = get_move_input()
 	run_process(delta)
 	gravity_process(delta)
 	jump_process(delta)
 	pound_process(delta)
+	move_state_process(delta)
 	
 	camera_process(delta)
 	
 	if Input.is_action_just_pressed("Shoot"):
+		if Game.timer(last_spin_attack, spin_time + spin_end_time):
+			twirl_buffer.stop()
+			last_spin_attack = Time.get_ticks_msec() / 1000.0
+			state_orb.weapon_input()
+		else:
+			twirl_buffer.start()
+	
+	if Game.timer(last_spin_attack, spin_time + spin_end_time) and not twirl_buffer.is_stopped():
+		twirl_buffer.stop()
 		last_spin_attack = Time.get_ticks_msec() / 1000.0
+		state_orb.weapon_input()
 	
 	animate()
 	
 	if not on_floor_last_frame and is_on_floor() and last_frame_velocity.y < -100.0:
 		print("BAM!")
 		camera.shake(0.2, 0.3)
+	
+	if not on_floor_last_frame and is_on_floor() and last_frame_velocity.y > 100:
+		last_landing = Game.time
 	
 	on_floor_last_frame = is_on_floor()
 	last_frame_velocity = velocity
@@ -82,7 +116,7 @@ func input(event: InputEvent) -> void:
 		flat_angle = -camera_pivot.rotation.y
 
 func run_process(_delta: float):
-	velocity = Vector.two_to_three(get_move_input() * speed, velocity.y)
+	velocity = Vector.two_to_three(last_move_input * speed, velocity.y)
 
 func gravity_process(delta: float):
 	velocity.y -= gravity * delta
@@ -95,14 +129,17 @@ func pound_process(_delta: float):
 	if Input.is_action_just_pressed("Pound"):
 		velocity.y = -pound_speed
 
+func move_state_process(_delta: float):
+	match move_state:
+		MOVE_NORMAL:
+			speed = walk_speed
+		MOVE_TWIRL:
+			speed = twirl_speed
+
 func camera_process(_delta):
 	
 	var input: Vector2 = Input.get_vector("Leftward", "Rightward", "Forward", "Backward").normalized()
 	camera.rotation_goal = -input.x * 0.01
-
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("Shoot"):
-		state_orb.weapon_input()
 
 func shoot_forward() -> RayResult:
 	var space_state: PhysicsDirectSpaceState3D = camera.get_world_3d().direct_space_state
@@ -127,13 +164,25 @@ func on_hit(damage: DamageInfo) -> void:
 func animate():
 	if not animations.is_playing():
 		animations.play()
+	
 	if not Game.timer(last_spin_attack, spin_time):
 		animations.animation = "Spin"
+		move_state = MOVE_TWIRL
 	elif not Game.timer(last_spin_attack, spin_time + spin_end_time):
 		if animations.animation != "SpinEnd":
 			animations.play("SpinEnd")
+			move_state = MOVE_NORMAL
 			animations.frame = randi_range(0, animations.sprite_frames.get_frame_count("SpinEnd") - 1)
-	elif get_move_input() == Vector2.ZERO or not is_on_floor():
+	elif not is_on_floor():
+		if velocity.y > pound_speed * 0.8:
+			animations.animation = "Stomp"
+		if velocity.y > 0:
+			animations.animation = "Jump"
+		else:
+			animations.animation = "Fall"
+	elif not Game.timer(last_landing, stomp_animation_time):
+		animations.animation = "Land"
+	elif get_move_input() == Vector2.ZERO:
 		animations.animation = "Idle"
 	else:
 		animations.animation = "Walk"

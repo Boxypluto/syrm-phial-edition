@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://du3knkfan8rhq" path="res://content/enemy/thumper/enemy_thumper.gd" id="1_48y4t"]
 [ext_resource type="Texture2D" uid="uid://dgeiemkj3calr" path="res://assets/sprites/enemy/thumper.png" id="1_viq1k"]
 [ext_resource type="Script" uid="uid://cvdxyomux8pmi" path="res://content/component/health.gd" id="2_np4s2"]
-[ext_resource type="AudioStream" uid="uid://bgatqyvsxdvqq" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_thumer_attack.wav" id="3_8hb0a"]
+[ext_resource type="AudioStream" uid="uid://bhsc4u3h4ah37" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_thumer_attack.wav" id="3_8hb0a"]
 [ext_resource type="Script" uid="uid://c2ndi6ftfs5m4" path="res://content/component/musical_audio_3d.gd" id="4_nj8qf"]
 [ext_resource type="Script" uid="uid://bog6bqfmnioad" path="res://multi_scripts/hit_box.gd" id="5_nj8qf"]
 [ext_resource type="Script" uid="uid://5t0i5fcvv63q" path="res://content/component/hit_effect.gd" id="6_d52oe"]
@@ -70,8 +70,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d52oe"]
-radius = 1.0
-height = 3.727539
+radius = 1.46875
+height = 4.1831055
 
 [node name="EnemyThumper" type="Node3D"]
 script = ExtResource("1_48y4t")
@@ -111,7 +111,7 @@ script = ExtResource("5_nj8qf")
 metadata/_custom_type_script = "uid://bog6bqfmnioad"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9038086, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9499512, 0)
 shape = SubResource("CapsuleShape3D_d52oe")
 debug_color = Color(0.61, 0.5388333, 0, 0.6627451)
 

@@ -4,10 +4,10 @@
 [ext_resource type="Script" uid="uid://cvdxyomux8pmi" path="res://content/component/health.gd" id="2_e3m7y"]
 [ext_resource type="Texture2D" uid="uid://xfkc3tajd0ta" path="res://assets/sprites/enemy/enemy_lenzen.png" id="3_x2sln"]
 [ext_resource type="Script" uid="uid://bog6bqfmnioad" path="res://multi_scripts/hit_box.gd" id="4_n6emx"]
-[ext_resource type="AudioStream" uid="uid://de3wqbkcsbbec" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_lenzen_charge.wav" id="4_x2sln"]
+[ext_resource type="AudioStream" uid="uid://c1kfyya0nicf0" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_lenzen_charge.wav" id="4_x2sln"]
 [ext_resource type="Script" uid="uid://5t0i5fcvv63q" path="res://content/component/hit_effect.gd" id="5_215wj"]
 [ext_resource type="Script" uid="uid://c2ndi6ftfs5m4" path="res://content/component/musical_audio_3d.gd" id="5_n6emx"]
-[ext_resource type="AudioStream" uid="uid://ctg0vpoledv3a" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_lenzen_charge #3.wav" id="6_n6emx"]
+[ext_resource type="AudioStream" uid="uid://rb5obpu4mkfl" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_lenzen_charge #3.wav" id="6_n6emx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tr2pu"]
 atlas = ExtResource("3_x2sln")
@@ -46,8 +46,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m51cx"]
-radius = 1.0
-height = 3.727539
+radius = 1.7143555
+height = 5.510742
 
 [node name="EnemyLenzen" type="Node3D"]
 script = ExtResource("1_2b803")
@@ -93,7 +93,7 @@ script = ExtResource("4_n6emx")
 metadata/_custom_type_script = "uid://bog6bqfmnioad"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9038086, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7954102, 0)
 shape = SubResource("CapsuleShape3D_m51cx")
 debug_color = Color(0.61, 0.5388333, 0, 0.6627451)
 

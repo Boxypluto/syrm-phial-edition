@@ -63,8 +63,9 @@ func room_load() -> void:
 		if not should_be_active(): return
 		spin_spirals())
 
-func physics_update(delta: float) -> void:
+func physics_update(_delta: float) -> void:
 	
+	if not should_be_active(): return
 	position_sprials()
 	#position_verticals()
 
@@ -97,6 +98,8 @@ func on_hit(damage: DamageInfo) -> void:
 func on_zero_health() -> void:
 	is_defeated = true
 	visible = false
+	for gust in all_gusts:
+		gust.queue_free()
 	defeated.emit()
 
 func should_be_active() -> bool:

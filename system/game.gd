@@ -10,6 +10,8 @@ static var VIEWPORT: SubViewport
 
 static var are_game_refrences_ready: bool = false
 static var current_level_packed: PackedScene
+static var time: float:
+	get(): return Time.get_ticks_msec() / 1000.0
 
 const SCENE_PLAYER = preload("uid://db6dv4pdde6co")
 const SCENE_TESTING_1 = preload("uid://ccuvbsr4nryxp")

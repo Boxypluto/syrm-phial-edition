@@ -45,6 +45,6 @@ static func ray(screen_position: Vector2, spawn_depth: float, ray_result: RayRes
 	h_mesh_instance.global_position = start
 	v_mesh_instance.global_position = start
 	Game.GAME.get_tree().create_timer(destory_after_time).timeout.connect(func():
-		h_mesh_instance.queue_free()
-		v_mesh_instance.queue_free()
+		if h_mesh_instance != null: h_mesh_instance.queue_free()
+		if v_mesh_instance != null: v_mesh_instance.queue_free()
 	)

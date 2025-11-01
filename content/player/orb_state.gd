@@ -21,7 +21,7 @@ func shoot_visual(ray_result: RayResult):
 	mat = mat as ShaderMaterial
 	materials.append(mat)
 	for direction: Vector2 in DIRECTIONS:
-		Visual.ray(Game.HUD.ORB_CENTER.global_position * 2.0 + direction * RADIUS, 2.0, ray_result, 0.1, mat)
+		Visual.ray(Game.HUD.ORB_CENTER.global_position * 2.0 + direction * RADIUS, 2.0, ray_result, 0.2, mat)
 
 func _physics_process(delta: float) -> void:
 	var index: int = -1
@@ -34,9 +34,13 @@ func _physics_process(delta: float) -> void:
 			continue
 		mat.set_shader_parameter("opacity", opacity)
 
-const DIRECTIONS: PackedVector2Array = [
+static var DIRECTIONS: PackedVector2Array = [
 	Vector2.UP,
 	Vector2.RIGHT,
 	Vector2.DOWN,
 	Vector2.LEFT,
+	Vector2(1, 1).normalized(),
+	Vector2(1, -1).normalized(),
+	Vector2(-1, -1).normalized(),
+	Vector2(-1, 1).normalized(),
 ]

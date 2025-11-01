@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bgwwid7wriy3h" path="res://content/enemy/lynlyn/enemy_lynlyn.gd" id="1_6mpy5"]
 [ext_resource type="Script" uid="uid://cvdxyomux8pmi" path="res://content/component/health.gd" id="2_n6ku1"]
 [ext_resource type="Script" uid="uid://c2ndi6ftfs5m4" path="res://content/component/musical_audio_3d.gd" id="3_iy06o"]
-[ext_resource type="AudioStream" uid="uid://dvdve2t16nxuw" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_lynlyn_leap.wav" id="3_yynju"]
+[ext_resource type="AudioStream" uid="uid://60gqj5d3ghnf" path="res://__external/SFX/PHIAL_SFX_ENEMY/PHIAL_SFX_ENEMY_lynlyn_leap.wav" id="3_yynju"]
 [ext_resource type="Script" uid="uid://bog6bqfmnioad" path="res://multi_scripts/hit_box.gd" id="6_w7si0"]
 [ext_resource type="Script" uid="uid://lomp1cr0yce7" path="res://multi_scripts/damager.gd" id="7_w7si0"]
 [ext_resource type="Script" uid="uid://013kh1y3kvjg" path="res://multi_scripts/damage_info.gd" id="8_2iuwu"]
@@ -51,7 +51,7 @@ animations = [{
 }]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2iuwu"]
-radius = 1.1035212
+radius = 1.8395637
 
 [sub_resource type="Resource" id="Resource_504yc"]
 script = ExtResource("8_2iuwu")

@@ -60,8 +60,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dufm4"]
-radius = 0.74121094
-height = 2.4814453
+radius = 1.0952148
+height = 3.0917969
 
 [node name="EnemySliz" type="Node3D"]
 script = ExtResource("1_ssju7")
@@ -120,7 +120,7 @@ script = ExtResource("9_1qq75")
 metadata/_custom_type_script = "uid://bog6bqfmnioad"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2149764, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2623397, 0)
 shape = SubResource("CapsuleShape3D_dufm4")
 debug_color = Color(0.61, 0.5388333, 0, 0.654902)
 

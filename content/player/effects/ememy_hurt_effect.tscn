@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpe1qgvrea1jx"]
+
+[ext_resource type="Texture2D" uid="uid://cd4wjoiyyxntm" path="res://assets/sprites/player/hit_enemy.png" id="1_ajy1p"]
+[ext_resource type="Script" uid="uid://cokgshmh5bdme" path="res://content/player/effects/ememy_hurt_effect.gd" id="1_to8hv"]
+
+[node name="EmemyHurtEffect" type="Node3D"]
+script = ExtResource("1_to8hv")
+
+[node name="Sprite2D" type="Sprite3D" parent="."]
+pixel_size = 0.05
+billboard = 1
+texture_filter = 0
+texture = ExtResource("1_ajy1p")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="end"]
