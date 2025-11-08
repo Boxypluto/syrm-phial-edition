@@ -33,6 +33,9 @@ var last_move_input: Vector2 = Vector2.ZERO
 
 var twirl_buffer_time: float = 0.3
 var twirl_buffer: Timer = Timer.new()
+@onready var twirl_collison: CollisionShape3D = $Twirl/Damager/CollisionShape3D
+@onready var twirl_sprite: Sprite3D = $Twirl/TwirlSprite
+@onready var twirl_damager: TwirlDamage = $Twirl/Damager
 
 # Animation
 var last_spin_attack: float = -1000.0
@@ -56,6 +59,7 @@ func _ready() -> void:
 	add_child(twirl_buffer)
 	twirl_buffer.one_shot = true
 	twirl_buffer.wait_time = twirl_buffer_time
+	twirl_sprite.visible = false
 
 func try_step(_beat: int = 0):
 	if velocity != Vector3.ZERO and is_on_floor():
@@ -66,7 +70,7 @@ func get_move_input():
 
 func _physics_process(delta: float) -> void:
 	
-	if move_state == MOVE_NORMAL:
+	if move_state == MOVE_NORMAL or true:
 		last_move_input = get_move_input()
 	run_process(delta)
 	gravity_process(delta)
@@ -78,16 +82,12 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("Shoot"):
 		if Game.timer(last_spin_attack, spin_time + spin_end_time):
-			twirl_buffer.stop()
-			last_spin_attack = Time.get_ticks_msec() / 1000.0
-			state_orb.weapon_input()
+			do_twirl()
 		else:
 			twirl_buffer.start()
 	
 	if Game.timer(last_spin_attack, spin_time + spin_end_time) and not twirl_buffer.is_stopped():
-		twirl_buffer.stop()
-		last_spin_attack = Time.get_ticks_msec() / 1000.0
-		state_orb.weapon_input()
+		do_twirl()
 	
 	animate()
 	
@@ -101,6 +101,13 @@ func _physics_process(delta: float) -> void:
 	on_floor_last_frame = is_on_floor()
 	last_frame_velocity = velocity
 	move_and_slide()
+
+func do_twirl():
+	twirl_sprite.visible = true
+	twirl_buffer.stop()
+	last_spin_attack = Time.get_ticks_msec() / 1000.0
+	state_orb.weapon_input()
+	twirl_damager.active = true
 
 func input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -133,6 +140,9 @@ func move_state_process(_delta: float):
 	match move_state:
 		MOVE_NORMAL:
 			speed = walk_speed
+			if twirl_damager.active:
+				twirl_damager.active = false
+			twirl_sprite.visible = false
 		MOVE_TWIRL:
 			speed = twirl_speed
 

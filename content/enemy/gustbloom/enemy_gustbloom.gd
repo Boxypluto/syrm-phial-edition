@@ -32,6 +32,12 @@ var all_gusts: Array[Node3D]
 var spirals_rotation: float = 0.0
 var spirals_rotations: Array[float]
 
+func _ready() -> void:
+	all_gusts = []
+	spirals = []
+	vertical_gusts = []
+	spirals_rotations = []
+
 func room_load() -> void:
 	spirals_rotations.resize(spiral_gust_count)
 	
@@ -99,7 +105,8 @@ func on_zero_health() -> void:
 	is_defeated = true
 	visible = false
 	for gust in all_gusts:
-		gust.queue_free()
+		if gust != null:
+			gust.queue_free()
 	defeated.emit()
 
 func should_be_active() -> bool:

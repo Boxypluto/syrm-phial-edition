@@ -9,6 +9,7 @@ class_name OrbState
 var materials: Array[ShaderMaterial]
 
 func weapon_input() -> void:
+	return
 	var result: RayResult =player.shoot_forward()
 	print(result.collider)
 	damage_hitbox(result.collider, damage)

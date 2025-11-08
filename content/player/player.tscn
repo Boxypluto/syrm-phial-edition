@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://db6dv4pdde6co"]
+[gd_scene load_steps=47 format=3 uid="uid://db6dv4pdde6co"]
 
 [ext_resource type="Script" uid="uid://bq2fijtm5dps3" path="res://content/player/player.gd" id="1_2rga7"]
 [ext_resource type="Script" uid="uid://cvdxyomux8pmi" path="res://content/component/health.gd" id="2_tpspr"]
@@ -18,6 +18,9 @@
 [ext_resource type="Shader" uid="uid://cstwj8bmsi487" path="res://content/player/orb_shot.gdshader" id="14_sks62"]
 [ext_resource type="Texture2D" uid="uid://dqya08esuf38x" path="res://assets/noise/Grainy 4 - 256x256.png" id="15_6pxk4"]
 [ext_resource type="Texture2D" uid="uid://ckviyr7f4vh4a" path="res://assets/noise/Voronoi 12 - 256x256.png" id="16_6pxk4"]
+[ext_resource type="Script" uid="uid://crhkyr0s4eh06" path="res://content/player/twirl_damager.gd" id="19_v3tlx"]
+[ext_resource type="Texture2D" uid="uid://c1jpdapo16a23" path="res://assets/sprites/player/swirl_attack.png" id="20_v3tlx"]
+[ext_resource type="Script" uid="uid://cknpeoof3lhbs" path="res://content/player/twirl_swirl.gd" id="21_v3tlx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5unhu"]
 atlas = ExtResource("3_vx4xa")
@@ -197,6 +200,14 @@ shader_parameter/uv2_blend_sharpness = 1.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vx4xa"]
 
+[sub_resource type="Resource" id="Resource_pull8"]
+script = ExtResource("13_v250f")
+metadata/_custom_type_script = "uid://013kh1y3kvjg"
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_v3tlx"]
+height = 1.1363525
+radius = 3.6704102
+
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 4
 script = ExtResource("1_2rga7")
@@ -303,6 +314,33 @@ collision_mask = 256
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Bouncer"]
 shape = SubResource("CapsuleShape3D_x4mxd")
 
+[node name="Twirl" type="Node3D" parent="."]
+
+[node name="Damager" type="Area3D" parent="Twirl"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("19_v3tlx")
+damage = SubResource("Resource_pull8")
+metadata/_custom_type_script = "uid://lomp1cr0yce7"
+
+[node name="Collision" type="CollisionShape3D" parent="Twirl/Damager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2675171, 0)
+shape = SubResource("CylinderShape3D_v3tlx")
+disabled = true
+debug_color = Color(0.97, 0, 0.485, 0.85490197)
+
+[node name="DPS" type="Timer" parent="Twirl/Damager"]
+process_callback = 0
+wait_time = 0.07
+
+[node name="TwirlSprite" type="Sprite3D" parent="Twirl"]
+pixel_size = 0.05
+axis = 1
+texture_filter = 0
+texture = ExtResource("20_v3tlx")
+script = ExtResource("21_v3tlx")
+
 [connection signal="on_damaged_zero" from="Health" to="." method="on_zero_health"]
 [connection signal="hit" from="HitBox" to="." method="on_hit"]
 [connection signal="area_entered" from="Bouncer" to="." method="bounce"]
+[connection signal="timeout" from="Twirl/Damager/DPS" to="Twirl/Damager" method="on_do_damage"]
