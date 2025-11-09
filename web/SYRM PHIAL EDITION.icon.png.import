@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d13pnmx71mxos"
-path="res://.godot/imported/SYRM PHIAL EDITION.apple-touch-icon.png-0482be0e70b2ed35f0e9e0027c4c1f72.ctex"
+uid="uid://b535fn3l7n1ur"
+path="res://.godot/imported/SYRM PHIAL EDITION.icon.png-7a289a0d786690aca17ee9ffc563467c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://__builds/web/SYRM PHIAL EDITION.apple-touch-icon.png"
-dest_files=["res://.godot/imported/SYRM PHIAL EDITION.apple-touch-icon.png-0482be0e70b2ed35f0e9e0027c4c1f72.ctex"]
+source_file="res://web/SYRM PHIAL EDITION.icon.png"
+dest_files=["res://.godot/imported/SYRM PHIAL EDITION.icon.png-7a289a0d786690aca17ee9ffc563467c.ctex"]
 
 [params]
 
