@@ -48,7 +48,7 @@ func _ready() -> void:
 	SPAWNED = $"Game3D/3DViewport/Spawned"
 	VIEWPORT = $"Game3D/3DViewport"
 	
-	start_level(LEVEL_BEAMBLOOM)
+	start_level(LEVEL_BEAMBLOOM_DESERT)
 	
 	are_game_refrences_ready = true
 	game_refrences_ready.emit()

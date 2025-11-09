@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://d3wksdk62wfdy"]
+[gd_scene load_steps=24 format=3 uid="uid://d3wksdk62wfdy"]
 
 [ext_resource type="Texture2D" uid="uid://bery80d3iqdoc" path="res://assets/sprites/environment/sun.png" id="1_lsjvh"]
 [ext_resource type="Script" uid="uid://ndo4d4agq3vk" path="res://content/component/pulse_3d.gd" id="2_eik8g"]
@@ -10,6 +10,9 @@
 [ext_resource type="Shader" uid="uid://c5u0e373tvinu" path="res://assets/shaders/lighting_triplanar.gdshader" id="9_vo2av"]
 [ext_resource type="Texture2D" uid="uid://cyqn5ndyw60gs" path="res://assets/textures/testing_normal.png" id="9_wjxmb"]
 [ext_resource type="PackedScene" uid="uid://cmxvrvtkghl04" path="res://content/enemy/sliz/enemy_sliz.tscn" id="16_32apw"]
+
+[sub_resource type="Environment" id="Environment_wjxmb"]
+ambient_light_color = Color(0.42154822, 0.4318161, 0.55669403, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_rnb26"]
 center_offset = Vector3(0, 0.275, -0.5)
@@ -95,6 +98,7 @@ shader_parameter/uv2_blend_sharpness = 1.0000000475
 [node name="Environment" type="Node3D" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_wjxmb")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
 transform = Transform3D(-0.8660254, -0.43301278, 0.24999999, -0.27535698, 0.8303824, 0.48440024, -0.4173471, 0.35066366, -0.8383653, 0, 3.4081168, 0)

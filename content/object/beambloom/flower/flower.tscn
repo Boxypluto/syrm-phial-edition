@@ -32,7 +32,7 @@ script = ExtResource("2_sgbdi")
 
 [node name="Beam" type="Sprite3D" parent="."]
 offset = Vector2(0, 256)
-modulate = Color(1, 0.57, 0.78499997, 0.08235294)
+modulate = Color(1, 0.57, 0.78499997, 0.1764706)
 pixel_size = 0.1
 texture_filter = 0
 texture = ExtResource("1_dr28h")
