@@ -16,6 +16,7 @@ static var time: float:
 const SCENE_PLAYER = preload("uid://db6dv4pdde6co")
 const SCENE_TESTING_1 = preload("uid://ccuvbsr4nryxp")
 const LEVEL_BEAMBLOOM_DESERT = preload("uid://c8e2r7s0iqkyr")
+const LEVEL_BEAMBLOOM = preload("uid://d3wksdk62wfdy")
 
 signal game_refrences_ready
 
@@ -47,7 +48,7 @@ func _ready() -> void:
 	SPAWNED = $"Game3D/3DViewport/Spawned"
 	VIEWPORT = $"Game3D/3DViewport"
 	
-	start_level(SCENE_TESTING_1)
+	start_level(LEVEL_BEAMBLOOM)
 	
 	are_game_refrences_ready = true
 	game_refrences_ready.emit()

@@ -102,12 +102,10 @@ func on_hit(damage: DamageInfo) -> void:
 	health.damage(damage.damage)
 
 func on_zero_health() -> void:
-	is_defeated = true
-	visible = false
 	for gust in all_gusts:
 		if gust != null:
 			gust.queue_free()
-	defeated.emit()
+	do_death()
 
 func should_be_active() -> bool:
 	return is_room_active and Debug.flags.get("gustbloom") and not is_defeated

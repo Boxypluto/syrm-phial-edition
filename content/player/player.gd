@@ -3,15 +3,13 @@ class_name Player
 
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var camera: MainCamera = %PlayerCamera
-
 @onready var sfx_step: AudioStreamPlayer = $SFX/Step
-
 @onready var state_orb: OrbState = $WeaponStates/Orb
-
 @onready var health: Health = $Health
-
 @onready var animations: AnimatedSprite3D = $Animations
+@onready var pickup_area: Area3D = $PickupArea
 
+var accel: float = 120.0
 var speed: float = 15.0
 var jump_strength: float = 12.0
 var gravity: float = 20.0
@@ -78,6 +76,9 @@ func _physics_process(delta: float) -> void:
 	pound_process(delta)
 	move_state_process(delta)
 	
+	if Input.is_action_just_pressed("Interact"):
+		do_pickup()
+	
 	camera_process(delta)
 	
 	if Input.is_action_just_pressed("Shoot"):
@@ -122,8 +123,8 @@ func input(event: InputEvent) -> void:
 		flat_forward_direction = Vector2.from_angle(camera_pivot.rotation.y)
 		flat_angle = -camera_pivot.rotation.y
 
-func run_process(_delta: float):
-	velocity = Vector.two_to_three(last_move_input * speed, velocity.y)
+func run_process(delta: float):
+	velocity = velocity.move_toward(Vector.unflatten(last_move_input * speed, velocity.y), delta * accel)
 
 func gravity_process(delta: float):
 	velocity.y -= gravity * delta
@@ -202,3 +203,21 @@ func bounce(area: Area3D) -> void:
 
 func on_zero_health() -> void:
 	Game.GAME.restart()
+
+func twirl_did_damage(target: HitBox) -> void:
+	var flat_velocity: Vector2 = Vector.flatten(target.global_position).direction_to(Vector.flatten(global_position))
+	velocity = Vector.unflatten(flat_velocity * 16.0, velocity.y)
+
+func do_pickup():
+	var pickups: Array[Node3D] = pickup_area.get_overlapping_bodies()
+	if pickups.size() == 0: return
+	var closest: Pickupable = pickups.pop_back()
+	if closest == null: return
+	var closest_distance: float = closest.global_position.distance_squared_to(pickup_area.global_position)
+	for pickup: Pickupable in pickups:
+		if pickup == null: continue
+		var distance: float = pickup.global_position.distance_squared_to(pickup_area.global_position)
+		if distance < closest_distance:
+			closest = pickup
+			closest_distance = distance
+	closest.do_pickup()

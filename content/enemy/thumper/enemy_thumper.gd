@@ -52,9 +52,7 @@ func spawn_shockwave():
 	shockwave.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_INHERIT
 
 func kill() -> void:
-	is_defeated = true
-	visible = false
-	defeated.emit()
+	do_death()
 
 func on_damaged(damage: DamageInfo) -> void:
 	health.damage(damage.damage)

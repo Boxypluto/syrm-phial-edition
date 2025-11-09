@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://cmxvrvtkghl04"]
+[gd_scene load_steps=19 format=3 uid="uid://cmxvrvtkghl04"]
 
 [ext_resource type="Script" uid="uid://53o36xmor827" path="res://content/enemy/sliz/enemy_sliz.gd" id="1_ssju7"]
 [ext_resource type="Texture2D" uid="uid://nrhbtq57fgsl" path="res://assets/sprites/enemy/sliz.png" id="1_w2n7g"]
 [ext_resource type="Script" uid="uid://cvdxyomux8pmi" path="res://content/component/health.gd" id="2_7aqgi"]
+[ext_resource type="PackedScene" uid="uid://ckpl3tp4ooj4a" path="res://content/player/weapons/WeaponSlimelash.tscn" id="2_8ayir"]
 [ext_resource type="Script" uid="uid://ctehqaw3flkxh" path="res://content/component/beat_fader.gd" id="3_b8itv"]
 [ext_resource type="Script" uid="uid://ndo4d4agq3vk" path="res://content/component/pulse_3d.gd" id="3_xb7i7"]
 [ext_resource type="Texture2D" uid="uid://bdlqyyqt7piko" path="res://assets/sprites/pulse.png" id="5_1ehr1"]
@@ -65,6 +66,7 @@ height = 3.0917969
 
 [node name="EnemySliz" type="Node3D"]
 script = ExtResource("1_ssju7")
+dropped_weapon = ExtResource("2_8ayir")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_7aqgi")

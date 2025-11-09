@@ -69,9 +69,7 @@ func on_hit(damage: DamageInfo) -> void:
 
 func on_zero_health() -> void:
 	damager_shape.disabled = true
-	is_defeated = true
-	visible = false
-	defeated.emit()
+	do_death()
 
 func should_be_active() -> bool:
 	return is_room_active and Debug.flags.get("lynlyn") and not is_defeated

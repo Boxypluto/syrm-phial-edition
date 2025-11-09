@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://db6dv4pdde6co"]
+[gd_scene load_steps=48 format=3 uid="uid://db6dv4pdde6co"]
 
 [ext_resource type="Script" uid="uid://bq2fijtm5dps3" path="res://content/player/player.gd" id="1_2rga7"]
 [ext_resource type="Script" uid="uid://cvdxyomux8pmi" path="res://content/component/health.gd" id="2_tpspr"]
@@ -208,6 +208,9 @@ metadata/_custom_type_script = "uid://013kh1y3kvjg"
 height = 1.1363525
 radius = 3.6704102
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_v3tlx"]
+radius = 4.013272
+
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 4
 script = ExtResource("1_2rga7")
@@ -317,7 +320,7 @@ shape = SubResource("CapsuleShape3D_x4mxd")
 [node name="Twirl" type="Node3D" parent="."]
 
 [node name="Damager" type="Area3D" parent="Twirl"]
-collision_layer = 2
+collision_layer = 0
 collision_mask = 2
 script = ExtResource("19_v3tlx")
 damage = SubResource("Resource_pull8")
@@ -340,7 +343,15 @@ texture_filter = 0
 texture = ExtResource("20_v3tlx")
 script = ExtResource("21_v3tlx")
 
+[node name="PickupArea" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickupArea"]
+shape = SubResource("SphereShape3D_v3tlx")
+
 [connection signal="on_damaged_zero" from="Health" to="." method="on_zero_health"]
 [connection signal="hit" from="HitBox" to="." method="on_hit"]
 [connection signal="area_entered" from="Bouncer" to="." method="bounce"]
+[connection signal="did_damage" from="Twirl/Damager" to="." method="twirl_did_damage"]
 [connection signal="timeout" from="Twirl/Damager/DPS" to="Twirl/Damager" method="on_do_damage"]

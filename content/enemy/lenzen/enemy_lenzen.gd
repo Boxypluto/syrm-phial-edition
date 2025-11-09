@@ -82,8 +82,8 @@ func fire_laser(note: Note):
 	var left_pos: Vector2 = player_pos + left_dir * laser_arc_width
 	var right_pos: Vector2 = player_pos + right_dir * laser_arc_width
 	
-	var left_target: Vector3 = Vector.two_to_three(left_pos * Vector2(1, -1), Game.PLAYER.global_position.y)
-	var right_target: Vector3 = Vector.two_to_three(right_pos * Vector2(1, -1), Game.PLAYER.global_position.y)
+	var left_target: Vector3 = Vector.unflatten(left_pos * Vector2(1, -1), Game.PLAYER.global_position.y)
+	var right_target: Vector3 = Vector.unflatten(right_pos * Vector2(1, -1), Game.PLAYER.global_position.y)
 	
 	laser_target = laser.global_position.direction_to(right_target)
 	laser.look_at(left_target)
@@ -112,9 +112,7 @@ func set_laser(on: bool):
 	laser.set_physics_process(on)
 
 func on_zero_health() -> void:
-	is_defeated = true
-	visible = false
-	defeated.emit()
+	do_death()
 
 func on_hit(damage: DamageInfo) -> void:
 	health.damage(damage.damage)

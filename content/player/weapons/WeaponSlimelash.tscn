@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckpl3tp4ooj4a"]
+
+[ext_resource type="Script" uid="uid://lw1vyu765g2" path="res://content/player/weapons/pickupable.gd" id="1_3cjie"]
+[ext_resource type="Texture2D" uid="uid://00y27q2kr04g" path="res://assets/sprites/player/weapon/slimelash.png" id="1_vv5xo"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vv5xo"]
+radius = 0.30029297
+height = 2.8725586
+
+[node name="WeaponSlimelash" type="RigidBody3D"]
+collision_layer = 16
+mass = 10.0
+script = ExtResource("1_3cjie")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+pixel_size = 0.05
+texture_filter = 0
+texture = ExtResource("1_vv5xo")
+
+[node name="Sprite3D2" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+pixel_size = 0.05
+texture_filter = 0
+texture = ExtResource("1_vv5xo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.07885742, -3.4469672e-09, 0)
+shape = SubResource("CapsuleShape3D_vv5xo")
