@@ -20,4 +20,3 @@ func do_death():
 	is_defeated = true
 	visible = false
 	defeated.emit()
-	queue_free()

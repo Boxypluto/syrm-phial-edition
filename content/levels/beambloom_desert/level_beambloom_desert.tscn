@@ -239,6 +239,7 @@ draw_pass_1 = SubResource("QuadMesh_rx5e1")
 
 [node name="Room" type="Node3D" parent="."]
 script = ExtResource("8_8kota")
+first_room = true
 metadata/_custom_type_script = "uid://yivgpgxxtksp"
 
 [node name="Enemies" type="Node3D" parent="Room"]

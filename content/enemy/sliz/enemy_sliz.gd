@@ -4,6 +4,8 @@ class_name EnemySliz
 @onready var animation: AnimatedSprite3D = $Animation
 @onready var shoot_point: Marker3D = $ShootPoint
 @onready var health: Health = $Health
+@onready var hitbox_shape: CollisionShape3D = $HitBox/CollisionShape3D
+@onready var hit_box: HitBox = $HitBox
 
 @onready var sfx_shoot: MusicalAudio3D = $SFX/Shoot
 
@@ -43,6 +45,8 @@ func on_hit(damage: DamageInfo) -> void:
 	animation.play("Pulse")
 
 func kill():
+	hitbox_shape.disabled = true
+	hit_box.disabled = true
 	do_death()
 
 func should_be_active() -> bool:

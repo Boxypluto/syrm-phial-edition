@@ -32,9 +32,10 @@ func update_all_enemies_defeated() -> void:
 	if not is_active or is_complete: return
 	var are_all_defeated: bool = true
 	for enemy in _entities:
-		if not enemy.is_defeated:
-			are_all_defeated = false
-			break
+		if enemy != null:
+			if not enemy.is_defeated:
+				are_all_defeated = false
+				break
 	if are_all_defeated:
 		complete_room()
 
