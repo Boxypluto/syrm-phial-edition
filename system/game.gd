@@ -47,14 +47,18 @@ func _ready() -> void:
 	HUD = $HUD
 	SPAWNED = $"Game3D/3DViewport/Spawned"
 	VIEWPORT = $"Game3D/3DViewport"
-	
-	start_level(LEVEL_BEAMBLOOM_DESERT)
-	
-	are_game_refrences_ready = true
-	game_refrences_ready.emit()
 
 static func add_spawned(node: Node):
 	SPAWNED.add_child(node)
 
 static func timer(start_time: float, timer_length: float) -> bool:
 	return (Time.get_ticks_msec() / 1000.0 - start_time) >= timer_length
+
+
+func _on_start_button_pressed() -> void:
+	start_level(LEVEL_BEAMBLOOM_DESERT)
+	
+	are_game_refrences_ready = true
+	game_refrences_ready.emit()
+	$StartButton.queue_free()
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

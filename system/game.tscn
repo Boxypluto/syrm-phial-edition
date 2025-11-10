@@ -227,5 +227,22 @@ beats = 1
 shrink_speed = 3.0
 on_beat = false
 
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -15.5
+offset_right = 28.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "START"
+
 [connection signal="beat_centered" from="HUD/BeatSyncer/Beats" to="HUD/BeatSyncer/Beats/Heart" method="pulse"]
 [connection signal="beat_centered" from="HUD/BeatSyncer/BeatsAlt" to="HUD/BeatSyncer/BeatsAlt/Heart" method="pulse"]
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
