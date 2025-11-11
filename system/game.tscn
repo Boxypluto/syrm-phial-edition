@@ -1,6 +1,7 @@
-[gd_scene load_steps=31 format=3 uid="uid://d3fghnjmt3yp8"]
+[gd_scene load_steps=32 format=3 uid="uid://d3fghnjmt3yp8"]
 
 [ext_resource type="Script" uid="uid://4ax2lruikqyq" path="res://system/game.gd" id="1_uwgih"]
+[ext_resource type="Script" uid="uid://cnrqjek5dv51d" path="res://system/dialouge/dialouge.gd" id="3_fkdic"]
 [ext_resource type="Script" uid="uid://bkbpcrbxsc4gf" path="res://system/hud.gd" id="4_nvi61"]
 [ext_resource type="Script" uid="uid://c26d5htndjar5" path="res://system/debug_health.gd" id="5_3fs1o"]
 [ext_resource type="Script" uid="uid://cip3mcqdx4frc" path="res://system/fps_shower.gd" id="5_gsj3s"]
@@ -91,6 +92,15 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 script = ExtResource("4_nvi61")
+
+[node name="DIALOUGE" type="Control" parent="HUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_fkdic")
 
 [node name="Health" type="Label" parent="HUD"]
 layout_mode = 1
